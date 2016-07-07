@@ -35,6 +35,19 @@ namespace RedStar.Core
         }
 
         /// <summary>
+        /// Log info into the log file when log mode is Info
+        /// </summary>
+        /// <param name="format">String format</param>
+        /// <param name="args">arguments</param>
+        public static void Info( String format, params Object[] args)
+        {
+            if (mode == LogMode.INFO)
+            {
+                WriteToFile(String.Format(format,args), "INFO");
+            }
+        }
+
+        /// <summary>
         /// Log Debug into the log file when logMode is Debug or Error
         /// </summary>
         /// <param name="o"></param>
@@ -48,12 +61,36 @@ namespace RedStar.Core
         }
 
         /// <summary>
+        /// Log Debug into the log file when logMode is Debug or Error
+        /// </summary>
+        /// <param name="format">String format</param>
+        /// <param name="args">arguments</param>
+        public static void Debug(String format, params Object[] args)
+        {
+            if (mode == LogMode.DEBUG || mode == LogMode.ERROR)
+            {
+                WriteToFile(String.Format(format, args), "DEBUG");
+            }
+
+        }
+
+        /// <summary>
         /// Log Debug into the log file
         /// </summary>
         /// <param name="o"></param>
         public static void Error(Object o)
         {
             WriteToFile(o,"ERROR");
+        }
+
+        /// <summary>
+        /// Log Debug into the log file
+        /// </summary>
+        /// <param name="format">String format</param>
+        /// <param name="args">arguments</param>
+        public static void Error(String format, params Object[] args)
+        {
+            WriteToFile(String.Format(format, args), "ERROR");
         }
 
         /// <summary>
