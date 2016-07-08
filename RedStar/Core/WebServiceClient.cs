@@ -14,7 +14,6 @@ namespace RedStar.Core
         public HttpWebRequest Request { get; set; }
         public HttpWebResponse Response { get; private set; }
         public String EndPointURI { get; set; }
-        public String DataIdentifier { get; set; }
         public String ResponseBody { get; private set; }
         private String[] _serviceRequestValues;
         public long TimeTaken;
@@ -26,7 +25,6 @@ namespace RedStar.Core
         public String _requestHeaders { get; set; }
         public String _requestBody { get; set; }
         public String _expectedResponseBody { get; set; }
-
 
         public WebServiceClient(String endPointURI="",String dataIdentifier=null)
         {
@@ -44,8 +42,6 @@ namespace RedStar.Core
            
         }
 
-
-
         public WebServiceClient(String endPointURI, String[] values)
         {
             EndPointURI = endPointURI;
@@ -58,7 +54,6 @@ namespace RedStar.Core
             _serviceRequestValues = values;
             LoadServiceRequestValues();
         }
-
 
        /// <summary>
        /// Loads the Request values from the _serviceRequestValues to the corresponding properties
@@ -96,7 +91,7 @@ namespace RedStar.Core
             }
 
             EndPointURI = EndPointURI + _URISegment + _urlParameters;
-
+            
             Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
             if (Config.IsConfigValuePresent("DefaultHeaders"))
                 SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
@@ -110,7 +105,6 @@ namespace RedStar.Core
                 SetRequestBody(_requestBody);
             return this;
         }
-
 
         /// <summary>
         /// Set the Request body 
@@ -145,8 +139,6 @@ namespace RedStar.Core
             requestWriter.Write(parameterBody);
             return this;
         }
-
-
 
         /// <summary>
         /// Set Header values 
@@ -269,9 +261,30 @@ namespace RedStar.Core
         /// <returns></returns>
         public Object CallServiceGetResponseAsObject(Type type)
         {
-            return SetRequest().CallService().GetResponseAsObject(type);
+            try
+            {
+                return SetRequest().CallService().GetResponseAsObject(type);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+           
         }
 
+       /// <summary>
+       /// Set the URL parameters
+       /// </summary>
+       /// <param name="paramValuePairs">key value pairs of URL parameters to be appended to the endpoint</param>
+        public void SetURLParameters(Dictionary<String, String> paramValuePairs)
+        {
 
+            int index = 0;
+            foreach (String key in paramValuePairs.Keys)
+            {
+                _urlParameters = String.Format("{0}{1}={2}", String.IsNullOrWhiteSpace(_urlParameters)?"?":"&", _urlParameters , key);  
+            }
+        }
     }
 }
