@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 namespace RedStar.Core
 {
-    class Utils
+    public class Utils
     {
 
         static Dictionary<String, List<String[]>> ExcelData = new Dictionary<string, List<string[]>>();
@@ -195,7 +195,7 @@ namespace RedStar.Core
         /// </summary>
         /// <param name="fileIdentifier">Relative path of the file from resource directory</param>
         /// <returns></returns>
-        public static string getFileAsString(String fileIdentifier)
+        public static string GetFileAsString(String fileIdentifier)
         {
             String data;
             String filePath = getFullFilepath(fileIdentifier);
