@@ -30,6 +30,12 @@ namespace WebServiceTests.Test
             WebServiceClient client2 = new WebServiceClient("http://www.webservicex.net", "TestCaseData_WebServicexTests_TCGetCurrency");
             String yes = client2.SetRequest().CallService().GetResponseBody();
         }
+        [Test]
+        public void GetCurrenctOfCountry1()
+        {
+            WebServiceClient client2 = new WebServiceClient("http://www.webservicex.net", "TestCaseData_WebServicexTests_TCGetCurrency");
+            String yes = client2.SetRequest().CallService().GetResponseBody();
+        }
 
     }
 }
