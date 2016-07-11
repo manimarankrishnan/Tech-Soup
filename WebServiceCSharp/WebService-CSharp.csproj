@@ -7,8 +7,8 @@
     <ProjectGuid>{4D633460-0580-408F-BFE7-13D69E41A71B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedStar</RootNamespace>
-    <AssemblyName>RedStar</AssemblyName>
+    <RootNamespace>WebServiceCSharp</RootNamespace>
+    <AssemblyName>WebServiceCSharp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Logger.cs">
       <SubType>Code</SubType>
     </Compile>

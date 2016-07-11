@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-namespace RedStar.Core
+namespace WebServiceCSharp.Core
 {
     public  class Logger
     {
@@ -13,6 +13,8 @@ namespace RedStar.Core
         public static TextWriter logWriter;
         [ThreadStatic]
         public static String name;
+
+        private static String filePath { get; set; }
 
         public static LogMode mode=LogMode.DEBUG;
         private static DateTime buildStartTime = DateTime.Now;
@@ -67,7 +69,7 @@ namespace RedStar.Core
         /// <param name="args">arguments</param>
         public static void Debug(String format, params Object[] args)
         {
-            if (mode == LogMode.DEBUG || mode == LogMode.ERROR)
+            if (mode == LogMode.DEBUG || mode == LogMode.INFO)
             {
                 WriteToFile(String.Format(format, args), "DEBUG");
             }
@@ -99,9 +101,12 @@ namespace RedStar.Core
         /// <param name="o">object to be written</param>
         /// <param name="logmode">log mode </param>
         private static void WriteToFile(Object o,String logmode){
-            logWriter.WriteLine(o);
+
+            if(logWriter!=null)
+              logWriter.WriteLine(o);
             using (StreamWriter sw = new StreamWriter(getFilePath(), true))
             {
+                sw.AutoFlush = true;
                 sw.WriteLine(logmode +": "+ o.ToString());
             }
         }
@@ -112,8 +117,10 @@ namespace RedStar.Core
         /// <returns></returns>
         private static string getFilePath()
         {
+            if (name == null)
+                name = "TestResult";
             String fileName = name.Split('.').LastOrDefault();
-            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("yyyyMMdd-mmsstt"), name.Replace(fileName, ""));
+            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults",buildStartTime.ToString("HHmmssfff"), name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
             filePath = Path.Combine(filePath, fileName + ".txt");
             return filePath;

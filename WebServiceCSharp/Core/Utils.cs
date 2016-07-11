@@ -8,7 +8,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-namespace RedStar.Core
+namespace WebServiceCSharp.Core
 {
     public class Utils
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace RedStar.Core
+namespace WebServiceCSharp.Core
 {
     public class Config
     {
@@ -70,6 +70,8 @@ namespace RedStar.Core
         /// <returns>true if the config is present, false if not present</returns>
         public static bool IsConfigValuePresent(String configName)
         {
+            if (Values == null)
+                ReloadConfigFile();
             return Values.ContainsKey(configName);
         }
 
@@ -128,7 +130,7 @@ namespace RedStar.Core
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    internal partial class configuration
+    public partial class configuration
     {
 
         private configurationParameter[] parameterField;

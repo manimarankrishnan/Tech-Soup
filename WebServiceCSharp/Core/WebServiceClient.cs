@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
-namespace RedStar.Core
+namespace WebServiceCSharp.Core
 {
    public class WebServiceClient
     {
@@ -85,6 +85,8 @@ namespace RedStar.Core
             if (_serviceRequestValues == null)
             {
                 Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
+                Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
+
                 if (Config.IsConfigValuePresent("DefaultHeaders"))
                     SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
                 return this;
@@ -93,16 +95,22 @@ namespace RedStar.Core
             EndPointURI = EndPointURI + _URISegment + _urlParameters;
             
             Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
+            Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
+
             if (Config.IsConfigValuePresent("DefaultHeaders"))
                 SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
 
             Request.Method = _requestMethod;
+            Logger.Debug("Request method :{0}", Request.Method);
 
             if (!String.IsNullOrEmpty(_requestHeaders))
                 SetRequestHeaders(_requestHeaders);
 
             if (!String.IsNullOrEmpty(_requestBody))
                 SetRequestBody(_requestBody);
+
+            Logger.Debug(Request);
+
             return this;
         }
 
@@ -137,6 +145,8 @@ namespace RedStar.Core
             StreamWriter requestWriter = new StreamWriter(Request.GetRequestStream());
             requestWriter.AutoFlush = true;
             requestWriter.Write(parameterBody);
+
+            Logger.Debug("Set Request Body: " + parameterBody);
             return this;
         }
 
@@ -166,6 +176,7 @@ namespace RedStar.Core
                         Request.Headers.Add(headerName.Trim(), headerValue.Trim());
                         break;
                 }
+                Logger.Debug("Set Header {0}={1} ", headerName, headerValue);
             }
             return this;
         }
@@ -190,7 +201,8 @@ namespace RedStar.Core
                 Response = (HttpWebResponse)Request.GetResponse();
                 stopWatch.Stop();
                 TimeTaken = stopWatch.ElapsedMilliseconds;
-                Logger.Info("Time take for the service response : " + TimeTaken + " milliseconds");
+                Logger.Debug("Status Code:{0}", Response.StatusCode);
+                Logger.Debug("Time take for the service response : " + TimeTaken + " milliseconds");
             }
             catch (Exception e)
             {
@@ -204,7 +216,9 @@ namespace RedStar.Core
                 {
                     ResponseBody = responseReader.ReadToEnd();
                     responseReader.Close();
+                    Logger.Debug("Response body : \n {0}", ResponseBody);
                 }
+
             }
             catch (Exception e)
             {
@@ -285,6 +299,7 @@ namespace RedStar.Core
             {
                 _urlParameters = String.Format("{0}{1}={2}", String.IsNullOrWhiteSpace(_urlParameters)?"?":"&", _urlParameters , key);  
             }
+            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
         }
     }
 }
