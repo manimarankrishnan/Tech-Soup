@@ -288,17 +288,27 @@ namespace WebServiceCSharp.Core
         }
 
        /// <summary>
-       /// Set the URL parameters
+       /// Add the URL parameters
        /// </summary>
        /// <param name="paramValuePairs">key value pairs of URL parameters to be appended to the endpoint</param>
-        public void SetURLParameters(Dictionary<String, String> paramValuePairs)
+        public void AddURLParametersToURL(Dictionary<String, String> paramValuePairs)
         {
-
-            int index = 0;
             foreach (String key in paramValuePairs.Keys)
             {
-                _urlParameters = String.Format("{0}{1}={2}", String.IsNullOrWhiteSpace(_urlParameters)?"?":"&", _urlParameters , key);  
+                AddURLParametersToURL( String.Format("{0}={1}"  ,paramValuePairs[key] , key));  
             }
+            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
+        }
+
+       /// <summary>
+       ///  Add URL parameters to the endpoint url
+       /// </summary>
+       /// <param name="keyValue">URL parameter in format &lt;key&gt;=&lt;value&gt;</param>
+        public void AddURLParametersToURL(String keyValue)
+        {
+            if (String.IsNullOrEmpty(_urlParameters))
+                _urlParameters = "?";
+            _urlParameters = _urlParameters.Equals("?") ? "" : "&" + keyValue;
             Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
         }
     }
