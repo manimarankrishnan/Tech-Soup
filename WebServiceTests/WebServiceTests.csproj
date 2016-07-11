@@ -71,7 +71,9 @@
     <None Include="Resources\TestCaseData.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\TestSuite.xlsx" />
+    <None Include="Resources\TestSuite.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="test.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
