@@ -73,6 +73,11 @@ namespace WebServiceCSharp.Core
             //Setting Request Body
             if (_serviceRequestValues.Length > 3 && !String.IsNullOrEmpty(_serviceRequestValues[3]))
                 _requestBody = _serviceRequestValues[3];
+            
+            //Setting expected result
+            if (_serviceRequestValues.Length > 4 && !String.IsNullOrEmpty(_serviceRequestValues[4]))
+                _expectedResponseBody = _serviceRequestValues[4];
+
         }
 
 
@@ -158,6 +163,13 @@ namespace WebServiceCSharp.Core
         /// </param>
         public WebServiceClient SetRequestHeaders(String headerString)
         {
+            if (Request == null)
+            {
+                Exception e = new Exception("Call the SetRequest method before calling SetRequestHeaders method.");
+                Logger.Error(e);
+                throw e;
+            }
+
             String[] headers = headerString.Split(new Char[] { ',', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (String header in headers)
             {

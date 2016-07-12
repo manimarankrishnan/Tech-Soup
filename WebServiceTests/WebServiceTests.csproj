@@ -60,11 +60,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\DataValidation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Test\ExcelSuiteRunner.cs" />
+    <Compile Include="Test\NavigationTests.cs" />
+    <Compile Include="Test\OthersTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Test\PeriodicTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Main\" />
+    <Folder Include="Resources\DataValidation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -88,6 +96,15 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Navigation\ResponseGetCitiesByPostalCode.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Navigation\ResponseGetNearByCityName.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Others\TC_textToBraille.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\PeriodicTable\AtomicNumber.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

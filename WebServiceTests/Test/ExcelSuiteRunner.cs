@@ -26,15 +26,15 @@ namespace WebServiceTests.Test
         {
             var client = new WebServiceClient("", TCDatavalues);
 
-            var response = client.SetRequest().CallService().GetResponseBody();
-            Logger.Debug(response);
+            String response = client.SetRequest().CallService().GetResponseBody();
+            Logger.Debug((Object)response);
             Console.WriteLine(response);
             String expectedValue = client._expectedResponseBody;
             if (expectedValue.EndsWith(".xml") || expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
             {
                 expectedValue = Utils.GetFileAsString(expectedValue);
             }
-            Assert.AreEqual(expectedValue.Replace("\r\n", "\n"), response.Replace("\r\n", "\n"));
+            Assert.AreEqual(expectedValue.Replace("\r\n", "\n").Replace("\n", ""), response.Replace("\r\n", "\n").Replace("\n", ""));
 
 
 
