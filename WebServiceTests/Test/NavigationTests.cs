@@ -97,9 +97,10 @@ namespace WebServiceTests.Test
         public void GetCitiesByCountryNameWithoutHeader()
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_NavigationWithoutHeaders_TC_getCitiesByCountry");
-
-            String responseBody = client.SetRequest()
-                .SetRequestHeaders(@"Content-Type:text/xml,SOAPAction:http://www.webserviceX.NET/GetCitiesByCountry")
+            
+            String responseBody = client
+                .AddHeaders(@"Content-Type:text/xml,SOAPAction:http://www.webserviceX.NET/GetCitiesByCountry")
+                .SetRequest()
                 .CallService().GetResponseBody();
             //Assert.AreEqual(responseBody,client._expectedResponseBody,"Actual and Expected response body are not eaual");
         }
