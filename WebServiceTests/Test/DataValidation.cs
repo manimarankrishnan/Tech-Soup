@@ -24,7 +24,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyOutlookEmail()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_verifyOutlookEmail");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyOutlookEmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -36,7 +36,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyGmail()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_verifyGmail");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyGmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -48,7 +48,7 @@ namespace WebServiceTests.Test
         [Test]
         public void CheckLanguageEnglish()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_CheckLanguageEnglish");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_CheckLanguageEnglish");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -60,7 +60,7 @@ namespace WebServiceTests.Test
         [Test]
         public void CheckLanguageFrench()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_CheckLanguageFrench");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_CheckLanguageFrench");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -72,7 +72,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyVAT()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_verifyVat");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyVat");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -84,7 +84,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyMobileNumberIndia()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_verifyMobileNumberIndia");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyMobileNumberIndia");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -96,7 +96,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyMobileNumberBangaloreIndia()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_verifyMobileNumberBangaloreIndia");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyMobileNumberBangaloreIndia");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -108,7 +108,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyMobileNumberUS()
         {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationWithURI_TC_verifyMobileNumberUS");
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyMobileNumberUS");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -123,7 +123,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyOutlookEmailWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_verifyOutlookEmail");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyOutlookEmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -135,7 +135,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyGmailWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_verifyGmail");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyGmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -147,7 +147,7 @@ namespace WebServiceTests.Test
         [Test]
         public void CheckLanguageEnglishWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_CheckLanguageEnglish");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_CheckLanguageEnglish");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -159,7 +159,7 @@ namespace WebServiceTests.Test
         [Test]
         public void CheckLanguageFrenchWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_CheckLanguageFrench");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_CheckLanguageFrench");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -171,7 +171,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyVATWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_verifyVat");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyVat");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -183,7 +183,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyMobileNumberIndiaWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_verifyMobileNumberIndia");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyMobileNumberIndia");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -195,7 +195,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyMobileNumberBangaloreIndiaWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_verifyMobileNumberBangaloreIndia");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyMobileNumberBangaloreIndia");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }
@@ -207,7 +207,7 @@ namespace WebServiceTests.Test
         [Test]
         public void VerifyMobileNumberUSWithURI()
         {
-            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationWithoutURI_TC_verifyMobileNumberUS");
+            WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyMobileNumberUS");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
             Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not eaual");
         }

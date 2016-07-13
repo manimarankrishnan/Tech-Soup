@@ -120,7 +120,7 @@ namespace WebServiceCSharp.Core
             if (name == null)
                 name = "TestResult";
             String fileName = name.Split('.').LastOrDefault();
-            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults",buildStartTime.ToString("HHmmssfff"), name.Replace(fileName, ""));
+            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMM_dd_yyyy HHmmss"), name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
             filePath = Path.Combine(filePath, fileName + ".txt");
             return filePath;

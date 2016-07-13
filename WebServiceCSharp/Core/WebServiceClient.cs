@@ -199,8 +199,14 @@ namespace WebServiceCSharp.Core
                         Request.Headers.Add(headerName.Trim(), headerValue.Trim());
                         break;
                 }
-                Logger.Debug("Set Header {0}={1} ", headerName, headerValue);
+                //Logger.Debug("Set Header {0}={1} ", headerName, headerValue);
             }
+
+            foreach (String key in Request.Headers.Keys)
+            {
+                Logger.Debug("Set Header {0}={1} ",key,Request.Headers[key]);
+            }
+
             return this;
         }
 

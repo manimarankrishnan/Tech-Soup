@@ -65,14 +65,12 @@
     </Compile>
     <Compile Include="Test\ExcelSuiteRunner.cs" />
     <Compile Include="Test\NavigationTests.cs" />
-    <Compile Include="Test\OthersTest.cs">
+    <Compile Include="Test\OtherTest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Test\PeriodicTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Main\" />
-    <Folder Include="Resources\DataValidation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -96,16 +94,31 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Calculator\ResponsePerformAddition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Calculator\ResponsePerformDivision.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Calculator\ResponsePerformMultiplication.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Calculator\ResponsePerformSubtraction.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Navigation\ResponseGetCitiesByCountry.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Navigation\ResponseGetCitiesByPostalCode.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Navigation\ResponseGetNearByCityName.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Others\TC_textToBraille.xml">
+    <Content Include="Resources\OtherTests\TC_textToBraille.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\PeriodicTable\AtomicNumber.xml">
+    <Content Include="Resources\OtherTests\AtomicNumber.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
