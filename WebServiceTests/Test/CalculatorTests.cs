@@ -186,5 +186,61 @@ namespace WebServiceTests.Test
             Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
+
+
+
+
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// </summary>
+        [Test]
+        public void PerformAdditionWithRawData()
+        {
+            String[] values = Utils.GetDataFromExcel("TestCaseData_CalculatorTestsWithURI_TC_Add").First();
+            WebServiceClient client = new WebServiceClient("", values);
+            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+        }
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// </summary>
+        [Test]
+        public void PerformSubtractionWithRawData()
+        {
+            String[] values = Utils.GetDataFromExcel("TestCaseData_CalculatorTestsWithURI_TC_Sub").First();
+            WebServiceClient client = new WebServiceClient("", values);
+            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+        }
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// </summary>
+        [Test]
+        public void PerformMultiplicationWithRawData()
+        {
+            String[] values = Utils.GetDataFromExcel("TestCaseData_CalculatorTestsWithURI_TC_Mul").First();
+            WebServiceClient client = new WebServiceClient("", values);
+            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+        }
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// </summary>
+        [Test]
+        public void PerformDivisionWithRawData()
+        {
+            String[] values = Utils.GetDataFromExcel("TestCaseData_CalculatorTestsWithURI_TC_Div").First();
+            WebServiceClient client = new WebServiceClient("", values);
+            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+        }
     }
 }
