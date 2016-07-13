@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using System.Xml;
 namespace WebServiceCSharp.Core
 {
    public class WebServiceClient
@@ -80,44 +81,6 @@ namespace WebServiceCSharp.Core
 
         }
 
-
-        /// <summary>
-        /// Set the Request headers and request body from the data got from data identifier
-        /// </summary>
-        /// <returns></returns>
-        public WebServiceClient SetRequest()
-        {
-            if (_serviceRequestValues == null)
-            {
-                Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
-                Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
-
-                if (Config.IsConfigValuePresent("DefaultHeaders"))
-                    SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
-                return this;
-            }
-
-            EndPointURI = EndPointURI + _URISegment + _urlParameters;
-            
-            Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
-            Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
-
-            if (Config.IsConfigValuePresent("DefaultHeaders"))
-                SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
-
-            Request.Method = _requestMethod;
-            Logger.Debug("Request method :{0}", Request.Method);
-
-            if (!String.IsNullOrEmpty(_requestHeaders))
-                SetRequestHeaders(_requestHeaders);
-
-            if (!String.IsNullOrEmpty(_requestBody))
-                SetRequestBody(_requestBody);
-
-            Logger.Debug(Request);
-
-            return this;
-        }
 
         /// <summary>
         /// Set the Request body 
@@ -210,6 +173,130 @@ namespace WebServiceCSharp.Core
             return this;
         }
 
+
+       /// <summary>
+       /// Add the URL parameters
+       /// </summary>
+       /// <param name="paramValuePairs">key value pairs of URL parameters to be appended to the endpoint</param>
+        public WebServiceClient AddURLParametersToURL(Dictionary<String, String> paramValuePairs)
+        {
+            if (Request != null)
+            {
+                Exception e = new Exception("Call AddURLParametersToURL method before calling the SetRequestMethod");
+                Logger.Error(e);
+                throw e;
+            }
+            foreach (String key in paramValuePairs.Keys)
+            {
+                AddURLParametersToURL( String.Format("{0}={1}"  ,paramValuePairs[key] , key));  
+            }
+            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
+            return this;
+        }
+
+       /// <summary>
+       ///  Add URL parameters to the endpoint url
+       /// </summary>
+       /// <param name="keyValue">URL parameter in format &lt;key&gt;=&lt;value&gt;</param>
+        /// <returns>WebServiceClient</returns>
+        public WebServiceClient AddURLParametersToURL(String keyValue)
+        {
+            if (Request != null)
+            {
+                Exception e = new Exception("Call AddURLParametersToURL method before calling the SetRequestMethod");
+                Logger.Error(e);
+                throw e;
+            }
+            if (String.IsNullOrEmpty(_urlParameters))
+                _urlParameters = "?";
+            _urlParameters = _urlParameters.Equals("?") ? "" : "&" + keyValue;
+            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
+            return this;
+        }
+
+       /// <summary>
+       /// Adds the headers to the list of headers to be included in the Request
+       /// </summary>
+       /// <param name="headerString">'\n' or ',' delimited header and value pairs (seperated by ':')
+        /// eg. header1Name : header1Value,header2Name : header2Value
+        /// </param>
+        /// <returns>WebServiceClient</returns>
+        public WebServiceClient AddHeaders(String headerString)
+        {
+            if (Request != null)
+            {
+                Exception e = new Exception("Call AddHeaders method before calling the SetRequestMethod");
+                Logger.Error(e);
+                throw e;
+            }
+            _requestHeaders = _requestHeaders + "," + headerString;
+            Logger.Info("_requestHeaders = " + _requestHeaders); ;
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the headers to the list of headers to be included in the Request 
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns>WebServiceClient</returns>
+        public WebServiceClient AddHeaders(Dictionary<String,String> headers)
+        {
+            if (Request != null)
+            {
+                Exception e = new Exception("Call AddHeaders method before calling the SetRequestMethod");
+                Logger.Error(e);
+                throw e;
+            }
+
+            foreach (string key in headers.Keys)
+            {
+                _requestHeaders = String.Format("{0},{1}:{2}", _requestHeaders, key, headers[key]);
+            }
+
+            _requestHeaders = _requestHeaders + "," + headers;
+            Logger.Info("_requestHeaders = " + _requestHeaders); ;
+            return this;
+        }
+
+
+        /// <summary>
+        /// Set the Request headers and request body from the data got from data identifier
+        /// </summary>
+        /// <returns></returns>
+        public WebServiceClient SetRequest()
+        {
+            if (_serviceRequestValues == null)
+            {
+                Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
+                Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
+
+                if (Config.IsConfigValuePresent("DefaultHeaders"))
+                    SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
+                return this;
+            }
+
+            EndPointURI = EndPointURI + _URISegment + _urlParameters;
+
+            Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
+            Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
+
+            if (Config.IsConfigValuePresent("DefaultHeaders"))
+                SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
+
+            Request.Method = _requestMethod;
+            Logger.Debug("Request method :{0}", Request.Method);
+
+            if (!String.IsNullOrEmpty(_requestHeaders))
+                SetRequestHeaders(_requestHeaders);
+
+            if (!String.IsNullOrEmpty(_requestBody))
+                SetRequestBody(_requestBody);
+
+            Logger.Debug(Request);
+
+            return this;
+        }
+
         /// <summary>
         /// Call the Service and set the Response
         /// </summary>
@@ -298,6 +385,36 @@ namespace WebServiceCSharp.Core
 
 
         /// <summary>
+        /// Get the Response Body as an XMLDocument 
+        /// </summary>
+        /// <returns></returns>
+        public XmlDocument GetResponseAsXMLDocument()
+        {
+            if (Response == null)
+            {
+                Exception e = new Exception("Call the CallService method before getting the response");
+                Logger.Error(e);
+                throw e;
+            }
+
+            if (Response.ContentType.Contains("xml"))
+            {
+                Logger.Debug("Conten-Type of the Response(" + Response.ContentType + ") is not xml");
+            }
+            try
+            {
+                XmlDocument result = new XmlDocument();
+                result.LoadXml(GetResponseBody().Trim());
+                return result;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+
+        }
+        /// <summary>
         /// Call the SetRequest(),CallService(),GetResponseAsObject() methods consecutively and return response as an object.
         /// </summary>
         /// <param name="type"></param>
@@ -313,91 +430,7 @@ namespace WebServiceCSharp.Core
                 Logger.Error(e);
                 throw e;
             }
-           
-        }
 
-       /// <summary>
-       /// Add the URL parameters
-       /// </summary>
-       /// <param name="paramValuePairs">key value pairs of URL parameters to be appended to the endpoint</param>
-        public WebServiceClient AddURLParametersToURL(Dictionary<String, String> paramValuePairs)
-        {
-            if (Request != null)
-            {
-                Exception e = new Exception("Call AddURLParametersToURL method before calling the SetRequestMethod");
-                Logger.Error(e);
-                throw e;
-            }
-            foreach (String key in paramValuePairs.Keys)
-            {
-                AddURLParametersToURL( String.Format("{0}={1}"  ,paramValuePairs[key] , key));  
-            }
-            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
-            return this;
-        }
-
-       /// <summary>
-       ///  Add URL parameters to the endpoint url
-       /// </summary>
-       /// <param name="keyValue">URL parameter in format &lt;key&gt;=&lt;value&gt;</param>
-        /// <returns>WebServiceClient</returns>
-        public WebServiceClient AddURLParametersToURL(String keyValue)
-        {
-            if (Request != null)
-            {
-                Exception e = new Exception("Call AddURLParametersToURL method before calling the SetRequestMethod");
-                Logger.Error(e);
-                throw e;
-            }
-            if (String.IsNullOrEmpty(_urlParameters))
-                _urlParameters = "?";
-            _urlParameters = _urlParameters.Equals("?") ? "" : "&" + keyValue;
-            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
-            return this;
-        }
-
-       /// <summary>
-       /// Adds the headers to the list of headers to be included in the Request
-       /// </summary>
-       /// <param name="headerString">'\n' or ',' delimited header and value pairs (seperated by ':')
-        /// eg. header1Name : header1Value,header2Name : header2Value
-        /// </param>
-        /// <returns>WebServiceClient</returns>
-        public WebServiceClient AddHeaders(String headerString)
-        {
-            if (Request != null)
-            {
-                Exception e = new Exception("Call AddHeaders method before calling the SetRequestMethod");
-                Logger.Error(e);
-                throw e;
-            }
-            _requestHeaders = _requestHeaders + "," + headerString;
-            Logger.Info("_requestHeaders = " + _requestHeaders); ;
-            return this;
-        }
-
-        /// <summary>
-        /// Adds the headers to the list of headers to be included in the Request 
-        /// </summary>
-        /// <param name="headers"></param>
-        /// <returns>WebServiceClient</returns>
-        public WebServiceClient AddHeaders(Dictionary<String,String> headers)
-        {
-            if (Request != null)
-            {
-                Exception e = new Exception("Call AddHeaders method before calling the SetRequestMethod");
-                Logger.Error(e);
-                throw e;
-            }
-
-            foreach (string key in headers.Keys)
-            {
-                _requestHeaders = String.Format("{0},{1}:{2}", _requestHeaders, key, headers[key]);
-            }
-
-            _requestHeaders = _requestHeaders + "," + headers;
-            Logger.Info("_requestHeaders = " + _requestHeaders); ;
-            return this;
         }
     }
 }

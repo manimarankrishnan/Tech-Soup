@@ -8,6 +8,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Xml;
 namespace WebServiceCSharp.Core
 {
     public class Utils
@@ -207,6 +208,32 @@ namespace WebServiceCSharp.Core
                 return data;
             }
             catch ( Exception e){
+                Logger.Error(e);
+                throw e;
+            }
+
+        }
+
+        /// <summary>
+        /// Get a file as a XMLDocument
+        /// </summary>
+        /// <param name="fileIdentifier">Relative path of the file from resource directory</param>
+        /// <returns>XMLDocument</returns>
+        public static XmlDocument GetFileAsXMLDocument(String fileIdentifier)
+        {
+            String data;
+            String filePath = getFullFilepath(fileIdentifier);
+            try
+            {
+                StreamReader reader = new StreamReader(filePath);
+                data = reader.ReadToEnd();
+                reader.Close();
+                XmlDocument result = new XmlDocument();
+                result.LoadXml(data.Trim());
+                return result;
+            }
+            catch (Exception e)
+            {
                 Logger.Error(e);
                 throw e;
             }
