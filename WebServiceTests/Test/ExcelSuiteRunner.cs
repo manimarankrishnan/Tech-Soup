@@ -56,6 +56,8 @@ namespace WebServiceTests.Test
                     foreach (var testcaseData in TestCases)
                     {
                         String tcName = testcaseData[0];
+                        if (string.IsNullOrEmpty(tcName))
+                            continue;
                         Object TCData = testcaseData.Skip(1).ToArray();
                         yield return new TestCaseData(TCData)
                             .SetName(tcName)
