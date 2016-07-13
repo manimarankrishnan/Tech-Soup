@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\CalculatorTests.cs" />
     <Compile Include="Test\DataValidation.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,9 +50,14 @@ namespace WebServiceTests.Test
         public void GetCitiesByCountryName()
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_NavigationTestsWithURI_TC_getCitiesByCountry");
-            String responseBody = client.SetRequest().CallService().GetResponseBody();
-            //Assert.AreEqual(responseBody,client._expectedResponseBody,"Actual and Expected response body are not eaual");
+            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(responseBody,Utils.GetFileAsXMLDocument(client._expectedResponseBody),"Actual and Expected response body are not eaual");
         }
+
+
+
+
+
 
         /// <summary>
         /// URI- http://api.geonames.org
@@ -85,25 +91,30 @@ namespace WebServiceTests.Test
         public void GetCitiesByCountryNameWithURI()
         {
             WebServiceClient client = new WebServiceClient("http://www.webserviceX.NET", "TestCaseData_NavigationTestsWithoutURI_TC_getCitiesByCountry");
-            String responseBody = client.SetRequest().CallService().GetResponseBody();
-            //Assert.AreEqual(responseBody,client._expectedResponseBody,"Actual and Expected response body are not eaual");
+            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
+
+
+        
+
+
+
 
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_NavigationTestsWithoutHeaders)using identifier
         /// Request Header will be set using SetRequestHeaders method
         /// </summary>
-        //[Test]
+        [Test]
         public void GetCitiesByCountryNameWithoutHeader()
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_NavigationTestsWithoutHeaders_TC_getCitiesByCountry");
-            
-            String responseBody = client
+            XmlDocument responseBody = client
                 .AddHeaders(@"Content-Type:text/xml,SOAPAction:http://www.webserviceX.NET/GetCitiesByCountry")
                 .SetRequest()
-                .CallService().GetResponseBody();
-            //Assert.AreEqual(responseBody,client._expectedResponseBody,"Actual and Expected response body are not eaual");
+                .CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
     }
 }
