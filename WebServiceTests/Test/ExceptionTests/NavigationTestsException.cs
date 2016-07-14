@@ -10,6 +10,8 @@ namespace WebServiceTests.Test.ExceptionTests
 {
     public class NavigationTestsException
     {
+        public string errorMessage = "Call AddHeaders method before calling the SetRequestMethod";
+        
         [SetUp]
         public void Setup()
         {
@@ -24,7 +26,7 @@ namespace WebServiceTests.Test.ExceptionTests
         /// Request Header will be set using SetRequestHeaders method
         /// </summary>
         [Test]
-        public void GetCitiesByCountryNameWithoutHeader()
+        public void GetCitiesByCountryNameWithoutHeaderException()
         {
             try
             {
@@ -34,7 +36,6 @@ namespace WebServiceTests.Test.ExceptionTests
 
             catch (Exception e)
             {
-                string errorMessage = "Call AddHeaders method before calling the SetRequestMethod";                
                 Assert.AreEqual(e.Message,errorMessage);
             }
         }

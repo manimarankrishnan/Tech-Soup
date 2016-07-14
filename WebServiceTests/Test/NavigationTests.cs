@@ -42,21 +42,10 @@ namespace WebServiceTests.Test
             Assert.AreEqual(responseBody, Utils.GetFileAsString(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
-        /// <summary>
-        /// Base URI- empty,gets from excel
-        /// TC- gets from excel (TestCaseData_NavigationTestsWithURI)using identifier
-        /// </summary>
-        [Test]
-        public void GetCitiesByCountryName()
-        {
-            WebServiceClient client = new WebServiceClient("", "TestCaseData_NavigationTestsWithURI_TC_getCitiesByCountry");
-            XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(responseBody,Utils.GetFileAsXMLDocument(client._expectedResponseBody),"Actual and Expected response body are not eaual");
-        }
 
+        
 
-
-
+        
 
 
         /// <summary>
