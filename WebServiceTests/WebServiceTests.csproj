@@ -65,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Test\ExcelSuiteRunner.cs" />
+    <Compile Include="Test\ExceptionTests\NavigationTestsException.cs" />
     <Compile Include="Test\NavigationTests.cs" />
     <Compile Include="Test\OtherTest.cs">
       <SubType>Code</SubType>

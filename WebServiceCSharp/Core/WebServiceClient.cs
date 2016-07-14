@@ -209,7 +209,7 @@ namespace WebServiceCSharp.Core
             }
             if (String.IsNullOrEmpty(_urlParameters))
                 _urlParameters = "?";
-            _urlParameters = _urlParameters.Equals("?") ? "" : "&" + keyValue;
+            _urlParameters = _urlParameters +(_urlParameters.Equals("?") ? "" : "&") + keyValue;
             Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
             return this;
         }
@@ -230,7 +230,7 @@ namespace WebServiceCSharp.Core
                 throw e;
             }
             _requestHeaders = _requestHeaders + "," + headerString;
-            Logger.Info("_requestHeaders = " + _requestHeaders); ;
+            Logger.Info("_requestHeaders = " + _requestHeaders); 
             return this;
         }
 
@@ -254,7 +254,7 @@ namespace WebServiceCSharp.Core
             }
 
             _requestHeaders = _requestHeaders + "," + headers;
-            Logger.Info("_requestHeaders = " + _requestHeaders); ;
+            Logger.Info("_requestHeaders = " + _requestHeaders); 
             return this;
         }
 
