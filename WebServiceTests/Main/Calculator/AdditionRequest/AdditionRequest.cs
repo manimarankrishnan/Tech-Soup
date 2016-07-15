@@ -4,11 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WebServiceCSharp.Core;
 namespace WebServiceTests.Main.Calculator.AdditionRequest
 {
-    class AdditionRequest
+    public class AdditionRequest
     {
+        Envelope envelope;
+        public AdditionRequest(int a, int b)
+        {
+            envelope = new Envelope();
+            Add addValue = new Add();
+            addValue.intA = (byte)a;
+            addValue.intB = byte.Parse(b.ToString());
+            EnvelopeBody addBody = new EnvelopeBody();
+            addBody.Add = addValue;
+            envelope.Body = addBody;
+        }
+
+        public override string ToString()
+        {
+            return Utils.XMLSerializeObject(envelope);
+        }
+
     }
 
     /// <remarks/>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
+using WebServiceTests.Main.Calculator.AdditionRequest;
 namespace WebServiceTests.Test
 {
     public class CalculatorTests
@@ -38,18 +39,12 @@ namespace WebServiceTests.Test
         [Test]
         [TestCase(6, 2)]
         [TestCase(5, 3)]
-        [TestCase(12, 5)]
+        [TestCase(12, -5)]
         public void PerformAdditionUsingSerializedObject(int a,int b)
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add_Object");
-            Main.Calculator.AdditionRequest.Envelope additionRequest = new Main.Calculator.AdditionRequest.Envelope();
-            Main.Calculator.AdditionRequest.Add addValue= new Main.Calculator.AdditionRequest.Add();
-            addValue.intA = (byte) a;
-            addValue.intB = byte.Parse(b.ToString());
-            Main.Calculator.AdditionRequest.EnvelopeBody addBody = new Main.Calculator.AdditionRequest.EnvelopeBody();
-            addBody.Add = addValue;
-            additionRequest.Body = addBody;
-            XmlDocument responseBody = client.SetRequestBody(Utils.XMLSerializeObject(additionRequest))
+
+            XmlDocument responseBody = client.SetRequestBody(new AdditionRequest(a,b).ToString() )
                 .SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
