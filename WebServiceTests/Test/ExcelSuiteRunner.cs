@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using System.Collections;
 using WebServiceCSharp.Core;
+using System.Xml;
 namespace WebServiceTests.Test
 {
 
@@ -24,19 +25,40 @@ namespace WebServiceTests.Test
         [Test, TestCaseSource(typeof(MyFactoryClass), "TestCases")]
         public void LoginDataFromExcelUsingIdentifierTest(String[] TCDatavalues)
         {
-            var client = new WebServiceClient("", TCDatavalues);
+            WebServiceClient client = new WebServiceClient("", TCDatavalues);
 
             String response = client.SetRequest().CallService().GetResponseBody();
             Logger.Debug((Object)response);
             Console.WriteLine(response);
             String expectedValue = client._expectedResponseBody;
-            if (expectedValue.EndsWith(".xml") || expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
+            if(client.Response.ContentType.Contains("xml"))
             {
-                expectedValue = Utils.GetFileAsString(expectedValue);
+                XmlDocument expectedXmlDoc= null;
+
+                if(expectedValue.EndsWith(".xml") ){
+                   expectedXmlDoc= Utils.GetFileAsXMLDocument(expectedValue);
+                }
+                else{
+                    expectedXmlDoc = new XmlDocument();
+                    expectedXmlDoc.LoadXml(expectedValue);
+                }
+                Assert.AreEqual(expectedXmlDoc,client.GetResponseAsXMLDocument());
             }
-            Assert.AreEqual(expectedValue.Replace("\r\n", "\n").Replace("\n", ""), response.Replace("\r\n", "\n").Replace("\n", ""));
+            else
+            {
+                if (expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
+                {
+                    expectedValue = Utils.GetFileAsString(expectedValue);
+                }
 
+                //remove new line characters from response and expected
+                expectedValue = expectedValue.Replace("\r\n", "\n").Replace("\n", "");
+                response = response.Replace("\r\n", "\n").Replace("\n", "");
 
+                //Verifying the values are equal
+                Assert.AreEqual(expectedValue, response);
+            }
+           
 
         }
 
