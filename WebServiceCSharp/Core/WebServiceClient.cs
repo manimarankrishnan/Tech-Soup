@@ -81,20 +81,9 @@ namespace WebServiceCSharp.Core
 
         }
 
-
-        /// <summary>
-        /// Set the Request body 
-        /// </summary>
-        /// <param name="body">The Request body, or the path of the file(.txt,.json,.xml)</param>
-        /// <returns></returns>
-        public WebServiceClient SetRequestBody(String body)
+        private void loadRequestBody(String body)
         {
-            if (Request == null)
-            {
-                Exception e = new Exception("Call the SetRequest method before calling SetRequestBody method.");
-                Logger.Error(e);
-                throw e;
-            }
+            
             String parameterBody;
             if (body.EndsWith(".json"))
             {
@@ -119,13 +108,30 @@ namespace WebServiceCSharp.Core
 
             if (parameterBody.Contains("<?xml"))
                 Request.ContentType = "text/xml";
-               
+
             Request.ContentLength = parameterBody.Length;
             StreamWriter requestWriter = new StreamWriter(Request.GetRequestStream());
             requestWriter.AutoFlush = true;
             requestWriter.Write(parameterBody);
 
             Logger.Debug("Set Request Body: " + parameterBody);
+       
+        }
+
+        /// <summary>
+        /// Set the Request body 
+        /// </summary>
+        /// <param name="body">The Request body, or the path of the file(.txt,.json,.xml)</param>
+        /// <returns></returns>
+        public WebServiceClient SetRequestBody(String body)
+        {
+            if (Request != null)
+            {
+                Exception e = new Exception("Call the SetRequestBody method before calling SetRequest method.");
+                Logger.Error(e);
+                throw e;
+            }
+            this._requestBody = body;
             return this;
         }
 
@@ -290,7 +296,7 @@ namespace WebServiceCSharp.Core
                 SetRequestHeaders(_requestHeaders);
 
             if (!String.IsNullOrEmpty(_requestBody))
-                SetRequestBody(_requestBody);
+                loadRequestBody(_requestBody);
 
             Logger.Debug(Request);
 

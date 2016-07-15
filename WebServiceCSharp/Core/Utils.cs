@@ -230,6 +230,7 @@ namespace WebServiceCSharp.Core
                 reader.Close();
                 XmlDocument result = new XmlDocument();
                 result.LoadXml(data.Trim());
+                Logger.Info("File {0} : {1} {2}", fileIdentifier, data, result);
                 return result;
             }
             catch (Exception e)
@@ -363,16 +364,10 @@ namespace WebServiceCSharp.Core
             try
             {
                 var serializer = new XmlSerializer(obj.GetType());
-                Stream stream = new MemoryStream();
+                var stream = new StringWriter();
                 serializer.Serialize(stream, obj);
 
-                String result;
-                using (var streamReader = new StreamReader(stream))
-                {
-                    result = streamReader.ReadToEnd();
-                    stream.Close();
-                }
-                return result;
+                return stream.ToString();
             }
             catch (Exception e)
             {
