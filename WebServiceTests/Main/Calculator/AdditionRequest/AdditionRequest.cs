@@ -14,8 +14,8 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
         {
             envelope = new Envelope();
             Add addValue = new Add();
-            addValue.intA = (byte)a;
-            addValue.intB = byte.Parse(b.ToString());
+            addValue.intA = a;
+            addValue.intB = b;
             EnvelopeBody addBody = new EnvelopeBody();
             addBody.Add = addValue;
             envelope.Body = addBody;
@@ -78,12 +78,12 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
     public partial class Add
     {
 
-        private byte intAField;
+        private int intAField;
 
-        private byte intBField;
+        private int intBField;
 
         /// <remarks/>
-        public byte intA
+        public int intA
         {
             get
             {
@@ -96,7 +96,7 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
         }
 
         /// <remarks/>
-        public byte intB
+        public int intB
         {
             get
             {

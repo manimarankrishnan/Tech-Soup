@@ -39,7 +39,7 @@ namespace WebServiceTests.Test
         [Test]
         [TestCase(6, 2)]
         [TestCase(5, 3)]
-        [TestCase(12, -5)]
+        [TestCase(12, -4)]
         public void PerformAdditionUsingSerializedObject(int a,int b)
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add_Object");
@@ -48,11 +48,7 @@ namespace WebServiceTests.Test
                 .SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
-
-
-
         
-
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
