@@ -1,31 +1,13 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebServiceCSharp.Core;
+
 namespace WebServiceTests.Main.Calculator.AdditionRequest
 {
-    public class AdditionRequest
+    class AdditionResponse
     {
-        Envelope envelope;
-        public AdditionRequest(int a, int b)
-        {
-            envelope = new Envelope();
-            Add addValue = new Add();
-            addValue.intA = a;
-            addValue.intB = b;
-            EnvelopeBody addBody = new EnvelopeBody();
-            addBody.Add = addValue;
-            envelope.Body = addBody;
-        }
-
-        public override string ToString()
-        {
-            return Utils.XMLSerializeObject(envelope);
-        }
-
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.xmlsoap.org/soap/envelope/")]
@@ -54,19 +36,19 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
         public partial class EnvelopeBody
         {
 
-            private Add addField;
+            private AddResponse addResponseField;
 
             /// <remarks/>
             [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://tempuri.org/")]
-            public Add Add
+            public AddResponse AddResponse
             {
                 get
                 {
-                    return this.addField;
+                    return this.addResponseField;
                 }
                 set
                 {
-                    this.addField = value;
+                    this.addResponseField = value;
                 }
             }
         }
@@ -74,36 +56,21 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
         /// <remarks/>
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/")]
         [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/", IsNullable = false)]
-        public partial class Add
+        public partial class AddResponse
         {
 
-            private int intAField;
-
-            private int intBField;
+            private byte addResultField;
 
             /// <remarks/>
-            public int intA
+            public byte AddResult
             {
                 get
                 {
-                    return this.intAField;
+                    return this.addResultField;
                 }
                 set
                 {
-                    this.intAField = value;
-                }
-            }
-
-            /// <remarks/>
-            public int intB
-            {
-                get
-                {
-                    return this.intBField;
-                }
-                set
-                {
-                    this.intBField = value;
+                    this.addResultField = value;
                 }
             }
         }
@@ -111,5 +78,4 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
 
 
     }
-
 }

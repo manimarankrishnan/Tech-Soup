@@ -266,6 +266,9 @@ namespace WebServiceTests.Test
 
             XmlDocument responseBody = client.SetRequestBody(new AdditionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
+
+            AdditionResponse.Envelope response = (AdditionResponse.Envelope)client.GetResponseAsObject(typeof(AdditionResponse.Envelope));
+
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
 

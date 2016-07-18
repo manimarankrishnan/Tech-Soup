@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main\Calculator\AdditionRequest\AdditionRequest.cs" />
+    <Compile Include="Main\Calculator\AdditionRequest\AdditionResponse.cs" />
     <Compile Include="Main\Calculator\DeletionRequest\DeletionRequest.cs" />
     <Compile Include="Main\Calculator\SubtractionRequest\SubtractionRequest.cs" />
     <Compile Include="Main\Calculator\MultiplicationRequest\MultiplicationRequest.cs" />
