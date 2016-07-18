@@ -32,6 +32,12 @@ namespace WebServiceCSharp.Core
         {
             if (mode == LogMode.INFO)
             {
+                if (o.GetType().ToString().Contains("Exception"))
+                {
+                    Exception e = (Exception)o;
+                    Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
+                    return;
+                }
                 WriteToFile(o,"INFO");
             }
         }
@@ -45,7 +51,10 @@ namespace WebServiceCSharp.Core
         {
             if (mode == LogMode.INFO)
             {
-                WriteToFile(String.Format(format,args), "INFO");
+                if (args.Length == 0)
+                    Info((Object)format);
+                else
+                    WriteToFile(String.Format(format,args), "INFO");
             }
         }
 
@@ -55,8 +64,15 @@ namespace WebServiceCSharp.Core
         /// <param name="o"></param>
         public static void Debug(Object o)
         {
+
             if (mode == LogMode.DEBUG || mode == LogMode.ERROR)
             {
+                if (o.GetType().ToString().Contains("Exception"))
+                {
+                    Exception e = (Exception)o;
+                    Debug("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
+                    return;
+                }
                 WriteToFile(o,"DEBUG");
             }
                
@@ -71,7 +87,10 @@ namespace WebServiceCSharp.Core
         {
             if (mode == LogMode.DEBUG || mode == LogMode.INFO)
             {
-                WriteToFile(String.Format(format, args), "DEBUG");
+                if (args.Length == 0)
+                    Debug((Object)format);
+                else
+                    WriteToFile(String.Format(format, args), "DEBUG");
             }
 
         }
@@ -82,6 +101,12 @@ namespace WebServiceCSharp.Core
         /// <param name="o"></param>
         public static void Error(Object o)
         {
+            if(o.GetType().ToString().Contains("Exception")){
+                Exception e = (Exception)o;
+                Error("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
+                return;
+            }
+          
             WriteToFile(o,"ERROR");
         }
 
@@ -92,7 +117,10 @@ namespace WebServiceCSharp.Core
         /// <param name="args">arguments</param>
         public static void Error(String format, params Object[] args)
         {
-            WriteToFile(String.Format(format, args), "ERROR");
+            if (args.Length == 0)
+                Error((Object)format);
+            else
+                WriteToFile(String.Format(format, args), "ERROR");
         }
 
         /// <summary>
