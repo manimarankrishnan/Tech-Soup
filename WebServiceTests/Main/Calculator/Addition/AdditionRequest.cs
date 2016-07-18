@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
-namespace WebServiceTests.Main.Calculator.AdditionRequest
+namespace WebServiceTests.Main.Calculator.Addition
 {
     public class AdditionRequest
     {

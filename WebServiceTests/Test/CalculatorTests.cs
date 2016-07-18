@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
-using WebServiceTests.Main.Calculator.AdditionRequest;
-using WebServiceTests.Main.Calculator.SubtractionRequest;
-using WebServiceTests.Main.Calculator.MultiplicationRequest;
-using WebServiceTests.Main.Calculator.DeletionRequest;
+using WebServiceTests.Main.Calculator.Addition;
+using WebServiceTests.Main.Calculator.Subtraction;
+using WebServiceTests.Main.Calculator.Multiplication;
+using WebServiceTests.Main.Calculator.Deletion;
 namespace WebServiceTests.Test
 {
     public class CalculatorTests
@@ -21,6 +21,10 @@ namespace WebServiceTests.Test
             Logger.name = TestContext.CurrentContext.Test.FullName;
             Logger.mode = LogMode.INFO;
         }
+
+
+        //`````````````````````````````````````````````````````````Start-Of-BasicCalculatorTests`````````````````````````````````````````````````````````//
+
 
         /// <summary>
         /// Base URI- empty,gets from excel
@@ -71,6 +75,11 @@ namespace WebServiceTests.Test
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
+
+        //-----------------------------------------------------------End-Of-BasicCalculatorTests---------------------------------------------------------------//
+
+
+        //`````````````````````````````````````````````````````````Start-Of-BasicCalculatorTestsWithURI`````````````````````````````````````````````````````````````//
 
 
 
@@ -123,7 +132,10 @@ namespace WebServiceTests.Test
         }
 
 
+        //-----------------------------------------------------------End-Of-BasicCalculatorTestsWithURI---------------------------------------------------------------//
 
+
+        //`````````````````````````````````````````````````````````Start-Of-BasicCalculatorTestsWithoutHeaders`````````````````````````````````````````````````````````````//
 
 
 
@@ -192,7 +204,10 @@ namespace WebServiceTests.Test
         }
 
 
+        //-----------------------------------------------------------End-Of-BasicCalculatorTestsWithoutHeaders---------------------------------------------------------------//
 
+
+        //`````````````````````````````````````````````````````````Start-Of-BasicCalculatorTestsWithRawData`````````````````````````````````````````````````````````````//
 
 
 
@@ -248,13 +263,15 @@ namespace WebServiceTests.Test
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
+        //````````````````````````````````````````````````````````End-Of-BasicCalculatorTestsWithRawData`````````````````````````````````````````````````````//
 
 
-        //Serialization tests
+        //`````````````````````````````````````````````````````````Start-Of-SerializationTests`````````````````````````````````````````````````````````````//
 
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// PostBody is serialized to xml
         /// </summary>
         [Test]
         [TestCase(6, 2)]
@@ -266,15 +283,13 @@ namespace WebServiceTests.Test
 
             XmlDocument responseBody = client.SetRequestBody(new AdditionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
-
-            AdditionResponse.Envelope response = (AdditionResponse.Envelope)client.GetResponseAsObject(typeof(AdditionResponse.Envelope));
-
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// PostBody is serialized to xml
         /// </summary>
         [Test]
         [TestCase(6, 4)]
@@ -292,6 +307,7 @@ namespace WebServiceTests.Test
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// PostBody is serialized to xml
         /// </summary>
         [Test]
         [TestCase(3, 5)]
@@ -309,6 +325,7 @@ namespace WebServiceTests.Test
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// PostBody is serialized to xml
         /// </summary>
         [Test]
         [TestCase(6, 2)]
@@ -321,6 +338,91 @@ namespace WebServiceTests.Test
             XmlDocument responseBody = client.SetRequestBody(new DeletionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
+        }
+
+        //-----------------------------------------------------------End-Of-SerializationTests---------------------------------------------------------------//
+
+
+        //`````````````````````````````````````````````````````````Start-Of-DeSerializationTests`````````````````````````````````````````````````````````````//
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// Xml response is deserialized to object
+        /// </summary>
+        [Test]
+        [TestCase(6, 2)]
+        [TestCase(12, -4)]
+        public void PerformAdditionUsingDeSerializedObject(int a, int b)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add_Object");
+
+            client.SetRequestBody(new AdditionRequest(a, b).ToString())
+                .SetRequest().CallService();
+
+            AdditionResponse.Envelope response = (AdditionResponse.Envelope)client.GetResponseAsObject(typeof(AdditionResponse.Envelope));
+            
+            Assert.AreEqual(response.Body.AddResponse.AddResult,8, "Actual and Expected response body are not eaual");
+        }
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// Xml response is deserialized to object
+
+        /// </summary>
+        [Test]
+        [TestCase(6, 4)]
+        [TestCase(1, -1)]
+        public void PerformSubtractionUsingDeSerializedObject(int a, int b)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Sub_Object");
+
+            client.SetRequestBody(new SubtractionRequest(a, b).ToString())
+                .SetRequest().CallService();
+
+            SubtractionResponse.Envelope response = (SubtractionResponse.Envelope)client.GetResponseAsObject(typeof(SubtractionResponse.Envelope));
+            Assert.AreEqual(response.Body.SubtractResponse.SubtractResult,2, "Actual and Expected response body are not eaual");
+        }
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// xml response is deserialized to object
+        /// </summary>
+        [Test]
+        [TestCase(3, 5)]
+        [TestCase(-3, -5)]
+        public void PerformMultiplicationUsingDeSerializedObject(int a, int b)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Mul_Object");
+
+            client.SetRequestBody(new MultiplicationRequest(a, b).ToString())
+                .SetRequest().CallService();
+
+            MultiplicationResponse.Envelope response = (MultiplicationResponse.Envelope)client.GetResponseAsObject(typeof(MultiplicationResponse.Envelope));
+
+            Assert.AreEqual(response.Body.MultiplyResponse.MultiplyResult,15, "Actual and Expected response body are not eaual");
+        }
+
+        /// <summary>
+        /// Base URI- empty,gets from excel
+        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
+        /// xml response is deserialized to object
+        /// </summary>
+        [Test]
+        [TestCase(6, 2)]
+        [TestCase(-15, -5)]
+        public void PerformDeletionUsingDeSerializedObject(int a, int b)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Div_Object");
+
+            client.SetRequestBody(new DeletionRequest(a, b).ToString())
+                .SetRequest().CallService();
+
+            DeletionResponse.Envelope response = (DeletionResponse.Envelope)client.GetResponseAsObject(typeof(DeletionResponse.Envelope));
+            
+            Assert.AreEqual(response.Body.DivideResponse.DivideResult,3, "Actual and Expected response body are not eaual");
         }
         
     }

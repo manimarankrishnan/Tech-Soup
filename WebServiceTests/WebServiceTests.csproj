@@ -59,11 +59,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main\Calculator\AdditionRequest\AdditionRequest.cs" />
-    <Compile Include="Main\Calculator\AdditionRequest\AdditionResponse.cs" />
-    <Compile Include="Main\Calculator\DeletionRequest\DeletionRequest.cs" />
-    <Compile Include="Main\Calculator\SubtractionRequest\SubtractionRequest.cs" />
-    <Compile Include="Main\Calculator\MultiplicationRequest\MultiplicationRequest.cs" />
+    <Compile Include="Main\Calculator\Addition\AdditionRequest.cs" />
+    <Compile Include="Main\Calculator\Addition\AdditionResponse.cs" />
+    <Compile Include="Main\Calculator\Deletion\DeletionResponse.cs" />
+    <Compile Include="Main\Calculator\Deletion\DeletionRequest.cs" />
+    <Compile Include="Main\Calculator\Multiplication\MultiplicationtionResponse.cs" />
+    <Compile Include="Main\Calculator\Subtraction\SubtractionResponse.cs" />
+    <Compile Include="Main\Calculator\Subtraction\SubtractionRequest.cs" />
+    <Compile Include="Main\Calculator\Multiplication\MultiplicationRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\CalculatorTests.cs" />
     <Compile Include="Test\DataValidation.cs">

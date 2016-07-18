@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
-using WebServiceTests.Main.Calculator.AdditionRequest;
-using WebServiceTests.Main.Calculator.SubtractionRequest;
-using WebServiceTests.Main.Calculator.MultiplicationRequest;
-using WebServiceTests.Main.Calculator.DeletionRequest;
+using WebServiceTests.Main.Calculator.Addition;
+using WebServiceTests.Main.Calculator.Subtraction;
+using WebServiceTests.Main.Calculator.Multiplication;
+using WebServiceTests.Main.Calculator.Deletion;
 
 namespace WebServiceTests.Test.ExceptionTests
 {

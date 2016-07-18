@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
-namespace WebServiceTests.Main.Calculator.SubtractionRequest
+namespace WebServiceTests.Main.Calculator.Deletion
 {
-    public class SubtractionRequest
+    public class DeletionRequest
     {
         Envelope envelope;
-        public SubtractionRequest(int a, int b)
+        public DeletionRequest(int a, int b)
         {
             envelope = new Envelope();
-            Subtract addValue = new Subtract();
+            Divide addValue = new Divide();
             addValue.intA = a;
             addValue.intB = b;
             EnvelopeBody addBody = new EnvelopeBody();
-            addBody.Subtract = addValue;
+            addBody.Divide = addValue;
             envelope.Body = addBody;
         }
 
@@ -27,6 +27,7 @@ namespace WebServiceTests.Main.Calculator.SubtractionRequest
         }
 
     }
+
 
 
     /// <remarks/>
@@ -56,19 +57,19 @@ namespace WebServiceTests.Main.Calculator.SubtractionRequest
     public partial class EnvelopeBody
     {
 
-        private Subtract subtractField;
+        private Divide divideField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://tempuri.org/")]
-        public Subtract Subtract
+        public Divide Divide
         {
             get
             {
-                return this.subtractField;
+                return this.divideField;
             }
             set
             {
-                this.subtractField = value;
+                this.divideField = value;
             }
         }
     }
@@ -76,7 +77,7 @@ namespace WebServiceTests.Main.Calculator.SubtractionRequest
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/", IsNullable = false)]
-    public partial class Subtract
+    public partial class Divide
     {
 
         private int intAField;
@@ -109,6 +110,9 @@ namespace WebServiceTests.Main.Calculator.SubtractionRequest
             }
         }
     }
+
+
+
 
 
     

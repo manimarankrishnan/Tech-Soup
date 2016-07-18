@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebServiceTests.Main.Calculator.AdditionRequest
+namespace WebServiceTests.Main.Calculator.Multiplication
 {
-    class AdditionResponse
+    class MultiplicationResponse
     {
+
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.xmlsoap.org/soap/envelope/")]
@@ -36,19 +37,19 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
         public partial class EnvelopeBody
         {
 
-            private AddResponse addResponseField;
+            private MultiplyResponse multiplyResponseField;
 
             /// <remarks/>
             [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://tempuri.org/")]
-            public AddResponse AddResponse
+            public MultiplyResponse MultiplyResponse
             {
                 get
                 {
-                    return this.addResponseField;
+                    return this.multiplyResponseField;
                 }
                 set
                 {
-                    this.addResponseField = value;
+                    this.multiplyResponseField = value;
                 }
             }
         }
@@ -56,21 +57,21 @@ namespace WebServiceTests.Main.Calculator.AdditionRequest
         /// <remarks/>
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/")]
         [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/", IsNullable = false)]
-        public partial class AddResponse
+        public partial class MultiplyResponse
         {
 
-            private byte addResultField;
+            private byte multiplyResultField;
 
             /// <remarks/>
-            public byte AddResult
+            public byte MultiplyResult
             {
                 get
                 {
-                    return this.addResultField;
+                    return this.multiplyResultField;
                 }
                 set
                 {
-                    this.addResultField = value;
+                    this.multiplyResultField = value;
                 }
             }
         }

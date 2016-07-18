@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
-namespace WebServiceTests.Main.Calculator.MultiplicationRequest
+namespace WebServiceTests.Main.Calculator.Multiplication
 {
     public class MultiplicationRequest
     {
