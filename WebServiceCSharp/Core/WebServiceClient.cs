@@ -420,6 +420,8 @@ namespace WebServiceCSharp.Core
             }
 
         }
+
+
         /// <summary>
         /// Call the SetRequest(),CallService(),GetResponseAsObject() methods consecutively and return response as an object.
         /// </summary>

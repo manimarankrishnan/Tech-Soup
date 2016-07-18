@@ -31,6 +31,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
+            Assert.AreEqual(client.Response.StatusCode.ToString(), "OK","Status Code mismatch");
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }      
         

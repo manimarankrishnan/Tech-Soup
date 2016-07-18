@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="Test\ExcelSuiteRunner.cs" />
     <Compile Include="Test\ExceptionTests\DataValidationTestsException.cs" />
+    <Compile Include="Test\ExceptionTests\CalculatorTestsException.cs" />
     <Compile Include="Test\ExceptionTests\NavigationTestsException.cs" />
     <Compile Include="Test\NavigationTests.cs" />
     <Compile Include="Test\OtherTest.cs">
