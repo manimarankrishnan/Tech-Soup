@@ -65,7 +65,7 @@ namespace WebServiceCSharp.Core
         public static void Debug(Object o)
         {
 
-            if (mode == LogMode.DEBUG || mode == LogMode.ERROR)
+            if (mode == LogMode.DEBUG || mode == LogMode.INFO)
             {
                 if (o.GetType().ToString().Contains("Exception"))
                 {
@@ -148,9 +148,12 @@ namespace WebServiceCSharp.Core
             if (name == null)
                 name = "TestResult";
             String fileName = name.Split('.').LastOrDefault();
+            var invalids = Path.GetInvalidFileNameChars().ToList();
+             invalids.AddRange(Path.GetInvalidPathChars());
+            var newName = String.Join("_", fileName.Split(invalids.ToArray(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
             String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMM_dd_yyyy HHmmss"), name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
-            filePath = Path.Combine(filePath, fileName + ".txt");
+            filePath = Path.Combine(filePath, newName + ".txt");
             return filePath;
         }
     }

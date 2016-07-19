@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebServiceTests.Main.Calculator.Multiplication
+namespace WebServiceTests.Main.Calculator.Subtraction
 {
-   public class MultiplicationResponse
+   public class SubtractionResponse
     {
 
 
@@ -37,19 +37,19 @@ namespace WebServiceTests.Main.Calculator.Multiplication
         public partial class EnvelopeBody
         {
 
-            private MultiplyResponse multiplyResponseField;
+            private SubtractResponse subtractResponseField;
 
             /// <remarks/>
             [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://tempuri.org/")]
-            public MultiplyResponse MultiplyResponse
+            public SubtractResponse SubtractResponse
             {
                 get
                 {
-                    return this.multiplyResponseField;
+                    return this.subtractResponseField;
                 }
                 set
                 {
-                    this.multiplyResponseField = value;
+                    this.subtractResponseField = value;
                 }
             }
         }
@@ -57,21 +57,21 @@ namespace WebServiceTests.Main.Calculator.Multiplication
         /// <remarks/>
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/")]
         [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/", IsNullable = false)]
-        public partial class MultiplyResponse
+        public partial class SubtractResponse
         {
 
-            private byte multiplyResultField;
+            private byte subtractResultField;
 
             /// <remarks/>
-            public byte MultiplyResult
+            public byte SubtractResult
             {
                 get
                 {
-                    return this.multiplyResultField;
+                    return this.subtractResultField;
                 }
                 set
                 {
-                    this.multiplyResultField = value;
+                    this.subtractResultField = value;
                 }
             }
         }

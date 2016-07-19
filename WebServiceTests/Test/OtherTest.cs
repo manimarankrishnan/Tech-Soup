@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
+using WebServiceTests.Main.Other;
 namespace WebServiceTests.Test
 {
     public class OtherTest
@@ -42,7 +43,46 @@ namespace WebServiceTests.Test
             xd.LoadXml(responseBody);
             XmlDocument dd = new XmlDocument();
             dd.LoadXml(Utils.GetFileAsString(client._expectedResponseBody));
-            Assert.AreEqual(xd,dd, "Actual and Expected response body are not eaual");
-        }       
+            Assert.AreEqual(xd, dd, "Actual and Expected response body are not eaual");
+        }
+
+
+        #region-----------SerializationJSON---------------------
+
+        ///JSONPlaceHolder WebService
+        [Test]
+        [TestCase("Create", "BodyRequest", 15)]
+        public void CreateResourceSerialization(string title, string body, int userID)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_Others_TC_createResource");
+            String responseBody =  client.SetRequestBody(new CreateResourceRequest(title, body, userID).ToString()).SetRequest().CallService().GetResponseBody();
+            responseBody=responseBody.Replace("\n ", "");
+            
+            Assert.AreEqual(Utils.FormatJsonString(Utils.GetFileAsString(client._expectedResponseBody)), Utils.FormatJsonString(responseBody), "ResonseBody mismatch");
+
+        }
+
+
+        #endregion------------SerializationJSON-----------------------
+
+
+        #region-----------DeSerializationJSON---------------------
+
+        ///JSONPlaceHolder WebService
+        [Test]
+        [TestCase("Title", "BodyRequest", 15)]
+        public void CreateResourceDeSerialization(string title, string body, int userID)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_Others_TC_createResource");
+            client.SetRequestBody(new CreateResourceRequest(title, body, userID).ToString()).SetRequest().CallService();
+
+            CreateResourceResponse.Rootobject response = (CreateResourceResponse.Rootobject)client.GetResponseAsObject(typeof(CreateResourceResponse.Rootobject));
+            Assert.AreEqual(response.title, title, "Title mismatch");
+            Assert.AreEqual(response.body, body, "Body mismatch");
+            Assert.AreEqual(response.userId, userID, "UserID mismatch");
+        }
+        #endregion------------DeSerializationJSON-----------------------
+
     }
 }
+        

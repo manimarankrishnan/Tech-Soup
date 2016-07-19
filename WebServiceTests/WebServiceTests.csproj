@@ -67,6 +67,8 @@
     <Compile Include="Main\Calculator\Subtraction\SubtractionResponse.cs" />
     <Compile Include="Main\Calculator\Subtraction\SubtractionRequest.cs" />
     <Compile Include="Main\Calculator\Multiplication\MultiplicationRequest.cs" />
+    <Compile Include="Main\Other\CreateResourceRequest.cs" />
+    <Compile Include="Main\Other\CreateResourceResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\CalculatorTests.cs" />
     <Compile Include="Test\DataValidation.cs">
@@ -92,6 +94,7 @@
     </None>
     <None Include="test.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +126,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Navigation\ResponseGetNearByCityName.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OtherTests\TC_createResource.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\OtherTests\TC_textToBraille.xml">

@@ -415,5 +415,17 @@ namespace WebServiceCSharp.Core
             return filePath;
         }
 
+        public static String FormatJsonString(String text)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject(text).ToString(); 
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+        }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebServiceTests.Main.Calculator.Multiplication
+namespace WebServiceTests.Main.Calculator.Deletion
 {
-   public class MultiplicationResponse
+   public class DeletionResponse
     {
 
 
@@ -37,19 +37,19 @@ namespace WebServiceTests.Main.Calculator.Multiplication
         public partial class EnvelopeBody
         {
 
-            private MultiplyResponse multiplyResponseField;
+            private DivideResponse divideResponseField;
 
             /// <remarks/>
             [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://tempuri.org/")]
-            public MultiplyResponse MultiplyResponse
+            public DivideResponse DivideResponse
             {
                 get
                 {
-                    return this.multiplyResponseField;
+                    return this.divideResponseField;
                 }
                 set
                 {
-                    this.multiplyResponseField = value;
+                    this.divideResponseField = value;
                 }
             }
         }
@@ -57,24 +57,25 @@ namespace WebServiceTests.Main.Calculator.Multiplication
         /// <remarks/>
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/")]
         [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/", IsNullable = false)]
-        public partial class MultiplyResponse
+        public partial class DivideResponse
         {
 
-            private byte multiplyResultField;
+            private byte divideResultField;
 
             /// <remarks/>
-            public byte MultiplyResult
+            public byte DivideResult
             {
                 get
                 {
-                    return this.multiplyResultField;
+                    return this.divideResultField;
                 }
                 set
                 {
-                    this.multiplyResultField = value;
+                    this.divideResultField = value;
                 }
             }
         }
+
 
 
 

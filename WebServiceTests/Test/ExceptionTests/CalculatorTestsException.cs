@@ -35,6 +35,8 @@ namespace WebServiceTests.Test.ExceptionTests
         [TestCase(5, 3)]
         public void PerformAdditionWithoutRequestBodyException(int a, int b)
         {
+            string value = Config.GetConfigValue("BaseEndPointUrl");
+
             try
             {
                 WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add_Object");
@@ -57,6 +59,7 @@ namespace WebServiceTests.Test.ExceptionTests
         [TestCase(5, 3)]
         public void PerformSubtractionWithoutRequestBodyException(int a, int b)
         {
+     
             try
             {
                 WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add_Object");
@@ -87,6 +90,8 @@ namespace WebServiceTests.Test.ExceptionTests
 
             catch (Exception e)
             {
+                Logger.Debug(e);
+
                 Assert.AreEqual(e.Message, errorMessage);
             }
         }

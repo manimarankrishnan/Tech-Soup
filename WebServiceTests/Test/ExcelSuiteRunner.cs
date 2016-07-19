@@ -44,9 +44,24 @@ namespace WebServiceTests.Test
                 }
                 Assert.AreEqual(expectedXmlDoc,client.GetResponseAsXMLDocument());
             }
+
+            else if (client.Response.ContentType.Contains("json"))
+            {
+                String expectedJsonString = null;
+
+                if (expectedValue.EndsWith(".json"))
+                {
+                    expectedJsonString = Utils.FormatJsonString(Utils.GetFileAsString(expectedValue));
+                }
+                else
+                {
+                    expectedJsonString = Utils.FormatJsonString(expectedValue);
+                }
+                Assert.AreEqual(expectedJsonString, Utils.FormatJsonString(client.GetResponseBody()));
+            }
             else
             {
-                if (expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
+                if (expectedValue.EndsWith(".txt"))
                 {
                     expectedValue = Utils.GetFileAsString(expectedValue);
                 }
