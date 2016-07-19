@@ -20,20 +20,6 @@ namespace WebServiceTests.Test
         }
 
         [Test]
-        public void GetCurrenctOfCountry()
-        {
-            WebServiceClient client2 = new WebServiceClient("http://www.webservicex.net", "TestCaseData_WebServicexTests_TCGetCurrency");
-            String yes = client2.SetRequest().CallService().GetResponseBody();
-        }
-
-        [Test]
-        public void GetAtomicNumber()
-        {
-            WebServiceClient client = new WebServiceClient("http://www.webservicex.net", "TestCaseData_WebServicexTests_TCAtomicNumber");
-            String ss = client.SetRequest().CallService().GetResponseBody();
-        }
-
-        [Test]
         public void TextToBraille()
         {
             WebServiceClient client = new WebServiceClient("http://www.webservicex.net", "TestCaseData_Others_TC_textToBraille");
@@ -50,6 +36,7 @@ namespace WebServiceTests.Test
         #region-----------SerializationJSON---------------------
 
         ///JSONPlaceHolder WebService
+        ///Checks Status code of the response
         [Test]
         [TestCase("Create", "BodyRequest", 15)]
         public void CreateResourceSerialization(string title, string body, int userID)
@@ -57,7 +44,8 @@ namespace WebServiceTests.Test
             WebServiceClient client = new WebServiceClient("", "TestCaseData_Others_TC_createResource");
             String responseBody =  client.SetRequestBody(new CreateResourceRequest(title, body, userID).ToString()).SetRequest().CallService().GetResponseBody();
             responseBody=responseBody.Replace("\n ", "");
-            
+            String statusCode = client.GetStatusCodeOfResponse();
+            Assert.AreEqual(statusCode, "Created", "Status code mismatch");
             Assert.AreEqual(Utils.FormatJsonString(Utils.GetFileAsString(client._expectedResponseBody)), Utils.FormatJsonString(responseBody), "ResonseBody mismatch");
 
         }

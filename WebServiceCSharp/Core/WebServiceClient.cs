@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Xml;
 namespace WebServiceCSharp.Core
 {
-   public class WebServiceClient
+    public class WebServiceClient
     {
         //WebSerive Client Properties
         public HttpWebRequest Request { get; set; }
@@ -27,7 +27,7 @@ namespace WebServiceCSharp.Core
         public String _requestBody { get; set; }
         public String _expectedResponseBody { get; set; }
 
-        public WebServiceClient(String endPointURI="",String dataIdentifier=null)
+        public WebServiceClient(String endPointURI = "", String dataIdentifier = null)
         {
             EndPointURI = endPointURI;
             _requestBody = "";
@@ -36,11 +36,12 @@ namespace WebServiceCSharp.Core
             _urlParameters = "";
             _URISegment = "";
             _expectedResponseBody = "";
-            if(dataIdentifier!=null){
+            if (dataIdentifier != null)
+            {
                 _serviceRequestValues = Utils.GetDataFromExcel(dataIdentifier).First();
                 LoadServiceRequestValues();
             }
-           
+
         }
 
         public WebServiceClient(String endPointURI, String[] values)
@@ -56,9 +57,9 @@ namespace WebServiceCSharp.Core
             LoadServiceRequestValues();
         }
 
-       /// <summary>
-       /// Loads the Request values from the _serviceRequestValues to the corresponding properties
-       /// </summary>
+        /// <summary>
+        /// Loads the Request values from the _serviceRequestValues to the corresponding properties
+        /// </summary>
         private void LoadServiceRequestValues()
         {
             _URISegment = (_serviceRequestValues.Length > 0 && _serviceRequestValues[0] != null ? _serviceRequestValues[0] : "");
@@ -74,7 +75,7 @@ namespace WebServiceCSharp.Core
             //Setting Request Body
             if (_serviceRequestValues.Length > 3 && !String.IsNullOrEmpty(_serviceRequestValues[3]))
                 _requestBody = _serviceRequestValues[3];
-            
+
             //Setting expected result
             if (_serviceRequestValues.Length > 4 && !String.IsNullOrEmpty(_serviceRequestValues[4]))
                 _expectedResponseBody = _serviceRequestValues[4];
@@ -83,7 +84,7 @@ namespace WebServiceCSharp.Core
 
         private void loadRequestBody(String body)
         {
-            
+
             String parameterBody;
             if (body.EndsWith(".json"))
             {
@@ -115,7 +116,7 @@ namespace WebServiceCSharp.Core
             requestWriter.Write(parameterBody);
 
             Logger.Debug("Set Request Body: " + parameterBody);
-       
+
         }
 
         /// <summary>
@@ -173,17 +174,17 @@ namespace WebServiceCSharp.Core
 
             foreach (String key in Request.Headers.Keys)
             {
-                Logger.Debug("Set Header {0}={1} ",key,Request.Headers[key]);
+                Logger.Debug("Set Header {0}={1} ", key, Request.Headers[key]);
             }
 
             return this;
         }
 
 
-       /// <summary>
-       /// Add the URL parameters
-       /// </summary>
-       /// <param name="paramValuePairs">key value pairs of URL parameters to be appended to the endpoint</param>
+        /// <summary>
+        /// Add the URL parameters
+        /// </summary>
+        /// <param name="paramValuePairs">key value pairs of URL parameters to be appended to the endpoint</param>
         public WebServiceClient AddURLParametersToURL(Dictionary<String, String> paramValuePairs)
         {
             if (Request != null)
@@ -194,16 +195,16 @@ namespace WebServiceCSharp.Core
             }
             foreach (String key in paramValuePairs.Keys)
             {
-                AddURLParametersToURL( String.Format("{0}={1}"  ,paramValuePairs[key] , key));  
+                AddURLParametersToURL(String.Format("{0}={1}", paramValuePairs[key], key));
             }
             Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
             return this;
         }
 
-       /// <summary>
-       ///  Add URL parameters to the endpoint url
-       /// </summary>
-       /// <param name="keyValue">URL parameter in format &lt;key&gt;=&lt;value&gt;</param>
+        /// <summary>
+        ///  Add URL parameters to the endpoint url
+        /// </summary>
+        /// <param name="keyValue">URL parameter in format &lt;key&gt;=&lt;value&gt;</param>
         /// <returns>WebServiceClient</returns>
         public WebServiceClient AddURLParametersToURL(String keyValue)
         {
@@ -215,15 +216,15 @@ namespace WebServiceCSharp.Core
             }
             if (String.IsNullOrEmpty(_urlParameters))
                 _urlParameters = "?";
-            _urlParameters = _urlParameters +(_urlParameters.Equals("?") ? "" : "&") + keyValue;
+            _urlParameters = _urlParameters + (_urlParameters.Equals("?") ? "" : "&") + keyValue;
             Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
             return this;
         }
 
-       /// <summary>
-       /// Adds the headers to the list of headers to be included in the Request
-       /// </summary>
-       /// <param name="headerString">'\n' or ',' delimited header and value pairs (seperated by ':')
+        /// <summary>
+        /// Adds the headers to the list of headers to be included in the Request
+        /// </summary>
+        /// <param name="headerString">'\n' or ',' delimited header and value pairs (seperated by ':')
         /// eg. header1Name : header1Value,header2Name : header2Value
         /// </param>
         /// <returns>WebServiceClient</returns>
@@ -236,7 +237,7 @@ namespace WebServiceCSharp.Core
                 throw e;
             }
             _requestHeaders = _requestHeaders + "," + headerString;
-            Logger.Info("_requestHeaders = " + _requestHeaders); 
+            Logger.Info("_requestHeaders = " + _requestHeaders);
             return this;
         }
 
@@ -245,7 +246,7 @@ namespace WebServiceCSharp.Core
         /// </summary>
         /// <param name="headers"></param>
         /// <returns>WebServiceClient</returns>
-        public WebServiceClient AddHeaders(Dictionary<String,String> headers)
+        public WebServiceClient AddHeaders(Dictionary<String, String> headers)
         {
             if (Request != null)
             {
@@ -260,7 +261,7 @@ namespace WebServiceCSharp.Core
             }
 
             _requestHeaders = _requestHeaders + "," + headers;
-            Logger.Info("_requestHeaders = " + _requestHeaders); 
+            Logger.Info("_requestHeaders = " + _requestHeaders);
             return this;
         }
 
@@ -440,5 +441,33 @@ namespace WebServiceCSharp.Core
             }
 
         }
+
+
+        /// <summary>
+        /// return status code of the response. 
+        /// </summary>
+        /// <returns></returns>
+        public String GetStatusCodeOfResponse()
+        {
+            try
+            {
+                if (Response == null)
+                {
+                    Exception e = new Exception("Call the CallService method before getting the response");
+                    Logger.Error(e);
+                    throw e;
+                }
+                else
+                    return Response.StatusCode.ToString();
+
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+        }
+
+
     }
 }

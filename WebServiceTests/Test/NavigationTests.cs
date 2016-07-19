@@ -18,6 +18,7 @@ namespace WebServiceTests.Test
             Logger.mode = LogMode.INFO;
         }
 
+        #region-------------BasicNavigationTests
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_NavigationTestsWithURI)using identifier
@@ -43,9 +44,10 @@ namespace WebServiceTests.Test
         }
 
 
-        
+        #endregion-------------BasicNavigationTests
 
-        
+
+        #region-------------BasicNavigationTestsWithURI
 
 
         /// <summary>
@@ -84,10 +86,10 @@ namespace WebServiceTests.Test
             Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
+        #endregion-------------BasicNavigationTestsWithURI
 
-        
 
-
+        #region-------------BasicNavigationTestsWithoutHeaders
 
 
         /// <summary>
@@ -105,5 +107,7 @@ namespace WebServiceTests.Test
                 .CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
+
+        #endregion-------------BasicNavigationTestsWithoutHeaders
     }
 }
