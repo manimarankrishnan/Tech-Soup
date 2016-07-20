@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="Core\Utils.cs" />
     <Compile Include="Core\WebServiceClient.cs" />
+    <Compile Include="Core\Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +85,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Framework\" />
   </ItemGroup>
   <ItemGroup>
