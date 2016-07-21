@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using WebServiceCSharp.Core;
 namespace WebServiceTests.Main.Calculator.Deletion
 {
-    public class DeletionRequest
+    public class DivisionRequest
     {
         Envelope envelope;
-        public DeletionRequest(int a, int b)
+        public DivisionRequest(int a, int b)
         {
             envelope = new Envelope();
             Divide addValue = new Divide();

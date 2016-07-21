@@ -71,6 +71,25 @@ namespace WebServiceTests.Test
         }
         #endregion------------DeSerializationJSON-----------------------
 
+
+        #region-----------DeSerializationJSON---------------------
+
+        ///JSONPlaceHolder WebServicek
+        [Test]
+        [TestCase("Title", "BodyRequest", 15)]
+        public void CreateResourceUsingResponseValues(string title, string body, int userID)
+        {
+            WebServiceClient client = new WebServiceClient("", "TestCaseData_Others_TC_createResource");
+            client.SetRequestBody(new CreateResourceRequest(title, body, userID).ToString()).SetRequest().CallService();
+
+            //Deserialize
+            CreateResourceResponse.Rootobject response = (CreateResourceResponse.Rootobject)client.GetResponseAsObject(typeof(CreateResourceResponse.Rootobject));
+
+            WebServiceClient clientNew = new WebServiceClient("", "TestCaseData_Others_TC_createResource");
+            clientNew.SetRequestBody(new CreateResourceRequest(response.title, response.body, response.userId).ToString()).SetRequest().CallService();
+        }
+        #endregion------------DeSerializationJSON-----------------------
+
     }
 }
         

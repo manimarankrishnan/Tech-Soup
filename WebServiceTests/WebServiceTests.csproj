@@ -61,8 +61,8 @@
   <ItemGroup>
     <Compile Include="Main\Calculator\Addition\AdditionRequest.cs" />
     <Compile Include="Main\Calculator\Addition\AdditionResponse.cs" />
-    <Compile Include="Main\Calculator\Deletion\DeletionResponse.cs" />
-    <Compile Include="Main\Calculator\Deletion\DeletionRequest.cs" />
+    <Compile Include="Main\Calculator\Division\DeletionResponse.cs" />
+    <Compile Include="Main\Calculator\Division\DivisionRequest.cs" />
     <Compile Include="Main\Calculator\Multiplication\MultiplicationtionResponse.cs" />
     <Compile Include="Main\Calculator\Subtraction\SubtractionResponse.cs" />
     <Compile Include="Main\Calculator\Subtraction\SubtractionRequest.cs" />
