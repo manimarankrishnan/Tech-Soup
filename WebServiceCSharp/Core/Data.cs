@@ -20,9 +20,7 @@ namespace WebServiceCSharp.Core
         /// </summary>
         public Data()
         {
-            StringValues = new Dictionary<string, string>();
-            StringLists = new Dictionary<string, List<string>>();
-            DataValues = new Dictionary<string, Data>();
+            initialiseDictionaries();
         }
 
         /// <summary>
@@ -32,10 +30,15 @@ namespace WebServiceCSharp.Core
         /// <param name="type"></param>
         public Data(String dataIdentifier)
         {
-            StringValues = new Dictionary<string, string>();
-            StringLists = new Dictionary<string, List<string>>();
-            DataValues = new Dictionary<string, Data>();
+            initialiseDictionaries();
             LoadValues(dataIdentifier);
+        }
+
+        private void initialiseDictionaries()
+        {
+            StringValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            StringLists = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+            DataValues = new Dictionary<string, Data>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -244,6 +247,37 @@ namespace WebServiceCSharp.Core
         }
 
         /// <summary>
+        /// Returns true if the key is present in the list of key-value pairs
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool IsValueKeyPresent(String key)
+        {
+            return StringValues.ContainsKey(key);
+        }
+
+        /// <summary>
+        /// Returns true if the key is present in the dictionary of List objects
+        /// </summary>
+        /// <param name="listKey"></param>
+        /// <returns></returns>
+        public bool IsListValueKeyPresent(String listKey)
+        {
+            return StringLists.ContainsKey(listKey);
+        }
+
+        /// <summary>
+        /// Returns true if the key is present in the dictionary of data objects
+        /// </summary>
+        /// <param name="dataKey">key</param>
+        /// <returns></returns>
+        public bool IsDataKeyPresent(String dataKey)
+        {
+            return DataValues.ContainsKey(dataKey);
+        }
+
+
+        /// <summary>
         /// Loads the values from the DataIdentifier (Override the exising values)
         /// </summary>
         public virtual void LoadValues()
@@ -258,15 +292,13 @@ namespace WebServiceCSharp.Core
             String[] identifierParts = DataIdentifier.Split('_');
             String[] HeaderValues = Utils.GetDataFromExcel(identifierParts[0] + "_" + identifierParts[1]).First();
             String[] DataValues = Utils.GetDataFromExcel(DataIdentifier).First();
-
+            initialiseDictionaries();
             int index = 0;
             foreach (String val in DataValues)
             {
                 SetValue(HeaderValues[index], val);
                 index++;
             }
-
-          
 
         }
 

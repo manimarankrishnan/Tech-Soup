@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DataTests.cs" />
     <Compile Include="Main\Calculator\Addition\AdditionRequest.cs" />
     <Compile Include="Main\Calculator\Addition\AdditionResponse.cs" />
     <Compile Include="Main\Calculator\Deletion\DeletionResponse.cs" />
@@ -83,7 +84,9 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UnitTests\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\TestCaseData.xlsx">

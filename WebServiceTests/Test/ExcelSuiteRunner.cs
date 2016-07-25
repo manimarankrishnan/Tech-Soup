@@ -49,7 +49,7 @@ namespace WebServiceTests.Test
             {
                 String expectedJsonString = null;
 
-                if (expectedValue.EndsWith(".json"))
+                if (expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
                 {
                     expectedJsonString = Utils.FormatJsonString(Utils.GetFileAsString(expectedValue));
                 }
