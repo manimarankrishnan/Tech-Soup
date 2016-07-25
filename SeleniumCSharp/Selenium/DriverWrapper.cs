@@ -20,14 +20,6 @@ namespace SeleniumCSharp.Selenium
     {
         private IWebDriver driver;
 
-        public IWebDriver WebDriver
-        {
-            get
-            {
-                return this.driver;
-            }
-        }
-
         public IWebDriver WrappedDriver
         {
             get

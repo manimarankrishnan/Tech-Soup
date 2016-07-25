@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using WebServiceCSharp.Core;
 using System.Drawing;
 using OpenQA.Selenium.Interactions.Internal;
-
+using OpenQA.Selenium.Support.PageObjects;
 namespace SeleniumCSharp.Selenium
 {
 
@@ -1351,12 +1351,16 @@ namespace SeleniumCSharp.Selenium
 
         public IWebElement FindElement(By by)
         {
-            return WrappedElement.FindElement(by);
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement);
+            List<By> locators = new List<By> { by };
+            return  retryElementLocator.LocateElement(locators);
         }
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            return WrappedElement.FindElements(by);
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement);
+            List<By> locators = new List<By> { by };
+            return retryElementLocator.LocateElements(locators);
         }
 
         public void Clear()
@@ -1422,6 +1426,21 @@ namespace SeleniumCSharp.Selenium
         public string Text
         {
             get { return WrappedElement.Text; }
+        }
+
+        public WebElementWrapper Wait(long timeOutInSeconds)
+        {
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds));
+            List<By> locators = new List<By> { by };
+            WrappedElement = retryElementLocator.LocateElement(locators); 
+            return this;
+        }
+
+        public ReadOnlyCollection<IWebElement> WaitForElements(long timeOutInSeconds)
+        {
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds));
+            List<By> locators = new List<By> { by };
+            return retryElementLocator.LocateElements(locators);
         }
     }
 }
