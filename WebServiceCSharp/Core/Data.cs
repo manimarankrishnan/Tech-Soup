@@ -9,60 +9,11 @@ namespace WebServiceCSharp.Core
     public class Data
     {
         public String DataIdentifier { get; set; }
-        public DataSourceType Type { get; set; }
-
-        protected Dictionary<String, String> StringValues
-        {
-            get
-            {
-                if (StringValues == null)
-                {
-                    Exception e = new Exception("Please call LoadValues(); before accessing values ");
-                    Logger.Error(e);
-                    throw e;
-                }
-                return StringValues;
-            }
-            set
-            {
-                StringValues = value;
-            }
-        }
-        protected Dictionary<String, List<String>> StringLists
-        {
-            get
-            {
-                if (StringLists == null)
-                {
-                    Exception e = new Exception("Please call LoadValues(); before accessing value lists ");
-                    Logger.Error(e);
-                    throw e;
-                }
-                return StringLists;
-            }
-            set
-            {
-                StringLists = value;
-            }
-        }
-
-        protected Dictionary<String, Data> DataValues
-        {
-            get
-            {
-                if (DataValues == null)
-                {
-                    Exception e = new Exception("Please call LoadValues(); before accessing data objects ");
-                    Logger.Error(e);
-                    throw e;
-                }
-                return DataValues;
-            }
-            set
-            {
-                DataValues = value;
-            }
-        }
+       
+        protected Dictionary<String, String> StringValues;
+        protected Dictionary<String, List<String>> StringLists;
+        protected Dictionary<String, Data> DataValues;
+      
 
         /// <summary>
         /// Instantiates empty Data class
@@ -77,14 +28,14 @@ namespace WebServiceCSharp.Core
         /// <summary>
         /// Loads value using the dataIdentifier
         /// </summary>
-        /// <param name="dataIdentifier"></param>
+        /// <param name="dataIdentifier">excel Data identifier</param>
         /// <param name="type"></param>
-        public Data(String dataIdentifier, DataSourceType type)
+        public Data(String dataIdentifier)
         {
             StringValues = new Dictionary<string, string>();
             StringLists = new Dictionary<string, List<string>>();
             DataValues = new Dictionary<string, Data>();
-            LoadValues(dataIdentifier, type);
+            LoadValues(dataIdentifier);
         }
 
         /// <summary>
@@ -205,21 +156,60 @@ namespace WebServiceCSharp.Core
         }
 
         /// <summary>
+        /// Adds the values given in the list to the List item in the dictionary
+        /// </summary>
+        /// <param name="Listkey">key for the list</param>
+        /// <param name="ValuesToAddToList">List of values to be added to the list</param>
+        public void AddValuesToList(String Listkey, List<String> ValuesToAddToList)
+        {
+            if (StringValues.ContainsKey(Listkey))
+            {
+                StringLists[Listkey].AddRange(ValuesToAddToList);
+            }
+            else
+            {
+                StringLists.Add(Listkey, ValuesToAddToList);
+            }
+            Logger.Info("Set Key: {0}; Value:{1}", Listkey, StringLists[Listkey]);
+
+        }
+
+
+        /// <summary>
+        /// Adds the value given in the list to the List item in the dictionary
+        /// </summary>
+        /// <param name="Listkey">key for the list</param>
+        /// <param name="valueToAddToList">Value to be added to the list in the dictionary</param>
+        public void AddValuesToList(String Listkey, String valueToAddToList)
+        {
+            if (StringValues.ContainsKey(Listkey))
+            {
+                StringLists[Listkey].Add(valueToAddToList);
+            }
+            else
+            {
+                StringLists.Add(Listkey, new List<String>() { valueToAddToList });
+            }
+            Logger.Info("Set Key: {0}; Value:{1}", Listkey, StringLists[Listkey]);
+
+        }
+
+        /// <summary>
         /// Sets the List value of a partical key (override if present already)
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public void SetValueList(String key, List<String> ListValue)
+        public void SetValueList(String Listkey, List<String> ListValue)
         {
-            if (StringValues.ContainsKey(key))
+            if (StringValues.ContainsKey(Listkey))
             {
-                StringLists[key] = ListValue;
+                StringLists[Listkey] = ListValue;
             }
             else
             {
-                StringLists.Add(key, ListValue);
+                StringLists.Add(Listkey, ListValue);
             }
-            Logger.Info("Set Key: {0}; Value:{1}", key, StringLists[key]);
+            Logger.Info("Set Key: {0}; Value:{1}", Listkey, StringLists[Listkey]);
 
         }
 
@@ -254,7 +244,7 @@ namespace WebServiceCSharp.Core
         }
 
         /// <summary>
-        /// When implemented this method should load the values from the DataIdentifier (Override the exising values)
+        /// Loads the values from the DataIdentifier (Override the exising values)
         /// </summary>
         public virtual void LoadValues()
         {
@@ -264,20 +254,19 @@ namespace WebServiceCSharp.Core
                 Logger.Error(e);
                 throw e;
             }
-            if (Type == DataSourceType.None)
+
+            String[] identifierParts = DataIdentifier.Split('_');
+            String[] HeaderValues = Utils.GetDataFromExcel(identifierParts[0] + "_" + identifierParts[1]).First();
+            String[] DataValues = Utils.GetDataFromExcel(DataIdentifier).First();
+
+            int index = 0;
+            foreach (String val in DataValues)
             {
-                Exception e = new Exception("DataSource type is 'None', can't load when none");
-                Logger.Error(e);
-                throw e;
-            }
-            if (Type == DataSourceType.ExcelFile)
-            {
-                
-            }
-            if (Type == DataSourceType.ConfigFile)
-            {
+                SetValue(HeaderValues[index], val);
+                index++;
             }
 
+          
 
         }
 
@@ -286,22 +275,13 @@ namespace WebServiceCSharp.Core
         /// Should update the DataIdentifier and Type
         /// </summary>
         /// <param name="dataIdentifier"></param>
-        /// <param name="type"></param>
-        public void LoadValues(String dataIdentifier, DataSourceType type)
+        public void LoadValues(String dataIdentifier)
         {
             this.DataIdentifier = dataIdentifier;
-            this.Type = type;
             LoadValues();
         }
 
 
     }
 
-    public enum DataSourceType
-    {
-        ExcelFile,
-        ConfigFile,
-        None
-
-    }
 }
