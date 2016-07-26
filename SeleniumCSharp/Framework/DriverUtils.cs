@@ -14,16 +14,16 @@ namespace SeleniumCSharp.Framework
     public class DriverUtils
     {
         [ThreadStatic]
-        private static List<DriverWrapper> Drivers;
+        private static List<DriverWrapper> _drivers;
 
         public static TestConfiguration configuration = TestConfiguration.GetDefaultTestConfiguration();
 
         public static DriverWrapper GetDriver(){
-            if (Drivers == null)
-                Drivers = new List<DriverWrapper>();
+            if (_drivers == null)
+                _drivers = new List<DriverWrapper>();
 
             DriverWrapper driver = new DriverWrapper( new FirefoxDriver());
-            Drivers.Add(driver);
+            _drivers.Add(driver);
             return driver;
         }
 
@@ -34,7 +34,7 @@ namespace SeleniumCSharp.Framework
             return new DriverWrapper(new FirefoxDriver());
         }
 
-        private static DriverWrapper CreateDriver()
+        public static DriverWrapper CreateDriver()
         {
             DesiredCapabilities capab=null;
 
@@ -68,14 +68,14 @@ namespace SeleniumCSharp.Framework
 
             capab.IsJavaScriptEnabled= true;
             capab.Platform = new Platform( configuration.PlatformType);
-            IWebDriver driver = new RemoteWebDriver(new Uri(configuration.HubURL), capab);
-
+            IWebDriver driver ;//= new RemoteWebDriver(new Uri(configuration.HubURL), capab);
+            driver = new RemoteWebDriver(capab);
             return new DriverWrapper(driver);
         }
 
         public static void QuitDrivers(){
 
-            foreach (DriverWrapper driver in Drivers)
+            foreach (DriverWrapper driver in _drivers)
             {
                 try
                 {
@@ -87,7 +87,7 @@ namespace SeleniumCSharp.Framework
                     Logger.Debug(e);
                 }                
             }
-            Drivers = null;
+            _drivers = null;
         }
 
     }

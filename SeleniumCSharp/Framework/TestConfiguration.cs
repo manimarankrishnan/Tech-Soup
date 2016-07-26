@@ -11,10 +11,11 @@ namespace SeleniumCSharp.Framework
     {
         //Time interval
         public static TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
-        public TimeSpan ImplicitTimout = DefaultTimeOut;
-        public TimeSpan PageLoadTimeOut = DefaultTimeOut;
-        public TimeSpan JavascriptTimeout = DefaultTimeOut;
-        public TimeSpan PollingInterVal = TimeSpan.FromMilliseconds(300);
+        public static TimeSpan ImplicitTimout = DefaultTimeOut;
+        public static TimeSpan PageLoadTimeOut = DefaultTimeOut;
+        public static TimeSpan JavascriptTimeout = DefaultTimeOut;
+        public static TimeSpan ElementWaitTimeout = DefaultTimeOut;
+        public static TimeSpan PollingInterVal = TimeSpan.FromMilliseconds(300);
 
         //Webdriver Configuration
         public Browser Browser= Browser.Firefox;
@@ -35,7 +36,8 @@ namespace SeleniumCSharp.Framework
         
         public static TestConfiguration GetDefaultTestConfiguration()
         {
-           DesiredCapabilities capab= new DesiredCapabilities();
+            DesiredCapabilities capab = DesiredCapabilities.Firefox();
+
             
             return new TestConfiguration();
         }

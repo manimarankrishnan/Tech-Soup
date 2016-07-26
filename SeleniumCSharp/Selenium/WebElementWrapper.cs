@@ -10,6 +10,9 @@ using WebServiceCSharp.Core;
 using System.Drawing;
 using OpenQA.Selenium.Interactions.Internal;
 using OpenQA.Selenium.Support.PageObjects;
+using SeleniumCSharp.Framework;
+using OpenQA.Selenium.Interactions;
+
 namespace SeleniumCSharp.Selenium
 {
 
@@ -290,661 +293,6 @@ namespace SeleniumCSharp.Selenium
                 }
             }
         }
-
-        public string FakeAttributeId
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeId = ((DummyWebElement)this.element).FakeAttributeId;
-                }
-                return this._fakeAttributeId;
-            }
-            set
-            {
-                this._fakeAttributeId = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeId = this._fakeAttributeId;
-            }
-        }
-
-        public string FakeAttributeName
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeName = ((DummyWebElement)this.element).FakeAttributeName;
-                }
-                return this._fakeAttributeName;
-            }
-            set
-            {
-                this._fakeAttributeName = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeName = this._fakeAttributeName;
-            }
-        }
-
-        public string FakeAttributeValue
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeValue = ((DummyWebElement)this.element).FakeAttributeValue;
-                }
-                return this._fakeAttributeValue;
-            }
-            set
-            {
-                this._fakeAttributeValue = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeValue = this._fakeAttributeValue;
-            }
-        }
-
-        public string FakeAttributeClass
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeClass = ((DummyWebElement)this.element).FakeAttributeClass;
-                }
-                return this._fakeAttributeClass;
-            }
-            set
-            {
-                this._fakeAttributeClass = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeClass = this._fakeAttributeClass;
-            }
-        }
-
-        public string FakeAttributeHref
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeHref = ((DummyWebElement)this.element).FakeAttributeHref;
-                }
-                return this._fakeAttributeHref;
-            }
-            set
-            {
-                this._fakeAttributeHref = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeHref = this._fakeAttributeHref;
-            }
-        }
-
-        public string FakeAttributeStyle
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeStyle = ((DummyWebElement)this.element).FakeAttributeStyle;
-                }
-                return this._fakeAttributeStyle;
-            }
-            set
-            {
-                this._fakeAttributeStyle = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeStyle = this._fakeAttributeStyle;
-            }
-        }
-
-        public string FakeAttributeOnClick
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeOnClick = ((DummyWebElement)this.element).FakeAttributeOnClick;
-                }
-                return this._fakeAttributeOnClick;
-            }
-            set
-            {
-                this._fakeAttributeOnClick = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeOnClick = this._fakeAttributeOnClick;
-            }
-        }
-
-        public string FakeAttributeDocid
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDocid = ((DummyWebElement)this.element).FakeAttributeDocid;
-                }
-                return this._fakeAttributeDocid;
-            }
-            set
-            {
-                this._fakeAttributeDocid = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDocid = this._fakeAttributeDocid;
-            }
-        }
-
-        public string FakeAttributeNk
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeNk = ((DummyWebElement)this.element).FakeAttributeNk;
-                }
-                return this._fakeAttributeNk;
-            }
-            set
-            {
-                this._fakeAttributeNk = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeNk = this._fakeAttributeNk;
-            }
-        }
-
-        public string FakeAttributeKey
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeKey = ((DummyWebElement)this.element).FakeAttributeKey;
-                }
-                return this._fakeAttributeKey;
-            }
-            set
-            {
-                this._fakeAttributeKey = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeKey = this._fakeAttributeKey;
-            }
-        }
-
-        public string FakeAttributeItemid
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeItemid = ((DummyWebElement)this.element).FakeAttributeItemid;
-                }
-                return this._fakeAttributeItemid;
-            }
-            set
-            {
-                this._fakeAttributeItemid = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeItemid = this._fakeAttributeItemid;
-            }
-        }
-
-        public string FakeAttributePassageid
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributePassageid = ((DummyWebElement)this.element).FakeAttributePassageid;
-                }
-                return this._fakeAttributePassageid;
-            }
-            set
-            {
-                this._fakeAttributePassageid = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributePassageid = this._fakeAttributePassageid;
-            }
-        }
-
-        public string FakeAttributeRubricid
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeRubricid = ((DummyWebElement)this.element).FakeAttributeRubricid;
-                }
-                return this._fakeAttributeRubricid;
-            }
-            set
-            {
-                this._fakeAttributeRubricid = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeRubricid = this._fakeAttributeRubricid;
-            }
-        }
-
-        public string FakeAttributeDataKey
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataKey = ((DummyWebElement)this.element).FakeAttributeDataKey;
-                }
-                return this._fakeAttributeDataKey;
-            }
-            set
-            {
-                this._fakeAttributeDataKey = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataKey = this._fakeAttributeDataKey;
-            }
-        }
-
-        public string FakeAttributeDataNgBind
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgBind = ((DummyWebElement)this.element).FakeAttributeDataNgBind;
-                }
-                return this._fakeAttributeDataNgBind;
-            }
-            set
-            {
-                this._fakeAttributeDataNgBind = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgBind = this._fakeAttributeDataNgBind;
-            }
-        }
-
-        public string FakeAttributeDataNgClass
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgClass = ((DummyWebElement)this.element).FakeAttributeDataNgClass;
-                }
-                return this._fakeAttributeDataNgClass;
-            }
-            set
-            {
-                this._fakeAttributeDataNgClass = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgClass = this._fakeAttributeDataNgClass;
-            }
-        }
-
-        public string FakeAttributeDataNgClick
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgClick = ((DummyWebElement)this.element).FakeAttributeDataNgClick;
-                }
-                return this._fakeAttributeDataNgClick;
-            }
-            set
-            {
-                this._fakeAttributeDataNgClick = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgClick = this._fakeAttributeDataNgClick;
-            }
-        }
-
-        public string FakeAttributeDataNgIf
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgIf = ((DummyWebElement)this.element).FakeAttributeDataNgIf;
-                }
-                return this._fakeAttributeDataNgIf;
-            }
-            set
-            {
-                this._fakeAttributeDataNgIf = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgIf = this._fakeAttributeDataNgIf;
-            }
-        }
-
-        public string FakeAttributeDataNgLabel
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgLabel = ((DummyWebElement)this.element).FakeAttributeDataNgLabel;
-                }
-                return this._fakeAttributeDataNgLabel;
-            }
-            set
-            {
-                this._fakeAttributeDataNgLabel = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgLabel = this._fakeAttributeDataNgLabel;
-            }
-        }
-
-        public string FakeAttributeDataNgModel
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgModel = ((DummyWebElement)this.element).FakeAttributeDataNgModel;
-                }
-                return this._fakeAttributeDataNgModel;
-            }
-            set
-            {
-                this._fakeAttributeDataNgModel = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgModel = this._fakeAttributeDataNgModel;
-            }
-        }
-
-        public string FakeAttributeDataNgOptions
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgOptions = ((DummyWebElement)this.element).FakeAttributeDataNgOptions;
-                }
-                return this._fakeAttributeDataNgOptions;
-            }
-            set
-            {
-                this._fakeAttributeDataNgOptions = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgOptions = this._fakeAttributeDataNgOptions;
-            }
-        }
-
-        public string FakeAttributeDataNgRepeat
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDataNgRepeat = ((DummyWebElement)this.element).FakeAttributeDataNgRepeat;
-                }
-                return this._fakeAttributeDataNgRepeat;
-            }
-            set
-            {
-                this._fakeAttributeDataNgRepeat = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDataNgRepeat = this._fakeAttributeDataNgRepeat;
-            }
-        }
-
-        public string FakeAttributeNgIf
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeNgIf = ((DummyWebElement)this.element).FakeAttributeNgIf;
-                }
-                return this._fakeAttributeNgIf;
-            }
-            set
-            {
-                this._fakeAttributeNgIf = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeNgIf = this._fakeAttributeNgIf;
-            }
-        }
-
-        public string FakeAttributeAriaValueNow
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeAriaValueNow = ((DummyWebElement)this.element).FakeAttributeAriaValueNow;
-                }
-                return this._fakeAttributeAriaValueNow;
-            }
-            set
-            {
-                this._fakeAttributeAriaValueNow = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeAriaValueNow = this._fakeAttributeAriaValueNow;
-            }
-        }
-
-        public string FakeAttributeAriaLabel
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeAriaLabel = ((DummyWebElement)this.element).FakeAttributeAriaLabel;
-                }
-                return this._fakeAttributeAriaLabel;
-            }
-            set
-            {
-                this._fakeAttributeAriaLabel = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeAriaLabel = this._fakeAttributeAriaLabel;
-            }
-        }
-
-        public string FakeAttributeRid
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeRid = ((DummyWebElement)this.element).FakeAttributeRid;
-                }
-                return this._fakeAttributeRid;
-            }
-            set
-            {
-                this._fakeAttributeRid = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeRid = this._fakeAttributeRid;
-            }
-        }
-
-        public string FakeAttributeDetail
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeDetail = ((DummyWebElement)this.element).FakeAttributeDetail;
-                }
-                return this._fakeAttributeDetail;
-            }
-            set
-            {
-                this._fakeAttributeDetail = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeDetail = this._fakeAttributeDetail;
-            }
-        }
-
-        public string FakeAttributeTitle
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeTitle = ((DummyWebElement)this.element).FakeAttributeTitle;
-                }
-                return this._fakeAttributeTitle;
-            }
-            set
-            {
-                this._fakeAttributeTitle = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeTitle = this._fakeAttributeTitle;
-            }
-        }
-
-        public string FakeAttributeContent
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeAttributeContent = ((DummyWebElement)this.element).FakeAttributeContent;
-                }
-                return this._fakeAttributeContent;
-            }
-            set
-            {
-                this._fakeAttributeContent = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeAttributeContent = this._fakeAttributeContent;
-            }
-        }
-
-        public string FakeCssValueStyle
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeCssValueStyle = ((DummyWebElement)this.element).FakeCssValueStyle;
-                }
-                return this._fakeCssValueStyle;
-            }
-            set
-            {
-                this._fakeCssValueStyle = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeCssValueStyle = this._fakeCssValueStyle;
-            }
-        }
-
-        public string FakeCssValueClass
-        {
-            get
-            {
-                if (this.Driver.WrappedDriver.GetType() == typeof(DummyDriver))
-                {
-                    this.InitializeWebElement();
-                    this._fakeCssValueClass = ((DummyWebElement)this.element).FakeCssValueClass;
-                }
-                return this._fakeCssValueClass;
-            }
-            set
-            {
-                this._fakeCssValueClass = value;
-                if (!(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)))
-                    return;
-                this.InitializeWebElement();
-                ((DummyWebElement)this.element).FakeCssValueClass = this._fakeCssValueClass;
-            }
-        }
-
-        public List<IWebElement> FakeFindElementsList { get; set; }
-
-        public List<NgWebElement> FakeFindNgElementsList { get; set; }
 
         public WebElementWrapper(By by)
         {
@@ -1300,6 +648,22 @@ namespace SeleniumCSharp.Selenium
 
         public ISearchContext SearchContext { get; set; }
 
+        public IWebDriver Driver
+        {
+            get
+            {
+                IWebDriver driver = null;
+                ISearchContext searchContext = SearchContext;
+                while (searchContext is WebElementWrapper)
+                {
+                    searchContext = ((WebElementWrapper)searchContext).SearchContext;
+                }
+                if (searchContext is IWebDriver)
+                    driver = (IWebDriver)searchContext;
+                return driver;
+            }
+        }
+
         public WebElementWrapper(IWebElement element)
         {
             this.WrappedElement = element;
@@ -1328,17 +692,26 @@ namespace SeleniumCSharp.Selenium
             this.by = by;
         }
 
+        private IWebElement _element;
         public IWebElement WrappedElement
         {
             get {
-                return WrappedElement;
+                if (_element == null)
+                    InitializeElement();
+                return _element;
             }
             set
             {
-                WrappedElement = value;
+                _element = value;
             }
         }
-        
+
+        public WebElementWrapper InitializeElement()
+        {
+            Wait(TestConfiguration.ElementWaitTimeout.Seconds, TestConfiguration.PollingInterVal.Milliseconds);
+            return this;
+        }
+
         public ICoordinates Coordinates
         {
             get { return ((ILocatable)WrappedElement).Coordinates; }
@@ -1365,12 +738,40 @@ namespace SeleniumCSharp.Selenium
 
         public void Clear()
         {
-            WrappedElement.Clear();
+            try
+            {
+                WrappedElement.Clear();
+            }
+            catch (StaleElementReferenceException e)
+            {
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element",e);
+                InitializeElement();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+            
         }
 
         public void Click()
         {
-            WrappedElement.Click();
+            try
+            {
+                WrappedElement.Click();
+            }
+            catch (StaleElementReferenceException e)
+            {
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                InitializeElement();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+         
         }
 
         public bool Displayed
@@ -1405,7 +806,21 @@ namespace SeleniumCSharp.Selenium
 
         public void SendKeys(string text)
         {
-            WrappedElement.SendKeys(text);
+            try
+            {
+                WrappedElement.SendKeys(text);
+            }
+            catch (StaleElementReferenceException e)
+            {
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                InitializeElement();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
+           
         }
 
         public Size Size
@@ -1415,7 +830,20 @@ namespace SeleniumCSharp.Selenium
 
         public void Submit()
         {
-            WrappedElement.Submit();
+            try
+            {
+                WrappedElement.Submit();
+            }
+            catch (StaleElementReferenceException e)
+            {
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                InitializeElement();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw e;
+            }
         }
 
         public string TagName
@@ -1428,19 +856,52 @@ namespace SeleniumCSharp.Selenium
             get { return WrappedElement.Text; }
         }
 
-        public WebElementWrapper Wait(long timeOutInSeconds)
+        public void Check()
         {
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds));
+            if (!Selected)
+                Click();
+        }
+
+        public void UnCheck()
+        {
+            if (Selected)
+                Click();
+        }
+
+        public WebElementWrapper Wait(long timeOutInSeconds,long pollingIntervalInMilliSeconds = 500)
+        {
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds),TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
             WrappedElement = retryElementLocator.LocateElement(locators); 
             return this;
         }
 
-        public ReadOnlyCollection<IWebElement> WaitForElements(long timeOutInSeconds)
+        public ReadOnlyCollection<IWebElement> WaitForElements(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds));
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
             return retryElementLocator.LocateElements(locators);
+        }
+
+
+        public WebElementWrapper ScrollToView()
+        {           
+            if (Driver != null)
+                ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.WaitForAngular, WrappedElement);
+            return this;
+        }
+
+        public WebElementWrapper MoveToElement()
+        {
+            try
+            {
+                new Actions((IWebDriver)this.Driver).MoveToElement(WrappedElement).Click().Build().Perform();
+            }
+            catch (WebDriverException ex)
+            {
+                Logger.Error(ex);
+            }
+            return this;
         }
     }
 }

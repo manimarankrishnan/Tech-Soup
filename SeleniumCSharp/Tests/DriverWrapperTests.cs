@@ -28,6 +28,21 @@ namespace SeleniumCSharp.Tests
         }
 
 
+
+        [Test]
+        public void CreateDriver()
+        {
+
+            DriverWrapper wrapper = DriverUtils.CreateDriver();
+
+            wrapper.Navigate().GoToUrl("http://www.carnaticcorner.com/library.html");
+
+
+            DriverWrapper wrapper1 = DriverUtils.GetDriver();
+
+            wrapper1.Navigate().GoToUrl("http://www.carnaticcorner.com/library.html");
+        }
+
         [TearDown]
         public void CleanUp()
         {

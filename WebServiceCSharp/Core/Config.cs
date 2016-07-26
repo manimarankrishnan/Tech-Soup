@@ -111,7 +111,7 @@ namespace WebServiceCSharp.Core
                 Logger.Info( "Reloading values from config file");
            if( Values == null)
                 Logger.Info("Loading values from config file");
-            Values = new Dictionary<string, string>();
+            Values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             try
             {
                 LoadValuesFromConfigFile("test.config");
