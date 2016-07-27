@@ -11,7 +11,7 @@ namespace SeleniumCSharp.Framework
     public class TestConfiguration
     {
         //Time interval
-        public const TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
+        public TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
         public TimeSpan ImplicitTimout { get; set; }
         public TimeSpan PageLoadTimeOut { get; set; }
         public TimeSpan JavascriptTimeout { get; set; }
@@ -89,8 +89,8 @@ namespace SeleniumCSharp.Framework
                 testconfig.SauceLabsUserName = Config.GetConfigValue("SAUCE_USERNAME");
             if (Config.IsConfigValuePresent("SAUCE_ACCESS_KEY"))
                 testconfig.SauceLabsAccessKey = Config.GetConfigValue("SAUCE_ACCESS_KEY");
-            if (Config.IsConfigValuePresent("Grid"))
-                testconfig.SauceLabsAccessKey = Config.GetConfigValue("Grid");
+            if (Config.IsConfigValuePresent("GRID"))
+                testconfig.SauceLabsAccessKey = Config.GetConfigValue("GRID");
             return testconfig;
         }
     }

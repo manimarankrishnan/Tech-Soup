@@ -78,12 +78,9 @@ namespace SeleniumCSharp.Framework
             return capab;
         }
 
-        private static DriverWrapper CreateDriver(TestConfiguration configuration, DesiredCapabilities capab = null)
+        private static DriverWrapper CreateDriver(TestConfiguration configuration, DesiredCapabilities capab)
         {
             IWebDriver driver;
-
-            if (capab == null)
-                capab = GetCapability(configuration);
 
             if (configuration.GridType.Equals("grid2", StringComparison.OrdinalIgnoreCase))
                 driver = new RemoteWebDriver(new Uri(configuration.HubURL), capab);
@@ -125,7 +122,8 @@ namespace SeleniumCSharp.Framework
 
         public static void QuitDrivers()
         {
-
+            if (_drivers == null)
+                return;
             foreach (DriverWrapper driver in _drivers)
             {
                 try

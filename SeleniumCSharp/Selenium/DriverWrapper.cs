@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Support.Events;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
