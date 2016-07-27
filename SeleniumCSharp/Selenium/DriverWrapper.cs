@@ -164,11 +164,13 @@ namespace SeleniumCSharp.Selenium
                     if (takesScreenshot != null)
                         return takesScreenshot.GetScreenshot();
                     Logger.Debug("Failed to take a screen shot...");
+                    Logger.Debug(ex1);
                     return (Screenshot)null;
                 }
                 catch (Exception ex2)
                 {
                     Logger.Debug("Failed to take a screen shot...");
+                    Logger.Debug(ex2);
                     return (Screenshot)null;
                 }
             }

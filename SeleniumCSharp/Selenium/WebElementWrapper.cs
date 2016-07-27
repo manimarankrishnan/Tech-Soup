@@ -642,7 +642,7 @@ namespace SeleniumCSharp.Selenium
             this.Click();
         }
          * */
-
+        
 
         public By by { get; set; }
 
@@ -708,7 +708,7 @@ namespace SeleniumCSharp.Selenium
 
         public WebElementWrapper InitializeElement()
         {
-            Wait(TestConfiguration.ElementWaitTimeout.Seconds, TestConfiguration.PollingInterVal.Milliseconds);
+            Wait(TestConfiguration.GetCurrentConfiguration().ElementWaitTimeout.Seconds, TestConfiguration.GetCurrentConfiguration().PollingInterVal.Milliseconds);
             return this;
         }
 

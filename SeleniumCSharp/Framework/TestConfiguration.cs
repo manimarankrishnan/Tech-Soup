@@ -11,7 +11,7 @@ namespace SeleniumCSharp.Framework
     public class TestConfiguration
     {
         //Time interval
-        public TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
+        public static TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
         public TimeSpan ImplicitTimout { get; set; }
         public TimeSpan PageLoadTimeOut { get; set; }
         public TimeSpan JavascriptTimeout { get; set; }
