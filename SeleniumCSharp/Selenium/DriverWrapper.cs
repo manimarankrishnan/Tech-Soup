@@ -23,8 +23,11 @@ namespace SeleniumCSharp.Selenium
         public IWebDriver WrappedDriver
         {
             get
-            {               
-                return ((EventFiringWebDriver)this.driver).WrappedDriver;
+            {
+                IWebDriver driver = this.driver;
+                while (driver is IWrapsDriver)
+                    driver = ((IWrapsDriver)driver).WrappedDriver;
+                return driver;
             }
         }
 
@@ -90,7 +93,7 @@ namespace SeleniumCSharp.Selenium
 
         public DriverWrapper(IWebDriver driver)
         {
-           this.driver = driver;
+            this.driver = driver;
         }
 
         [DebuggerStepThrough]
@@ -166,7 +169,7 @@ namespace SeleniumCSharp.Selenium
                 }
                 catch (Exception ex2)
                 {
-                   Logger.Debug("Failed to take a screen shot...");
+                    Logger.Debug("Failed to take a screen shot...");
                     return (Screenshot)null;
                 }
             }

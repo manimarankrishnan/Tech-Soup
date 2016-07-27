@@ -10,12 +10,13 @@ using SeleniumCSharp.Framework;
 
 namespace SeleniumCSharp.Tests
 {
-    
+
     public class DriverWrapperTests
     {
 
         [Test]
-        public void  GotoURLTest(){
+        public void GotoURLTest()
+        {
 
             DriverWrapper wrapper = DriverUtils.GetDriver();
 
@@ -32,11 +33,6 @@ namespace SeleniumCSharp.Tests
         [Test]
         public void CreateDriver()
         {
-
-            DriverWrapper wrapper = DriverUtils.CreateDriver();
-
-            wrapper.Navigate().GoToUrl("http://www.carnaticcorner.com/library.html");
-
 
             DriverWrapper wrapper1 = DriverUtils.GetDriver();
 

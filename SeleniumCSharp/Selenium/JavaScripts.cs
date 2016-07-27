@@ -12,7 +12,7 @@ namespace SeleniumCSharp.Selenium
         /// <summary>
         /// Pass locator for ng-app root element as first argument
         /// </summary>
-        public static const String WaitForAngular = @"var rootSelector = arguments[0];
+        public const  String WaitForAngular = @"var rootSelector = arguments[0];
                                                     var el = document.querySelector(rootSelector);
                                                     var callback = arguments[1];
                                                     if (window.getAngularTestability) {
@@ -37,7 +37,7 @@ namespace SeleniumCSharp.Selenium
         /// <summary>
         /// Pass webelement as the first argument
         /// </summary>
-        public static const String ScrollToElement = "arguments[0].scrollIntoView(true);";
+        public const  String ScrollToElement = "arguments[0].scrollIntoView(true);";
 
 
 

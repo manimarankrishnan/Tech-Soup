@@ -107,9 +107,9 @@ namespace WebServiceCSharp.Core
         /// </summary>
         public static void ReloadConfigFile()
         {
-            if(Values != null)
-                Logger.Info( "Reloading values from config file");
-           if( Values == null)
+            if (Values != null)
+                Logger.Info("Reloading values from config file");
+            if (Values == null)
                 Logger.Info("Loading values from config file");
             Values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             try
@@ -118,7 +118,7 @@ namespace WebServiceCSharp.Core
             }
             catch (Exception e)
             {
-               Logger.Error("test.config file is not present in the project" + e.Message);
+                Logger.Error("test.config file is not present in the project" + e.Message);
             }
         }
 
@@ -189,7 +189,7 @@ namespace WebServiceCSharp.Core
     }
     #endregion
 
-    }
+}
 
 
 
