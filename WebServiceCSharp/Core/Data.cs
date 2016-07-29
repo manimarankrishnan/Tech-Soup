@@ -273,14 +273,43 @@ namespace WebServiceCSharp.Core
         /// <returns></returns>
         public bool IsDataKeyPresent(String dataKey)
         {
-            return DataValues.ContainsKey(dataKey);
+            return DataValues.ContainsKey(dataKey) ;
         }
 
 
         /// <summary>
+        /// Returns true if the key is present in the list of key-value pairs  and populates value with value of the key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool TryGetValue(String key,out String value)
+        {
+            return StringValues.TryGetValue(key,out value);
+        }
+
+        /// <summary>
+        /// Returns true if the key is present in the dictionary of List objects and populates valueList with value of the key
+        /// </summary>
+        /// <param name="listKey"></param>
+        /// <returns></returns>
+        public bool TryGetListValue(String listKey, out List<String> valueList)
+        {
+            return StringLists.TryGetValue(listKey,out valueList);
+        }
+
+        /// <summary>
+        /// Returns true if the key is present in the dictionary of data objects  and populates value with value of the key
+        /// </summary>
+        /// <param name="dataKey">key</param>
+        /// <returns></returns>
+        public bool TryGetData(String dataKey,out Data value)
+        {
+            return DataValues.TryGetValue(dataKey, out value);
+        }
+        /// <summary>
         /// Loads the values from the DataIdentifier (Override the exising values)
         /// </summary>
-        public virtual void LoadValues()
+        public void LoadValues()
         {
             if (DataIdentifier == null)
             {
