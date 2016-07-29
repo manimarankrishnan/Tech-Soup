@@ -163,7 +163,7 @@ namespace WebServiceTests.Test
         [Test]
         public void PerformAdditionWithRawData()
         {
-            String[] values = Utils.GetDataFromExcel("TestCaseData_CalculatorTestsWithURI_TC_Add").First();
+            Data values = Utils.GetExcelValueAsDataList("TestCaseData_CalculatorTestsWithURI_TC_Add").First();
             WebServiceClient client = new WebServiceClient("", values);
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
@@ -178,7 +178,7 @@ namespace WebServiceTests.Test
         [Test]
         public void PerformDivisionWithRawData()
         {
-            String[] values = Utils.GetDataFromExcel("TestCaseData_CalculatorTestsWithURI_TC_Div").First();
+            Data values = Utils.GetExcelValueAsDataList("TestCaseData_CalculatorTestsWithURI_TC_Div").First();
             WebServiceClient client = new WebServiceClient("", values);
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");

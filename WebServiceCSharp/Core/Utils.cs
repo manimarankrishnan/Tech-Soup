@@ -40,7 +40,7 @@ namespace WebServiceCSharp.Core
                 catch (Exception e)
                 {
                     Logger.Error("{0}\n{1}\n{2}", e.Message, e.InnerException, e.StackTrace);
-                    throw e;
+                    throw ;
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
             finally
@@ -173,8 +173,8 @@ namespace WebServiceCSharp.Core
                 {
                     //Removing the Id column data
                     List<String> requiredColumnList = rowData.ToList();
-                    int startingIndex = String.IsNullOrEmpty(ID) ? 0 : 1;
-                    requiredColumnList = requiredColumnList.GetRange(startingIndex, noOfColumns > -1 ? noOfColumns : requiredColumnList.Count - startingIndex);
+                    //int startingIndex = String.IsNullOrEmpty(ID) ? 0 : 1;
+                    //requiredColumnList = requiredColumnList.GetRange(startingIndex, noOfColumns > -1 ? noOfColumns : requiredColumnList.Count - startingIndex);
                     //Adding the result to the required Data
                     requiredData.Add(requiredColumnList.ToArray());
                 }
@@ -210,7 +210,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -237,7 +237,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -252,7 +252,7 @@ namespace WebServiceCSharp.Core
             List<Data> neededData = new List<Data>();
             String[] identifierParts = dataIdentifer.Split('_');
 
-            String[] Headers = Utils.GetDataFromExcel(identifierParts[0] + identifierParts[1]).First();
+            String[] Headers = Utils.GetDataFromExcel(identifierParts[0] +"_"+ identifierParts[1]).First();
             foreach (String[] DataValues in Utils.GetDataFromExcel(dataIdentifer))
             {
                 Data iterateData = new Data();
@@ -291,7 +291,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
         /// <summary>
@@ -315,7 +315,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -334,7 +334,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw;
             }
 
         }
@@ -355,7 +355,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
@@ -378,7 +378,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
@@ -400,7 +400,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -419,7 +419,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
@@ -457,7 +457,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
     }
