@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
 using WebServiceCSharp.Core;
-
+using OpenQA.Selenium.Remote;
 
 namespace SeleniumCSharp.Selenium
 {
@@ -92,7 +92,7 @@ namespace SeleniumCSharp.Selenium
 
         public DriverWrapper(IWebDriver driver)
         {
-            this.driver = driver;
+            this.driver = driver;          
         }
 
         [DebuggerStepThrough]
@@ -150,6 +150,11 @@ namespace SeleniumCSharp.Selenium
             return this.driver.Navigate();
         }
 
+        public String GetSessionId()
+        {
+            return CustomRemoteDriver.GetSessionId(WrappedDriver);            
+        }
+
         public Screenshot GetScreenshot()
         {
             try
@@ -174,6 +179,25 @@ namespace SeleniumCSharp.Selenium
                     return (Screenshot)null;
                 }
             }
+        }
+
+
+       class CustomRemoteDriver :RemoteWebDriver
+        {
+           //Dummy Constructor
+           private CustomRemoteDriver()
+               : base(DesiredCapabilities.Firefox())
+           {
+
+           }
+            public static  String GetSessionId(IWebDriver driver)
+            {
+                
+                if (driver is RemoteWebDriver)
+                    return ((RemoteWebDriver)driver).SessionId.ToString();
+                return null;
+            }
+
         }
     }
 }
