@@ -75,24 +75,29 @@ namespace SeleniumCSharp.Framework
             capab.IsJavaScriptEnabled = true;
             capab.SetCapability("Version", configuration.BrowserVersion);
             capab.SetCapability("Platform", configuration.Platform);
+            capab.SetCapability("build", configuration.BuildName);
             return capab;
         }
 
         private static DriverWrapper CreateDriver(TestConfiguration configuration, DesiredCapabilities capab)
         {
-            IWebDriver driver;
+            DriverWrapper driver;
 
             if (configuration.GridType.Equals("grid2", StringComparison.OrdinalIgnoreCase))
-                driver = new RemoteWebDriver(new Uri(configuration.HubURL), capab);
-            else if (configuration.GridType.Equals("saucelabs", StringComparison.OrdinalIgnoreCase))
-                driver = new RemoteWebDriver(new Uri(configuration.SauceURL), capab);
+                driver =  new DriverWrapper(new RemoteWebDriver(new Uri(configuration.HubURL), capab));
+            else if (configuration.GridType.Equals("saucelabs", StringComparison.OrdinalIgnoreCase)){
+                driver =  new DriverWrapper(new RemoteWebDriver(new Uri(configuration.SauceURL), capab));
+                Logger.Info("SauceOnDemandSessionID={0} job-name={1}",((DriverWrapper)driver).GetSessionId(), currentTestConfiguration.JobName);
+            }
+               
             else if (configuration.GridType.Equals("local", StringComparison.OrdinalIgnoreCase))
             {
-                driver = GetLocalDriver(configuration.Browser).WrappedDriver;
+                driver = GetLocalDriver(configuration.Browser);
             }
             else
                 driver = new DriverWrapper(new FirefoxDriver());
-            return new DriverWrapper(driver);
+
+            return driver;
         }
 
 

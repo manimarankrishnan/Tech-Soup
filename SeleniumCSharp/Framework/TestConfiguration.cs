@@ -28,6 +28,18 @@ namespace SeleniumCSharp.Framework
         //Grid2 Config
         public String GridType { get; set; }
 
+
+        public String BuildName
+        {
+            get
+            {
+                return JobName + "__" + BuildNumber;
+            }
+        }
+        public String JobName { get; set; }
+        public String BuildNumber { get; set; }
+        
+
         //Remote WebDriver
         public String HubURL
         {
@@ -72,8 +84,14 @@ namespace SeleniumCSharp.Framework
             GridType = "local";
             HubHost = "localhost";
             HubPort = "4444";
-            SauceLabsUserName = null;
-            SauceLabsAccessKey = null;
+            Config.SetConfigValue("HubURL", HubURL);
+            SauceLabsUserName = "";
+            SauceLabsAccessKey = "";
+            Config.SetConfigValue("SauceURL", SauceURL);
+            BuildNumber = "";
+            JobName = "";
+            Config.SetConfigValue("BuildName", BuildName);
+
         }
 
         public static TestConfiguration GetCurrentConfiguration()
@@ -91,6 +109,10 @@ namespace SeleniumCSharp.Framework
                 testconfig.SauceLabsAccessKey = Config.GetConfigValue("SAUCE_ACCESS_KEY");
             if (Config.IsConfigValuePresent("GRID"))
                 testconfig.SauceLabsAccessKey = Config.GetConfigValue("GRID");
+            if (Config.IsConfigValuePresent("JOB_NAME"))
+                testconfig.JobName = Config.GetConfigValue("JOB_NAME");
+            if (Config.IsConfigValuePresent("BUILD_NUMBER"))
+                testconfig.BuildNumber = Config.GetConfigValue("BUILD_NUMBER");
             return testconfig;
         }
     }
