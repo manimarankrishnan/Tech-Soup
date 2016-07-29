@@ -16,7 +16,7 @@ namespace WebServiceCSharp.Core
         public HttpWebResponse Response { get; private set; }
         public String EndPointURI { get; set; }
         public String ResponseBody { get; private set; }
-        private String[] _serviceRequestValues;
+        private Data _requestData;
         public long TimeTaken;
 
         //Excel values
@@ -38,13 +38,13 @@ namespace WebServiceCSharp.Core
             _expectedResponseBody = "";
             if (dataIdentifier != null)
             {
-                _serviceRequestValues = Utils.GetDataFromExcel(dataIdentifier).First();
+                _requestData = new Data(dataIdentifier);
                 LoadServiceRequestValues();
             }
 
         }
 
-        public WebServiceClient(String endPointURI, String[] values)
+        public WebServiceClient(String endPointURI, Data values)
         {
             EndPointURI = endPointURI;
             _requestBody = "";
@@ -53,7 +53,7 @@ namespace WebServiceCSharp.Core
             _urlParameters = "";
             _URISegment = "";
             _expectedResponseBody = "";
-            _serviceRequestValues = values;
+            _requestData = values;
             LoadServiceRequestValues();
         }
 
@@ -62,23 +62,24 @@ namespace WebServiceCSharp.Core
         /// </summary>
         private void LoadServiceRequestValues()
         {
-            _URISegment = (_serviceRequestValues.Length > 0 && _serviceRequestValues[0] != null ? _serviceRequestValues[0] : "");
+            String URISegmentKey = "URISegment";
+            String MethodKey = "Method";
+            String HeadersKey = "Headers";
+            String RequestBodyKey = "PostBody";
+            String ExpectedResponseBodyKey = "Expected Response Body";
 
-            //Setting the request method
-            if (_serviceRequestValues.Length > 1)
-                _requestMethod = String.IsNullOrEmpty(_serviceRequestValues[1]) ? "GET" : _serviceRequestValues[1];
-
-            //Setting the Request header
-            if (_serviceRequestValues.Length > 2 && !String.IsNullOrEmpty(_serviceRequestValues[2]))
-                _requestHeaders = _serviceRequestValues[2];
-
-            //Setting Request Body
-            if (_serviceRequestValues.Length > 3 && !String.IsNullOrEmpty(_serviceRequestValues[3]))
-                _requestBody = _serviceRequestValues[3];
-
-            //Setting expected result
-            if (_serviceRequestValues.Length > 4 && !String.IsNullOrEmpty(_serviceRequestValues[4]))
-                _expectedResponseBody = _serviceRequestValues[4];
+            String value;
+            if(_requestData.TryGetValue(URISegmentKey,out value) &&  !String.IsNullOrEmpty(value))
+                _URISegment =value;
+            if (_requestData.TryGetValue(MethodKey, out value) && !String.IsNullOrEmpty(value))
+                _requestMethod = value;
+            if (_requestData.TryGetValue(HeadersKey, out value) && !String.IsNullOrEmpty(value))
+                _requestHeaders = value;
+            if (_requestData.TryGetValue(RequestBodyKey, out value) && !String.IsNullOrEmpty(value))
+                _requestBody = value;
+            if (_requestData.TryGetValue(ExpectedResponseBodyKey, out value) && !String.IsNullOrEmpty(value))
+                _expectedResponseBody = value;
+           
 
         }
 
@@ -272,7 +273,7 @@ namespace WebServiceCSharp.Core
         /// <returns></returns>
         public WebServiceClient SetRequest()
         {
-            if (_serviceRequestValues == null)
+            if (_requestData == null)
             {
                 Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
                 Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
@@ -330,7 +331,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
             try
@@ -338,7 +339,7 @@ namespace WebServiceCSharp.Core
                 using (StreamReader responseReader = new StreamReader(Response.GetResponseStream()))
                 {
                     ResponseBody = responseReader.ReadToEnd();
-                    responseReader.Close();
+                    //responseReader.Close();
                     Logger.Debug("Response body : \n {0}", ResponseBody);
                 }
 
@@ -346,7 +347,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error("Error reading the response", e);
-                throw e;
+                throw ;
             }
             return this;
         }
@@ -417,7 +418,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -437,7 +438,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -464,7 +465,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 

@@ -122,72 +122,73 @@ namespace WebServiceCSharp.Core
             }
         }
 
-    }
 
-
-    #region Configuration Fille XML classes
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class configuration
-    {
-
-        private configurationParameter[] parameterField;
+        #region Configuration Fille XML classes
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("parameter")]
-        public configurationParameter[] parameter
+        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+        [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+        public partial class configuration
         {
-            get
-            {
-                return this.parameterField;
-            }
-            set
-            {
-                this.parameterField = value;
-            }
-        }
-    }
 
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class configurationParameter
-    {
+            private configurationParameter[] parameterField;
 
-        private string nameField;
-
-        private string valueField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string name
-        {
-            get
+            /// <remarks/>
+            [System.Xml.Serialization.XmlElementAttribute("parameter")]
+            public configurationParameter[] parameter
             {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
+                get
+                {
+                    return this.parameterField;
+                }
+                set
+                {
+                    this.parameterField = value;
+                }
             }
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string value
+        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+        public partial class configurationParameter
         {
-            get
+
+            private string nameField;
+
+            private string valueField;
+
+            /// <remarks/>
+            [System.Xml.Serialization.XmlAttributeAttribute()]
+            public string name
             {
-                return this.valueField;
+                get
+                {
+                    return this.nameField;
+                }
+                set
+                {
+                    this.nameField = value;
+                }
             }
-            set
+
+            /// <remarks/>
+            [System.Xml.Serialization.XmlAttributeAttribute()]
+            public string value
             {
-                this.valueField = value;
+                get
+                {
+                    return this.valueField;
+                }
+                set
+                {
+                    this.valueField = value;
+                }
             }
         }
+        #endregion
+
     }
-    #endregion
+
 
 }
 

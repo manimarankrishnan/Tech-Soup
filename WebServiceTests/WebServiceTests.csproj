@@ -83,7 +83,9 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UnitTests\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\TestCaseData.xlsx">

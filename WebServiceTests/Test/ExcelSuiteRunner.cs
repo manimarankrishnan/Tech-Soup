@@ -23,7 +23,7 @@ namespace WebServiceTests.Test
 
         //Test with multiple parameters - Data From Excel using Identifier
         [Test, TestCaseSource(typeof(MyFactoryClass), "TestCases")]
-        public void LoginDataFromExcelUsingIdentifierTest(String[] TCDatavalues)
+        public void LoginDataFromExcelUsingIdentifierTest(Data TCDatavalues)
         {
             WebServiceClient client = new WebServiceClient("", TCDatavalues);
 
@@ -49,7 +49,7 @@ namespace WebServiceTests.Test
             {
                 String expectedJsonString = null;
 
-                if (expectedValue.EndsWith(".json"))
+                if (expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
                 {
                     expectedJsonString = Utils.FormatJsonString(Utils.GetFileAsString(expectedValue));
                 }
@@ -84,19 +84,19 @@ namespace WebServiceTests.Test
             {
                 get
                 {
-                    List<String[]> TestCases = new List<string[]>();
+                    List<Data> TestCases = new List<Data>();
 
                     foreach (String[] moduleSheet in Utils.GetDataFromExcel(Config.GetConfigValue("FunctionalSuiteFile"), 1))
                     {
-                        TestCases.AddRange(Utils.GetDataFromExcel(moduleSheet[0]));
+                        if(!String.IsNullOrEmpty(moduleSheet[1]))
+                            TestCases.AddRange(Utils.GetExcelValueAsDataList(moduleSheet[1]));
                     }
                     foreach (var testcaseData in TestCases)
                     {
-                        String tcName = testcaseData[0];
-                        if (string.IsNullOrEmpty(tcName))
+                        String tcName = testcaseData.GetValue("ID");
+                        if (string.IsNullOrEmpty(tcName) || tcName.Equals("ID"))
                             continue;
-                        Object TCData = testcaseData.Skip(1).ToArray();
-                        yield return new TestCaseData(TCData)
+                        yield return new TestCaseData(testcaseData)
                             .SetName(tcName)
                      .SetDescription("Test case executed");
                     }

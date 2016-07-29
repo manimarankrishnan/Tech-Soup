@@ -15,7 +15,7 @@ namespace WebServiceCSharp.Core
     {
 
         static Dictionary<String, List<String[]>> ExcelData = new Dictionary<string, List<string[]>>();
-    
+
         /// <summary>
         /// Get the data from Cached Excel Data
         /// If not already cached the data will be cached for further use
@@ -23,7 +23,7 @@ namespace WebServiceCSharp.Core
         /// <param name="excelFilePath">Full excel file path</param>
         /// <param name="sheetName">Worksheet name</param>
         /// <returns></returns>
-        public static List<String[]> GetDataFromExcelData(String excelFilePath, String sheetName)
+        private static List<String[]> GetDataFromExcelData(String excelFilePath, String sheetName)
         {
             if (ExcelData.Keys.Contains(excelFilePath + sheetName))
             {
@@ -40,7 +40,7 @@ namespace WebServiceCSharp.Core
                 catch (Exception e)
                 {
                     Logger.Error("{0}\n{1}\n{2}", e.Message, e.InnerException, e.StackTrace);
-                    throw e;
+                    throw ;
                 }
             }
         }
@@ -78,10 +78,10 @@ namespace WebServiceCSharp.Core
                 }
                 catch (Exception e)
                 {
-                    Logger.Error("Sheet: {0} is not found in {1} \n {2}", sheetName,excelFilePath, e);
+                    Logger.Error("Sheet: {0} is not found in {1} \n {2}", sheetName, excelFilePath, e);
                     throw new Exception("Sheet: " + sheetName + " is not found", e);
                 }
-                
+
                 //Getting the used Range
                 Range range = workSheet.UsedRange;
                 Logger.Info("{0}Rows \n {1}Columns", range.Rows.Count, range.Columns.Count);
@@ -92,7 +92,7 @@ namespace WebServiceCSharp.Core
                 //Checking whether the number of columns not greater than the available columns
                 if (noOfColumns > range.Columns.Count)
                 {
-                    Exception e =new Exception(String.Format("The number of columns requested: {0} is greater than the available no of Columns: {1}", noOfColumns, range.Columns.Count));
+                    Exception e = new Exception(String.Format("The number of columns requested: {0} is greater than the available no of Columns: {1}", noOfColumns, range.Columns.Count));
                     Logger.Error(e);
                     throw e;
                 }
@@ -120,7 +120,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
             finally
@@ -159,10 +159,10 @@ namespace WebServiceCSharp.Core
             //Getting the data from all the rows in the excel sheet
             List<String[]> rawDataFromExcel = GetDataFromExcelData(excelFilePath, sheetName);
 
-            if (String.IsNullOrEmpty(ID))
-            {
-                rawDataFromExcel.RemoveAt(0);
-            }
+            //if (String.IsNullOrEmpty(ID))
+            //{
+            //    rawDataFromExcel.RemoveAt(0);
+            //}
 
             List<String[]> requiredData = new List<string[]>();
             foreach (String[] rowData in rawDataFromExcel)
@@ -173,8 +173,8 @@ namespace WebServiceCSharp.Core
                 {
                     //Removing the Id column data
                     List<String> requiredColumnList = rowData.ToList();
-                    int startingIndex = String.IsNullOrEmpty(ID) ? 0 : 1;
-                    requiredColumnList = requiredColumnList.GetRange(startingIndex, noOfColumns > -1 ? noOfColumns : requiredColumnList.Count - startingIndex);
+                    //int startingIndex = String.IsNullOrEmpty(ID) ? 0 : 1;
+                    //requiredColumnList = requiredColumnList.GetRange(startingIndex, noOfColumns > -1 ? noOfColumns : requiredColumnList.Count - startingIndex);
                     //Adding the result to the required Data
                     requiredData.Add(requiredColumnList.ToArray());
                 }
@@ -182,8 +182,8 @@ namespace WebServiceCSharp.Core
 
             //Throwing exception if no rows are found
             if (requiredData.Count == 0)
-            { 
-                Exception e =new Exception("No data found for the Identifier:" + Identifier);
+            {
+                Exception e = new Exception("No data found for the Identifier:" + Identifier);
                 Logger.Error(e);
                 throw e;
             }
@@ -207,9 +207,10 @@ namespace WebServiceCSharp.Core
                 reader.Close();
                 return data;
             }
-            catch ( Exception e){
+            catch (Exception e)
+            {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
         }
@@ -236,9 +237,36 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
 
+        }
+
+        /// <summary>
+        /// Get the data in excel as a list of Data objects
+        /// </summary>
+        /// <param name="dataIdentifer">Identifier for data</param>
+        /// <returns></returns>
+        public static List<Data> GetExcelValueAsDataList(String dataIdentifer)
+        {
+            List<Data> neededData = new List<Data>();
+            String[] identifierParts = dataIdentifer.Split('_');
+
+            String[] Headers = Utils.GetDataFromExcel(identifierParts[0] +"_"+ identifierParts[1]).First();
+            foreach (String[] DataValues in Utils.GetDataFromExcel(dataIdentifer))
+            {
+                Data iterateData = new Data();
+                int index = 0;
+                foreach (String val in DataValues)
+                {
+                    iterateData.SetValue(Headers[index], val);
+                    index++;
+                }
+
+                neededData.Add(iterateData);
+            }
+
+            return neededData;
         }
 
         /// <summary>
@@ -263,7 +291,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
         /// <summary>
@@ -287,9 +315,9 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
-         
+
         }
         /// <summary>
         /// De-serialize Json string into an object
@@ -306,9 +334,9 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw;
             }
-           
+
         }
 
         /// <summary>
@@ -327,7 +355,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
@@ -350,7 +378,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
@@ -372,9 +400,9 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
-           
+
         }
 
         /// <summary>
@@ -391,7 +419,7 @@ namespace WebServiceCSharp.Core
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
@@ -404,7 +432,12 @@ namespace WebServiceCSharp.Core
         {
             if (File.Exists(fileIdentifier))
                 return fileIdentifier;
-            Logger.Debug(fileIdentifier + " file is not found. Checking in Resource Directory");
+            Logger.Debug(fileIdentifier + " file is not found. Checking in Relative to base Directory");
+
+            String relativeToProject = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileIdentifier);
+            if (File.Exists(relativeToProject))
+                return relativeToProject;
+            Logger.Debug(relativeToProject + " file is not found. Checking in Relative to Resource Directory");
             String filePath = Path.Combine(Config.ResourcesBaseDirectory, fileIdentifier);
             if (!File.Exists(filePath))
             {
@@ -419,12 +452,12 @@ namespace WebServiceCSharp.Core
         {
             try
             {
-                return JsonConvert.DeserializeObject(text).ToString(); 
+                return JsonConvert.DeserializeObject(text).ToString();
             }
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
     }
