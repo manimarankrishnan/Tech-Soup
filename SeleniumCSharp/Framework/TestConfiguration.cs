@@ -113,6 +113,16 @@ namespace SeleniumCSharp.Framework
                 testconfig.JobName = Config.GetConfigValue("JOB_NAME");
             if (Config.IsConfigValuePresent("BUILD_NUMBER"))
                 testconfig.BuildNumber = Config.GetConfigValue("BUILD_NUMBER");
+
+            Logger.Debug(@"SELENIUM_BROWSER : {0} \n
+                            SELENIUM_VERSION : {1} \n
+                            SELENIUM_PLATFORM : {2} \n
+                            SAUCE_USERNAME : {3} \n
+                            SAUCE_ACCESS_KEY : {4} \n
+                            GRID : {5} \n
+                            JOB_NAME : {6} \n
+                            BUILD_NUMBER : {7} \n", testconfig.Browser, testconfig.BrowserVersion, testconfig.Platform, testconfig.SauceLabsUserName, testconfig.SauceLabsAccessKey, testconfig.GridType, testconfig.JobName, testconfig.BuildNumber);
+
             return testconfig;
         }
     }
