@@ -50,6 +50,8 @@ namespace SeleniumCSharp.Framework
                     capab = DesiredCapabilities.Chrome();
                     break;
                 case "IEXPLORER":
+                case "INTERNET EXPLORER":
+                case "INTERNET":
                     capab = DesiredCapabilities.InternetExplorer();
                     break;
                 case "EDGE":
