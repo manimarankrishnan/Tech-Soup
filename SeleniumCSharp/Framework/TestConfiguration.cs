@@ -108,7 +108,7 @@ namespace SeleniumCSharp.Framework
             if (Config.IsConfigValuePresent("SAUCE_ACCESS_KEY"))
                 testconfig.SauceLabsAccessKey = Config.GetConfigValue("SAUCE_ACCESS_KEY");
             if (Config.IsConfigValuePresent("GRID"))
-                testconfig.SauceLabsAccessKey = Config.GetConfigValue("GRID");
+                testconfig.GridType = Config.GetConfigValue("GRID");
             if (Config.IsConfigValuePresent("JOB_NAME"))
                 testconfig.JobName = Config.GetConfigValue("JOB_NAME");
             if (Config.IsConfigValuePresent("BUILD_NUMBER"))
