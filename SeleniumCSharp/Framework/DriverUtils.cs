@@ -103,8 +103,11 @@ namespace SeleniumCSharp.Framework
                     driver = GetLocalDriver(configuration.Browser);
                 }
                 else
+                {
                     Logger.Info("Initalising local Firefox Browser");
-                driver = new DriverWrapper(new FirefoxDriver());
+                    driver = new DriverWrapper(new FirefoxDriver());
+                }
+
 
             }
             catch (Exception e)
