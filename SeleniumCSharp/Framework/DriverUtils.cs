@@ -110,7 +110,7 @@ namespace SeleniumCSharp.Framework
                 Logger.Error(e);
                 throw;
             }
-           
+
             return driver;
         }
 
@@ -150,13 +150,12 @@ namespace SeleniumCSharp.Framework
             Logger.Info("Number of drivers : {0}", _drivers.Count);
             foreach (DriverWrapper driver in _drivers)
             {
-                Logger.Info("Attempting to close Driver number {0}" ,_drivers.IndexOf(driver) );
+                Logger.Info("Attempting to close Driver number {0}", _drivers.IndexOf(driver) + 1);
                 try
                 {
                     driver.Close();
                     driver.Quit();
-                    Logger.Info("Closed Driver number {0}", _drivers.IndexOf(driver));
-
+                    Logger.Info("Closed Driver number {0}", _drivers.IndexOf(driver) + 1);
                 }
                 catch (Exception e)
                 {
