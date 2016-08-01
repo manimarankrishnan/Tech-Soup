@@ -131,6 +131,8 @@ namespace SeleniumCSharp.Framework
                     driver = new ChromeDriver(currentTestConfiguration.ChromeDriverFileLocation);
                     break;
                 case "IEXPLORER":
+                case "INTERNET EXPLORER":
+                case "INTERNET":
                     Logger.Info("Initalising local Internet Explorer Browser");
                     driver = new InternetExplorerDriver(currentTestConfiguration.IEDriverFileLocation);
                     break;
