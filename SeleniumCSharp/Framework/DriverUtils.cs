@@ -82,21 +82,37 @@ namespace SeleniumCSharp.Framework
         private static DriverWrapper CreateDriver(TestConfiguration configuration, DesiredCapabilities capab)
         {
             DriverWrapper driver;
-
-            if (configuration.GridType.Equals("grid2", StringComparison.OrdinalIgnoreCase))
-                driver =  new DriverWrapper(new RemoteWebDriver(new Uri(configuration.HubURL), capab));
-            else if (configuration.GridType.Equals("saucelabs", StringComparison.OrdinalIgnoreCase)){
-                driver =  new DriverWrapper(new RemoteWebDriver(new Uri(configuration.SauceURL), capab));
-                Logger.Info("SauceOnDemandSessionID={0} job-name={1}",((DriverWrapper)driver).GetSessionId(), currentTestConfiguration.JobName);
-            }
-               
-            else if (configuration.GridType.Equals("local", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                driver = GetLocalDriver(configuration.Browser);
-            }
-            else
+                if (configuration.GridType.Equals("grid2", StringComparison.OrdinalIgnoreCase))
+                {
+                    Logger.Info("Initalising remote driver for the Grid hub {0} \n Capabilities: {1}", configuration.HubURL, capab);
+                    driver = new DriverWrapper(new RemoteWebDriver(new Uri(configuration.HubURL), capab));
+
+                }
+
+                else if (configuration.GridType.Equals("saucelabs", StringComparison.OrdinalIgnoreCase))
+                {
+                    Logger.Info("Initalising remote driver for the sauce {0} \n Capabilities: {1}", configuration.SauceURL, capab);
+                    driver = new DriverWrapper(new RemoteWebDriver(new Uri(configuration.SauceURL), capab));
+                    Logger.Info("SauceOnDemandSessionID={0} job-name={1}", ((DriverWrapper)driver).GetSessionId(), currentTestConfiguration.JobName);
+                }
+
+                else if (configuration.GridType.Equals("local", StringComparison.OrdinalIgnoreCase))
+                {
+                    driver = GetLocalDriver(configuration.Browser);
+                }
+                else
+                    Logger.Info("Initalising local Firefox Browser");
                 driver = new DriverWrapper(new FirefoxDriver());
 
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+           
             return driver;
         }
 
@@ -107,15 +123,19 @@ namespace SeleniumCSharp.Framework
             switch (browser.ToUpper())
             {
                 case "FIREFOX":
+                    Logger.Info("Initalising local Firefox Browser");
                     driver = new FirefoxDriver();
                     break;
                 case "CHROME":
+                    Logger.Info("Initalising local Chrome Browser");
                     driver = new ChromeDriver(currentTestConfiguration.ChromeDriverFileLocation);
                     break;
                 case "IEXPLORER":
+                    Logger.Info("Initalising local Internet Explorer Browser");
                     driver = new InternetExplorerDriver(currentTestConfiguration.IEDriverFileLocation);
                     break;
                 case "EDGE":
+                    Logger.Info("Initalising local Edge Browser");
                     driver = new EdgeDriver(currentTestConfiguration.EdgeDriverLocation);
                     break;
                 default:
