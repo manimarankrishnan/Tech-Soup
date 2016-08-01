@@ -20,6 +20,7 @@ namespace SeleniumCSharp.Tests
             Logger.logWriter = TestContext.Out;
             Logger.name = TestContext.CurrentContext.Test.FullName;
             Logger.mode = LogMode.INFO;
+            Logger.Info("Setup completed");
         }
 
         [Test]
@@ -51,7 +52,10 @@ namespace SeleniumCSharp.Tests
         [TearDown]
         public void CleanUp()
         {
+            Logger.Info("Entering Cleanup");
             DriverUtils.QuitDrivers();
+            Logger.Info("Completed Cleanup");
+
         }
     }
 }

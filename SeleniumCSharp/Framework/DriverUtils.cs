@@ -88,16 +88,13 @@ namespace SeleniumCSharp.Framework
                 {
                     Logger.Info("Initalising remote driver for the Grid hub {0} \n Capabilities: {1}", configuration.HubURL, capab);
                     driver = new DriverWrapper(new RemoteWebDriver(new Uri(configuration.HubURL), capab));
-
                 }
-
                 else if (configuration.GridType.Equals("saucelabs", StringComparison.OrdinalIgnoreCase))
                 {
                     Logger.Info("Initalising remote driver for the sauce {0} \n Capabilities: {1}", configuration.SauceURL, capab);
                     driver = new DriverWrapper(new RemoteWebDriver(new Uri(configuration.SauceURL), capab));
                     Logger.Info("SauceOnDemandSessionID={0} job-name={1}", ((DriverWrapper)driver).GetSessionId(), currentTestConfiguration.JobName);
                 }
-
                 else if (configuration.GridType.Equals("local", StringComparison.OrdinalIgnoreCase))
                 {
                     driver = GetLocalDriver(configuration.Browser);
@@ -107,8 +104,6 @@ namespace SeleniumCSharp.Framework
                     Logger.Info("Initalising local Firefox Browser");
                     driver = new DriverWrapper(new FirefoxDriver());
                 }
-
-
             }
             catch (Exception e)
             {
@@ -152,12 +147,16 @@ namespace SeleniumCSharp.Framework
         {
             if (_drivers == null)
                 return;
+            Logger.Info("Number of drivers : {0}", _drivers.Count);
             foreach (DriverWrapper driver in _drivers)
             {
+                Logger.Info("Attempting to close Driver number {0}" ,_drivers.IndexOf(driver) );
                 try
                 {
                     driver.Close();
                     driver.Quit();
+                    Logger.Info("Closed Driver number {0}", _drivers.IndexOf(driver));
+
                 }
                 catch (Exception e)
                 {
