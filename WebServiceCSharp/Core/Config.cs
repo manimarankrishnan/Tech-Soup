@@ -9,7 +9,24 @@ namespace WebServiceCSharp.Core
 {
     public class Config
     {
-
+        
+        private static Dictionary<String, String> _env;
+        private static Dictionary<String,String> env
+        {
+            get
+            {
+                if(_env==null)
+                {
+                    _env = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                    var envVar = Environment.GetEnvironmentVariables();
+                    foreach (var s in envVar.Keys)
+                    {
+                        _env.Add(s.ToString(), envVar[s].ToString());
+                    }
+                }
+                return _env;
+            }
+        }
         private static Dictionary<String, String> Values;
         public static String ResourcesBaseDirectory
         {
@@ -38,7 +55,8 @@ namespace WebServiceCSharp.Core
                 return Values[configName];
             else
             {
-                String environmentValue = Environment.GetEnvironmentVariable(configName);
+                String environmentValue;
+                 env.TryGetValue(configName, out environmentValue);
                 if (!String.IsNullOrEmpty(environmentValue))
                 {
                     return environmentValue;
@@ -94,11 +112,13 @@ namespace WebServiceCSharp.Core
             configuration configDetails = (configuration)Utils.DeserializeXML(reader.ReadToEnd(), typeof(configuration));
             foreach (var parameter in configDetails.parameter)
             {
-                String value = Environment.GetEnvironmentVariable(parameter.name);
+                String value;
+                 env.TryGetValue(parameter.name,out value);
                 value = String.IsNullOrEmpty(value) ? parameter.value : value;
                 if (parameter.name.Equals("ConfigFile"))
                     LoadValuesFromConfigFile(value);
                 Values.Add(parameter.name, value);
+                Logger.Info("Added config '{0}' : '{1}'", parameter.name, value);
             }
         }
 
