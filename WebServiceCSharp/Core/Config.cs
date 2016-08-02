@@ -90,7 +90,7 @@ namespace WebServiceCSharp.Core
         {
             if (Values == null)
                 ReloadConfigFile();
-            return Values.ContainsKey(configName);
+            return Values.ContainsKey(configName) || env.ContainsKey(configName);
         }
 
 
