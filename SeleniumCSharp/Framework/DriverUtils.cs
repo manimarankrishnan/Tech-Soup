@@ -95,9 +95,10 @@ namespace SeleniumCSharp.Framework
                 {
                     capab.SetCapability("username", configuration.SauceLabsUserName);
                     capab.SetCapability("accessKey", configuration.SauceLabsAccessKey);
+                    capab.SetCapability("name", Logger.name);
                     Logger.Info("Initalising remote driver for the sauce {0} \n Capabilities: {1}", configuration.SauceURL, capab);
                     driver = new DriverWrapper(new RemoteWebDriver(new Uri(configuration.SauceURL), capab));
-                    Logger.Info("SauceOnDemandSessionID={0} job-name={1}", ((DriverWrapper)driver).GetSessionId(), currentTestConfiguration.JobName);
+                    Logger.Info("SauceOnDemandSessionID={0} job-name={1}", ((DriverWrapper)driver).GetSessionId(), Logger.name);
                 }
                 else if (configuration.GridType.Equals("local", StringComparison.OrdinalIgnoreCase))
                 {
