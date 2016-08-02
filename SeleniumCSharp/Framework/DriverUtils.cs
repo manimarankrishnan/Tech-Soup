@@ -160,7 +160,11 @@ namespace SeleniumCSharp.Framework
                 Logger.Info("Attempting to close Driver number {0}", _drivers.IndexOf(driver) + 1);
                 try
                 {
-                    driver.Close();
+                    try
+                    {
+                        driver.Close();
+                    }
+                    catch { }                    
                     driver.Quit();
                     Logger.Info("Closed Driver number {0}", _drivers.IndexOf(driver) + 1);
                 }

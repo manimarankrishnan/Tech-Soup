@@ -10,13 +10,30 @@ namespace SeleniumCSharp.Framework
 {
     public class TestConfiguration
     {
-        //Time interval
-        public static TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(30);
-        public TimeSpan ImplicitTimout { get; set; }
-        public TimeSpan PageLoadTimeOut { get; set; }
-        public TimeSpan JavascriptTimeout { get; set; }
-        public TimeSpan ElementWaitTimeout { get; set; }
-        public TimeSpan PollingInterVal { get; set; }
+        /// <summary>
+        /// Default Timeout value in seconds
+        /// </summary>
+        public static long DefaultTimeOut = 30;
+        /// <summary>
+        /// Implicit Timeout in seconds
+        /// </summary>
+        public static long ImplicitTimeout { get; set; }
+        /// <summary>
+        /// Page load Timeout in seconds
+        /// </summary>
+        public static long PageLoadTimeout { get; set; }
+        /// <summary>
+        /// Javascript Timeout in seconds
+        /// </summary>
+        public static long JavascriptTimeout { get; set; }
+        /// <summary>
+        ///Element Wait Timeout in seconds
+        /// </summary>
+        public static long ElementWaitTimeout { get; set; }
+        /// <summary>
+        /// Polling Interval in Milliseconds
+        /// </summary>
+        public static long PollingInterVal { get; set; }
 
         //Webdriver Configuration
         public String Browser { get; set; }
@@ -70,11 +87,11 @@ namespace SeleniumCSharp.Framework
 
         public void SetDefaults()
         {
-            ImplicitTimout = DefaultTimeOut;
-            PageLoadTimeOut = DefaultTimeOut;
+            ImplicitTimeout = DefaultTimeOut;
+            PageLoadTimeout = DefaultTimeOut;
             JavascriptTimeout = DefaultTimeOut;
             ElementWaitTimeout = DefaultTimeOut;
-            PollingInterVal = TimeSpan.FromMilliseconds(300);
+            PollingInterVal =300;
             Browser = "firefox";
             BrowserVersion = "";
             Platform = "";

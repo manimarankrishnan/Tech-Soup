@@ -167,7 +167,7 @@ namespace SeleniumCSharp.Selenium
 
         public WebElementWrapper InitializeElement()
         {
-            Wait(TestConfiguration.GetCurrentConfiguration().ElementWaitTimeout.Seconds, TestConfiguration.GetCurrentConfiguration().PollingInterVal.Milliseconds);
+            Wait(TestConfiguration.ElementWaitTimeout, TestConfiguration.PollingInterVal);
             return this;
         }
 
