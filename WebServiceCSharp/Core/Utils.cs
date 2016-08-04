@@ -460,5 +460,10 @@ namespace WebServiceCSharp.Core
                 throw ;
             }
         }
+
+        public static String GetUniqueNumber()
+        {
+            return String.Format("{0}", DateTime.UtcNow.ToFileTimeUtc() / 10000);
+        }
     }
 }

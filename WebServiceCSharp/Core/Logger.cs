@@ -15,7 +15,6 @@ namespace WebServiceCSharp.Core
         public static String name;
 
         private static String filePath { get; set; }
-
         public static LogMode mode=LogMode.DEBUG;
         private static DateTime buildStartTime = DateTime.Now;
 
@@ -103,7 +102,7 @@ namespace WebServiceCSharp.Core
         {
             if(o.GetType().ToString().Contains("Exception")){
                 Exception e = (Exception)o;
-                Error("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
+                Error("{0} \nInner Exception: {1} \n Stacktrace : {2}",e, e.InnerException, e.StackTrace);
                 return;
             }
           
@@ -132,18 +131,18 @@ namespace WebServiceCSharp.Core
 
             if(logWriter!=null)
               logWriter.WriteLine(o);
-            using (StreamWriter sw = new StreamWriter(getFilePath(), true))
+            using (StreamWriter sw = new StreamWriter(GetFilePath() + ".log", true))
             {
                 sw.AutoFlush = true;
                 sw.WriteLine(logmode +": "+ o.ToString());
             }
         }
 
-        /// <summary>
+         /// <summary>
         /// Get the file name for the current execution
         /// </summary>
         /// <returns></returns>
-        private static string getFilePath()
+        public static string GetFilePath()
         {
             if (name == null)
                 name = "TestResult";
@@ -153,9 +152,11 @@ namespace WebServiceCSharp.Core
             var newName = String.Join("_", fileName.Split(invalids.ToArray(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
             String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMM_dd_yyyy HHmmss"), name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
-            filePath = Path.Combine(filePath, newName + ".txt");
+            filePath = Path.Combine(filePath, newName );
             return filePath;
         }
+
+
     }
 
 
