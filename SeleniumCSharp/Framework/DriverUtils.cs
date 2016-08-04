@@ -33,11 +33,7 @@ namespace SeleniumCSharp.Framework
                 _drivers = new List<DriverWrapper>();
 
             DriverWrapper driver = CreateDriver(currentTestConfiguration, capabilites);
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(TestConfiguration.ImplicitTimeout));
-            driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(TestConfiguration.JavascriptTimeout));
-            //driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(TestConfiguration.PageLoadTimeout));
-            driver.Manage().Window.Maximize();
-            
+
             _drivers.Add(driver);
             return driver;
         }
@@ -120,6 +116,13 @@ namespace SeleniumCSharp.Framework
                 Logger.Error(e);
                 throw;
             }
+
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(TestConfiguration.ImplicitTimeout));
+            driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(TestConfiguration.JavascriptTimeout));
+            try
+            {
+                driver.Manage().Window.Maximize();
+            }catch{}
 
             return driver;
         }
