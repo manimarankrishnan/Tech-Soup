@@ -23,7 +23,7 @@ namespace SeleniumCSharp.Selenium
             {
                 String fileName = Logger.GetFilePath() +Utils.GetUniqueNumber() + ".jpg";
                 Driver.GetScreenshot().SaveAsFile(fileName, ImageFormat.Jpeg);
-                Logger.Debug("Screenshot saved at  <a href=\"file://{0}\">{0}</a>", fileName);
+                Logger.Debug("Screenshot saved at file://{0}", fileName);
             }
             catch (Exception e)
             {
@@ -41,7 +41,7 @@ namespace SeleniumCSharp.Selenium
                     writer.Write(Driver.PageSource);
                     writer.Close();
                 }
-                Logger.Debug("HTML Page Source Saved at <a href=\"file://{0}\">{0}</a>", fileName);
+                Logger.Debug("HTML Page Source Saved at file://{0}", fileName);
             }
             catch (Exception e)
             {

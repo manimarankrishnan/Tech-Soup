@@ -150,7 +150,7 @@ namespace WebServiceCSharp.Core
             var invalids = Path.GetInvalidFileNameChars().ToList();
              invalids.AddRange(Path.GetInvalidPathChars());
             var newName = String.Join("_", fileName.Split(invalids.ToArray(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
-            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMM_dd_yyyy HHmmss"), name.Replace(fileName, ""));
+            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"), name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
             filePath = Path.Combine(filePath, newName );
             return filePath;
