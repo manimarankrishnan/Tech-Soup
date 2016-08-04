@@ -35,7 +35,7 @@ namespace SeleniumCSharp.Framework
             DriverWrapper driver = CreateDriver(currentTestConfiguration, capabilites);
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(TestConfiguration.ImplicitTimeout));
             driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(TestConfiguration.JavascriptTimeout));
-            driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(TestConfiguration.PageLoadTimeout));
+            //driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(TestConfiguration.PageLoadTimeout));
             driver.Manage().Window.Maximize();
             
             _drivers.Add(driver);
