@@ -35,10 +35,37 @@ namespace SeleniumCSharp.Selenium
                                                     }";
 
         /// <summary>
-        /// Pass webelement as the first argument
+        /// arguments[0] - IWebelement element - the element to scroll into view
         /// </summary>
-        public const  String ScrollToElement = "arguments[0].scrollIntoView(true);";
+        public const  String ScrollIntoView = "arguments[0].scrollIntoView(true);";
 
+        /// <summary>
+        /// arguments[0] - String offset - Y axis position, where to scroll
+        /// </summary>
+        public const String ScrollVeriticallyTo = "scrollTo(0,arguments[0]);";
+
+
+        /// <summary>
+        /// arguments[0] - String offset - X axis position, where to scroll
+        /// </summary>
+        public const String ScrollHorizontallyTo = "scrollTo(arguments[0],0);";
+
+        /// <summary>
+        /// arguments[0] - String eventName - name of the event 
+        /// arguments[1] - String functionBody - the function body of the event listener
+        /// </summary>
+        public const String AddEventListenerStringFormat = "window.addEventListener('{0}',function(event){{1}});";
+
+        /// <summary>
+        /// Returns the javascript to add a function to a eventListener
+        /// </summary>
+        /// <param name="eventName">name of the event</param>
+        /// <param name="functionBody">the function body of the event listener</param>
+        /// <returns></returns>
+        public static String GetJSToAddEventListener(String eventName, String functionBody)
+        {
+            return String.Format(AddEventListenerStringFormat, eventName, functionBody);
+        }
 
 
     }

@@ -23,9 +23,6 @@ namespace SeleniumCSharp.Selenium
         {
             get
             {
-                IWebDriver driver = this.driver;
-                while (driver is IWrapsDriver)
-                    driver = ((IWrapsDriver)driver).WrappedDriver;
                 return driver;
             }
         }
@@ -181,6 +178,15 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        public IWebDriver GetInnermostDriver()
+        {
+            IWebDriver driver = this.driver;
+            while (driver is IWrapsDriver)
+            {
+                driver = ((IWrapsDriver)driver).WrappedDriver;
+            }                
+            return driver; 
+        }
 
        class CustomRemoteDriver :RemoteWebDriver
         {

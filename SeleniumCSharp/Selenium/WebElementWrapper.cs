@@ -19,92 +19,7 @@ namespace SeleniumCSharp.Selenium
 
     public class WebElementWrapper : IWebElement, ISearchContext, ILocatable, IWrapsElement
     {
-        /*
-        private const double DefaultTimeout = 90.0;
-        public By By { get; private set; }
-
-        private IWebElement element { get; set; }
-
-        public IWebElement WrappedElement
-        {
-            get
-            {
-                return this.element;
-            }
-            set
-            {
-                this.element = value;
-            }
-        }
-
-        public ReadOnlyCollection<IWebElement> WrappedElements { get; private set; }
-        private IWebElement WaitForVisibleElement(By by, double timeout)
-        {
-            this.Report.Write("Wait up to '" + (object)timeout + "' seconds to find the element by: '" + by.ToString() + "'.");
-            IWebElement webElement;
-            try
-            {
-                webElement = !(this.Driver.WrappedDriver.GetType() == typeof(DummyDriver)) ? new WebDriverWait((IWebDriver)this.Driver, TimeSpan.FromSeconds(timeout)).Until<IWebElement>(ExpectedConditions.ElementIsVisible(by)) : this.Driver.FindElement(by);
-            }
-            catch (WebDriverTimeoutException ex)
-            {
-                this.Report.Write("Attempted to wait up to '" + (object)timeout + "' seconds to find the element by: '" + by.ToString() + "', but failed.");
-                throw new Exception("Attempted to wait up to '" + (object)timeout + "' seconds to find the element by: '" + by.ToString() + "', but failed.", (Exception)ex);
-            }
-            catch (WebDriverException ex)
-            {
-                this.Report.Write("Attempted to wait up to '" + (object)timeout + "' seconds to find the element by: '" + by.ToString() + "', but failed.");
-                throw new Exception("Attempted to wait up to '" + (object)timeout + "' seconds to find the element by: '" + by.ToString() + "', but failed.", (Exception)ex);
-            }
-            this.Report.Write("Found the element by: '" + by.ToString() + "'.");
-            return webElement;
-        }
-
-        private IWebElement WaitForVisibleElement(By by)
-        {
-            return this.WaitForVisibleElement(by, 90.0);
-        }
-
-        public WebElementWrapper Wait(double timeout)
-        {
-            this.element = this.WaitForVisibleElement(this.By, timeout);
-            return this;
-        }
-
-        public WebElementWrapper Wait()
-        {
-            this.element = this.WaitForVisibleElement(this.By);
-            return this;
-        }
-
-        public WebElementWrapper WaitUntilVisible(double timeout)
-        {
-            this.element = this.WaitForVisibleElement(this.By, timeout);
-            return this;
-        }
-
-        public WebElementWrapper WaitUntilVisible()
-        {
-            this.element = this.WaitForVisibleElement(this.By);
-            return this;
-        }
-
-        public WebElementWrapper WaitUntilExists(double timeout)
-        {
-            this.element = this.WaitForElement(this.By, timeout);
-            return this;
-        }
-
-        public WebElementWrapper WaitUntilExists()
-        {
-            this.element = this.WaitForElement(this.By);
-            return this;
-        }
-         * */
-        
-
         public By by { get; set; }
-
         public ISearchContext SearchContext { get; set; }
 
         public IWebDriver Driver
@@ -154,7 +69,8 @@ namespace SeleniumCSharp.Selenium
         private IWebElement _element;
         public IWebElement WrappedElement
         {
-            get {
+            get
+            {
                 if (_element == null)
                     InitializeElement();
                 return _element;
@@ -173,19 +89,36 @@ namespace SeleniumCSharp.Selenium
 
         public ICoordinates Coordinates
         {
-            get { return ((ILocatable)WrappedElement).Coordinates; }
+            get
+            {
+
+                IWebElement element = WrappedElement;
+                while (element is IWrapsElement)
+                {
+                    element = ((IWrapsElement)element).WrappedElement;
+                }
+                return ((ILocatable)element).Coordinates;
+            }
         }
 
         public Point LocationOnScreenOnceScrolledIntoView
         {
-            get { return ((ILocatable)WrappedElement).LocationOnScreenOnceScrolledIntoView; }
+            get
+            {
+                IWebElement element = WrappedElement;
+                while (element is IWrapsElement)
+                {
+                    element = ((IWrapsElement)element).WrappedElement;
+                }
+                return ((ILocatable)element).LocationOnScreenOnceScrolledIntoView;
+            }
         }
 
         public IWebElement FindElement(By by)
         {
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement);
             List<By> locators = new List<By> { by };
-            return  retryElementLocator.LocateElement(locators);
+            return retryElementLocator.LocateElement(locators);
         }
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
@@ -203,7 +136,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element",e);
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
                 InitializeElement();
             }
             catch (Exception e)
@@ -211,7 +144,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw e;
             }
-            
+
         }
 
         public void Click()
@@ -230,7 +163,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw e;
             }
-         
+
         }
 
         public bool Displayed
@@ -279,7 +212,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw e;
             }
-           
+
         }
 
         public Size Size
@@ -327,7 +260,7 @@ namespace SeleniumCSharp.Selenium
                 Click();
         }
 
-        public WebElementWrapper Wait(long timeOutInSeconds,long pollingIntervalInMilliSeconds = 500)
+        public WebElementWrapper Wait(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
             if (by == null)
             {
@@ -335,9 +268,9 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw e;
             }
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds),TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
-            WrappedElement = retryElementLocator.LocateElement(locators); 
+            WrappedElement = retryElementLocator.LocateElement(locators);
             return this;
         }
 
@@ -368,13 +301,13 @@ namespace SeleniumCSharp.Selenium
             wait.PollingInterval = TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds);
             WrappedElement = wait.Until(ExpectedConditions.ElementIsVisible(by));
             return this;
-            
+
         }
 
         public WebElementWrapper ScrollToView()
-        {           
+        {
             if (Driver != null)
-                ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.ScrollToElement, WrappedElement);
+                ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.ScrollIntoView, WrappedElement);
             return this;
         }
 
