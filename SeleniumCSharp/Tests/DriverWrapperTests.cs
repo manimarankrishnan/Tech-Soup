@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SeleniumCSharp.Selenium;
-using OpenQA.Selenium.Firefox;
 using SeleniumCSharp.Framework;
 using WebServiceCSharp.Core;
 namespace SeleniumCSharp.Tests
@@ -27,9 +21,14 @@ namespace SeleniumCSharp.Tests
         public void GotoURLTest()
         {
             Logger.Info("Starting Test");
+           
             DriverWrapper wrapper = DriverUtils.GetDriver();
 
             wrapper.Navigate().GoToUrl("http://www.carnaticcorner.com/library.html");
+            var dc = new DriverCommands(wrapper);
+            dc.SavePageSource();
+            dc.SaveScreenshot();
+
 
             DriverWrapper wrapper1 = DriverUtils.GetDriver();
 
