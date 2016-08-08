@@ -1,5 +1,4 @@
 ﻿--------------New----------------
-#2  - Create a method to check status code returned by the server
 
 
 
@@ -22,6 +21,7 @@ _________________________________
 
 ------------Completed------------
 #1  - In ExcelSuiteRunner.cs test method(TC_getCitiesByCountry) does not work for xml responses 
+#2  - Create a method to check status code returned by the server
 
 
 

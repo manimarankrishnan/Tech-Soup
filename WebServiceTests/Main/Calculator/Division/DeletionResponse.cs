@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebServiceTests.Main.Calculator.Deletion
 {
-   public class DeletionResponse
+   public class DivisionResponse
     {
 
 

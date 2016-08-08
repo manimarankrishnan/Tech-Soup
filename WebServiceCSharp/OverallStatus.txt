@@ -61,6 +61,7 @@ Overall Scenarios Tested So Far:
 							   14. Serialization -xml/json.
 							   15. DeSerialization -xml/json.
 							   16. ExcelSuiteRunner -run the whole tests in a ExcelSheet.
+							   17. TC’s that gets URL parameters from Response of another request using Serialization and Deserialization concepts which can be used to frame another request.
 
 
 
