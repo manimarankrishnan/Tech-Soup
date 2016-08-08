@@ -82,6 +82,7 @@
     <Compile Include="Test\OtherTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Test\UnitTestData\UnitTestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UnitTests\" />
