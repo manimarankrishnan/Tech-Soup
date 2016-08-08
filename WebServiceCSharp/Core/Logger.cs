@@ -31,13 +31,7 @@ namespace WebServiceCSharp.Core
         {
             if (mode == LogMode.INFO)
             {
-                if (o.GetType().ToString().Contains("Exception"))
-                {
-                    Exception e = (Exception)o;
-                    Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException);
-                    return;
-                }
-                WriteToFile(o,"INFO");
+               WriteToFile(o,"INFO");
             }
         }
 
@@ -46,8 +40,8 @@ namespace WebServiceCSharp.Core
         /// </summary>
         /// <param name="e">Exception</param>
         public static void Info(Exception e)
-        {           
-            Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException);
+        {
+            Info("{0} \nInner Exception:\n{1} ", e, e.InnerException);
         }
 
         /// <summary>
@@ -85,7 +79,7 @@ namespace WebServiceCSharp.Core
         /// <param name="e">exception</param>
         public static void Debug(Exception e)
         {
-            Debug("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException);
+            Debug("{0} \nInner Exception:\n{1} ", e, e.InnerException);
         }
 
         /// <summary>
