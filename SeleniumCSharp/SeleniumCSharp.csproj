@@ -52,6 +52,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Form.cs" />
+    <Compile Include="Framework\Page.cs" />
     <Compile Include="Framework\DriverUtils.cs" />
     <Compile Include="Framework\TestConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,10 +62,15 @@
     <Compile Include="Selenium\JavaScripts.cs" />
     <Compile Include="Selenium\SeleniumListener.cs" />
     <Compile Include="Selenium\WebElementWrapper.cs" />
+    <Compile Include="Tests\DemoTest.cs" />
     <Compile Include="Tests\DriverWrapperTests.cs" />
+    <Compile Include="Tests\Main\LoginPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\TestCaseData.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="test.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -78,6 +85,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

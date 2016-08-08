@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
 using System.Drawing.Imaging;
+using System.Diagnostics;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium;
 namespace SeleniumCSharp.Selenium
 {
     public class DriverCommands
@@ -47,6 +50,12 @@ namespace SeleniumCSharp.Selenium
             {
                 Logger.Error(e);
             }
+        }
+
+        public void GetScreenshotAndPageSource()
+        {
+            SaveScreenshot();
+            SavePageSource();
         }
 
 
