@@ -40,13 +40,13 @@ namespace SeleniumCSharp.Selenium
         public const  String ScrollIntoView = "arguments[0].scrollIntoView(true);";
 
         /// <summary>
-        /// arguments[0] - String offset - Y axis position, where to scroll
+        /// arguments[0] - int offset - Y axis position, where to scroll
         /// </summary>
         public const String ScrollVeriticallyTo = "scrollTo(0,arguments[0]);";
 
 
         /// <summary>
-        /// arguments[0] - String offset - X axis position, where to scroll
+        /// arguments[0] - int offset - X axis position, where to scroll
         /// </summary>
         public const String ScrollHorizontallyTo = "scrollTo(arguments[0],0);";
 
@@ -67,6 +67,11 @@ namespace SeleniumCSharp.Selenium
             return String.Format(AddEventListenerStringFormat, eventName, functionBody);
         }
 
+        /// <summary>
+        /// Returns the parent element 
+        /// arguments[0] - IWebElement element - the webelement
+        /// </summary>
+        public const String ParentElementNode = "return arguments[0].parentNode;";
 
     }
 }

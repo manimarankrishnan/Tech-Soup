@@ -22,29 +22,39 @@ namespace SeleniumCSharp.Selenium
         public By by { get; set; }
         public ISearchContext SearchContext { get; set; }
 
-        public IWebDriver Driver
+        private DriverWrapper _driver;
+        public DriverWrapper Driver
         {
             get
             {
-                IWebDriver driver = null;
+                if (_driver != null)
+                    return _driver;
                 ISearchContext searchContext = SearchContext;
                 while (searchContext is WebElementWrapper)
                 {
                     searchContext = ((WebElementWrapper)searchContext).SearchContext;
                 }
+                if (searchContext is DriverWrapper)
+                    return (DriverWrapper)searchContext;
                 if (searchContext is IWebDriver)
-                    driver = (IWebDriver)searchContext;
-                return driver;
+                   return  new DriverWrapper((IWebDriver)searchContext);
+                return null; 
+            }
+            set
+            {
+                _driver = value;
             }
         }
 
-        public WebElementWrapper(IWebElement element)
+        public WebElementWrapper(IWebElement element,DriverWrapper driver = null)
         {
             this.WrappedElement = element;
+            this._driver = driver;
         }
 
         public WebElementWrapper(IWebDriver driver, By by)
         {
+            this._driver = new DriverWrapper(driver);
             this.SearchContext = driver;
             this.by = by;
         }
@@ -57,11 +67,13 @@ namespace SeleniumCSharp.Selenium
 
         public WebElementWrapper(DriverWrapper driver, By by)
         {
+            this._driver = driver;
             this.SearchContext = driver;
             this.by = by;
         }
         public WebElementWrapper(WebElementWrapper parentElementWrapper, By by)
         {
+            this._driver = parentElementWrapper.Driver;
             this.SearchContext = parentElementWrapper;
             this.by = by;
         }
@@ -478,6 +490,24 @@ namespace SeleniumCSharp.Selenium
                 element = ((IWrapsElement)element).WrappedElement;
             }
             return element;
+        }
+
+        public WebElementWrapper ParentElement
+        {
+            get
+            {
+                try
+                {
+                    IWebElement element = (IWebElement) Driver.ExecuteScript(JavaScripts.ParentElementNode, WrappedElement);
+                    var wrapper = new WebElementWrapper(element,Driver);
+                    return wrapper;
+                }
+                catch(Exception e)
+                {
+                    Logger.Error(e);
+                    throw;
+                }
+            }
         }
     }
 }
