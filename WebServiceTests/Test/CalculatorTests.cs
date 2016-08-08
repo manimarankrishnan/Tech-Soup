@@ -26,6 +26,7 @@ namespace WebServiceTests.Test
         //`````````````````````````````````````````````````````````Start-Of-BasicCalculatorTests`````````````````````````````````````````````````````````//
 
 
+
         /// <summary>
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
@@ -252,7 +253,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Div_Object");
 
-            XmlDocument responseBody = client.SetRequestBody(new DivisionRequest(a, b).ToString())
+            XmlDocument responseBody = client.SetRequestBody(new DeletionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
@@ -323,7 +324,6 @@ namespace WebServiceTests.Test
         /// Base URI- empty,gets from excel
         /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
         /// xml response is deserialized to object
-        /// the response value will be used to frame another request.
         /// </summary>
         [Test]
         [TestCase(-15, -5)]
@@ -331,36 +331,23 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Div_Object");
 
-            client.SetRequestBody(new DivisionRequest(a, b).ToString())
+            client.SetRequestBody(new DeletionRequest(a, b).ToString())
                 .SetRequest().CallService();
 
-            DivisionResponse.Envelope response = (DivisionResponse.Envelope)client.GetResponseAsObject(typeof(DivisionResponse.Envelope));
+            DeletionResponse.Envelope response = (DeletionResponse.Envelope)client.GetResponseAsObject(typeof(DeletionResponse.Envelope));
             
             Assert.AreEqual(response.Body.DivideResponse.DivideResult,3, "Actual and Expected response body are not eaual");
-
-            WebServiceClient clientNew = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Div_Object");
-            clientNew.SetRequestBody(new DivisionRequest(response.Body.DivideResponse.DivideResult, response.Body.DivideResponse.DivideResult).ToString()).SetRequest().CallService();
-
-            DivisionResponse.Envelope responseNew = (DivisionResponse.Envelope)clientNew.GetResponseAsObject(typeof(DivisionResponse.Envelope));
-
-            Assert.AreEqual(responseNew.Body.DivideResponse.DivideResult, 1, "Actual and Expected response body are not eaual");
         }
 
-
-        /// <summary>
-        /// Base URI- empty,gets from excel
-        /// TC- gets from excel (TestCaseData_CalculatorTestsWithURI)using identifier
-        /// xml response is deserialized to object
-        /// </summary>
         [TestCase(-15, -5, ExpectedResult = 3)]
         public int PerformDeletionUsingDeSerializedObjectNUnitAttribute(int a, int b)
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Div_Object");
 
-            client.SetRequestBody(new DivisionRequest(a, b).ToString())
+            client.SetRequestBody(new DeletionRequest(a, b).ToString())
                 .SetRequest().CallService();
 
-            DivisionResponse.Envelope response = (DivisionResponse.Envelope)client.GetResponseAsObject(typeof(DivisionResponse.Envelope));
+            DeletionResponse.Envelope response = (DeletionResponse.Envelope)client.GetResponseAsObject(typeof(DeletionResponse.Envelope));
             return response.Body.DivideResponse.DivideResult;
         }
         

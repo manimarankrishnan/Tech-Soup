@@ -15,7 +15,6 @@ namespace WebServiceCSharp.Core
         public static String name;
 
         private static String filePath { get; set; }
-
         public static LogMode mode=LogMode.DEBUG;
         private static DateTime buildStartTime = DateTime.Now;
 
@@ -32,14 +31,17 @@ namespace WebServiceCSharp.Core
         {
             if (mode == LogMode.INFO)
             {
-                if (o.GetType().ToString().Contains("Exception"))
-                {
-                    Exception e = (Exception)o;
-                    Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
-                    return;
-                }
-                WriteToFile(o,"INFO");
+               WriteToFile(o,"INFO");
             }
+        }
+
+        /// <summary>
+        /// Log info into the log file when log mode is Info
+        /// </summary>
+        /// <param name="e">Exception</param>
+        public static void Info(Exception e)
+        {
+            Info("{0} \nInner Exception:\n{1} ", e, e.InnerException);
         }
 
         /// <summary>
@@ -67,15 +69,17 @@ namespace WebServiceCSharp.Core
 
             if (mode == LogMode.DEBUG || mode == LogMode.INFO)
             {
-                if (o.GetType().ToString().Contains("Exception"))
-                {
-                    Exception e = (Exception)o;
-                    Debug("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
-                    return;
-                }
-                WriteToFile(o,"DEBUG");
+               WriteToFile(o,"DEBUG");
             }
                
+        }
+        /// <summary>
+        /// Log Debug into the log file when logMode is Debug or Error
+        /// </summary>
+        /// <param name="e">exception</param>
+        public static void Debug(Exception e)
+        {
+            Debug("{0} \nInner Exception:\n{1} ", e, e.InnerException);
         }
 
         /// <summary>
@@ -101,13 +105,16 @@ namespace WebServiceCSharp.Core
         /// <param name="o"></param>
         public static void Error(Object o)
         {
-            if(o.GetType().ToString().Contains("Exception")){
-                Exception e = (Exception)o;
-                Error("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
-                return;
-            }
-          
             WriteToFile(o,"ERROR");
+        }
+
+        /// <summary>
+        /// Log Debug into the log file
+        /// </summary>
+        /// <param name="e">Exception</param>
+        public static void Error(Exception e)
+        {
+            Error("{0} \nInner Exception:\n{1} ", e, e.InnerException);
         }
 
         /// <summary>
@@ -132,18 +139,18 @@ namespace WebServiceCSharp.Core
 
             if(logWriter!=null)
               logWriter.WriteLine(o);
-            using (StreamWriter sw = new StreamWriter(getFilePath(), true))
+            using (StreamWriter sw = new StreamWriter(GetFilePath() + ".log", true))
             {
                 sw.AutoFlush = true;
                 sw.WriteLine(logmode +": "+ o.ToString());
             }
         }
 
-        /// <summary>
+         /// <summary>
         /// Get the file name for the current execution
         /// </summary>
         /// <returns></returns>
-        private static string getFilePath()
+        public static string GetFilePath()
         {
             if (name == null)
                 name = "TestResult";
@@ -151,11 +158,13 @@ namespace WebServiceCSharp.Core
             var invalids = Path.GetInvalidFileNameChars().ToList();
              invalids.AddRange(Path.GetInvalidPathChars());
             var newName = String.Join("_", fileName.Split(invalids.ToArray(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
-            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMM_dd_yyyy HHmmss"), name.Replace(fileName, ""));
+            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"), name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
-            filePath = Path.Combine(filePath, newName + ".txt");
+            filePath = Path.Combine(filePath, newName );
             return filePath;
         }
+
+
     }
 
 
