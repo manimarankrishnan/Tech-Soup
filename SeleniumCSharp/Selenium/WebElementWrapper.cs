@@ -91,7 +91,6 @@ namespace SeleniumCSharp.Selenium
         {
             get
             {
-
                 IWebElement element = WrappedElement;
                 while (element is IWrapsElement)
                 {
@@ -116,16 +115,48 @@ namespace SeleniumCSharp.Selenium
 
         public IWebElement FindElement(By by)
         {
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement);
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
             List<By> locators = new List<By> { by };
-            return retryElementLocator.LocateElement(locators);
+            try
+            {
+                return retryElementLocator.LocateElement(locators);
+            }
+            catch (StaleElementReferenceException e)
+            {
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                InitializeElement();
+                return retryElementLocator.LocateElement(locators);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+          
         }
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement);
+            ReadOnlyCollection<IWebElement> result;
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
             List<By> locators = new List<By> { by };
-            return retryElementLocator.LocateElements(locators);
+            try
+            {
+                result = retryElementLocator.LocateElements(locators);
+            }
+            catch (StaleElementReferenceException e)
+            {
+                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                InitializeElement();
+                result = retryElementLocator.LocateElements(locators);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            Logger.Info("Found {0} element using the locator {1} in webelement {2} ", result.Count, by, WrappedElement);
+            return result;
         }
 
         public void Clear()
@@ -138,15 +169,20 @@ namespace SeleniumCSharp.Selenium
             {
                 Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
                 InitializeElement();
+                WrappedElement.Clear();
             }
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
-
+            Logger.Info("Cleared the element : {0}", WrappedElement);
         }
+        
 
+        /// <summary>
+        /// Click a webelement
+        /// </summary>
         public void Click()
         {
             try
@@ -157,12 +193,14 @@ namespace SeleniumCSharp.Selenium
             {
                 Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
                 InitializeElement();
+                WrappedElement.Click();
             }
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
+            Logger.Info("Clicked the element : {0}", WrappedElement);
 
         }
 
@@ -176,11 +214,21 @@ namespace SeleniumCSharp.Selenium
             get { return WrappedElement.Enabled; }
         }
 
+        /// <summary>
+        /// Get an attribute's value in the webelement
+        /// </summary>
+        /// <param name="attributeName">attribute name</param>
+        /// <returns></returns>
         public string GetAttribute(string attributeName)
         {
             return WrappedElement.GetAttribute(attributeName);
         }
 
+        /// <summary>
+        /// Get the Css property value of the webelement
+        /// </summary>
+        /// <param name="propertyName">property name</param>
+        /// <returns></returns>
         public string GetCssValue(string propertyName)
         {
             return WrappedElement.GetCssValue(propertyName);
@@ -196,8 +244,17 @@ namespace SeleniumCSharp.Selenium
             get { return WrappedElement.Selected; }
         }
 
+        /// <summary>
+        /// Send keys to the WebElement
+        /// </summary>
+        /// <param name="text">Text to be entered</param>
         public void SendKeys(string text)
         {
+            if (String.IsNullOrEmpty(text))
+            {
+                Logger.Debug("Recived null or empty string for sendkeys, returning without proceeding.");
+                return;
+            }
             try
             {
                 WrappedElement.SendKeys(text);
@@ -206,20 +263,28 @@ namespace SeleniumCSharp.Selenium
             {
                 Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
                 InitializeElement();
+                WrappedElement.SendKeys(text); 
             }
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
+            Logger.Info("Entered text {0} in the webelement : {1}",text, WrappedElement);
 
         }
 
+        /// <summary>
+        /// Size of the webelement
+        /// </summary>
         public Size Size
         {
             get { return WrappedElement.Size; }
         }
 
+        /// <summary>
+        /// Submit a webelement
+        /// </summary>
         public void Submit()
         {
             try
@@ -234,85 +299,162 @@ namespace SeleniumCSharp.Selenium
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw e;
+                throw ;
             }
         }
 
+        /// <summary>
+        /// Get the tag name of the Webelement
+        /// </summary>
         public string TagName
         {
             get { return WrappedElement.TagName; }
         }
 
+
+        /// <summary>
+        /// Get the text inside the webelement
+        /// </summary>
         public string Text
         {
             get { return WrappedElement.Text; }
         }
 
+        /// <summary>
+        /// Select the webelement
+        /// </summary>
         public void Check()
         {
             if (!Selected)
                 Click();
         }
 
+        /// <summary>
+        /// Un Select the webelement
+        /// </summary>
         public void UnCheck()
         {
             if (Selected)
                 Click();
         }
 
+        /// <summary>
+        /// Wait for element to be found using the By Locator
+        /// </summary>
+        /// <param name="timeOutInSeconds">Timeout period in seconds</param>
+        /// <param name="pollingIntervalInMilliSeconds">Polling interval in milliseconds</param>
+        /// <returns></returns>
         public WebElementWrapper Wait(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
             if (by == null)
             {
-                Exception e = new Exception("The By is not initialized.");
+                Exception e = new Exception("The By locator is not initialized.");
                 Logger.Error(e);
                 throw e;
             }
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
-            List<By> locators = new List<By> { by };
-            WrappedElement = retryElementLocator.LocateElement(locators);
-            return this;
+            try
+            {
+                RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
+                List<By> locators = new List<By> { by };
+                WrappedElement = retryElementLocator.LocateElement(locators);
+                Logger.Info("Found element using locator: {0}", by);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+           return this;
         }
 
+        /// <summary>
+        /// Gets the elements found using the By locator 
+        /// </summary>
+        /// <param name="timeOutInSeconds">Timeout period in seconds</param>
+        /// <param name="pollingIntervalInMilliSeconds">Polling interval in milliseconds</param>
+        /// <returns></returns>
         public ReadOnlyCollection<IWebElement> WaitForElements(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
 
             if (by == null)
             {
-                Exception e = new Exception("The By is not initialized.");
+                Exception e = new Exception("The By locator is not initialized.");
                 Logger.Error(e);
                 throw e;
             }
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
-            return retryElementLocator.LocateElements(locators);
+            var elements = retryElementLocator.LocateElements(locators);
+            Logger.Info("Found {0} elements using locator {1}", elements.Count, by);
+            return elements;
         }
 
-
+        /// <summary>
+        /// Wait for element to be visible
+        /// </summary>
+        /// <param name="timeOutInSeconds">Time out period in seconds.</param>
+        /// <param name="pollingIntervalInMilliSeconds"> Polling interval in milliseconds</param>
+        /// <returns></returns>
         public WebElementWrapper WaitToBeVisible(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
             if (by == null)
             {
-                Exception e = new Exception("The By is not initialized.");
+                Exception e = new Exception("The By locator is not initialized.");
                 Logger.Error(e);
                 throw e;
             }
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOutInSeconds));
-            wait.PollingInterval = TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds);
-            WrappedElement = wait.Until(ExpectedConditions.ElementIsVisible(by));
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOutInSeconds));
+                wait.PollingInterval = TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds);
+                WrappedElement = wait.Until(ExpectedConditions.ElementIsVisible(by));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+           
             return this;
 
         }
 
+        /// <summary>
+        /// Scroll into the view of an element.
+        /// </summary>
+        /// <returns></returns>
         public WebElementWrapper ScrollToView()
         {
-            if (Driver != null)
-                ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.ScrollIntoView, WrappedElement);
+             if (Driver == null){
+                  Exception e = new Exception ("Driver is null");
+                    Logger.Error(e);
+                    throw e;
+             }
+            try
+            {
+               ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.ScrollIntoView, WrappedElement);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+           
             return this;
         }
 
+        /// <summary>
+        /// Move to a Webelement
+        /// </summary>
+        /// <returns></returns>
         public WebElementWrapper MoveToElement()
         {
+            if (Driver == null)
+            {
+                Exception e = new Exception("Driver is null");
+                Logger.Error(e);
+                throw e;
+            }
             try
             {
                 new Actions((IWebDriver)this.Driver).MoveToElement(WrappedElement).Click().Build().Perform();
@@ -322,6 +464,20 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(ex);
             }
             return this;
+        }
+
+        /// <summary>
+        /// Gets the Webelement inside multiple levels of Wrapper classes.
+        /// </summary>
+        /// <returns></returns>
+        public IWebElement GetInnerMostWrapedElement()
+        {
+            IWebElement element = WrappedElement;
+            while (element is IWrapsElement)
+            {
+                element = ((IWrapsElement)element).WrappedElement;
+            }
+            return element;
         }
     }
 }
