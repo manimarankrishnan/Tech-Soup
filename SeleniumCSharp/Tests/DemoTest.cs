@@ -8,6 +8,8 @@ using WebServiceCSharp.Core;
 using SeleniumCSharp.Selenium;
 using SeleniumCSharp.Framework;
 using SeleniumCSharp.Tests.Main;
+using OpenQA.Selenium;
+
 namespace SeleniumCSharp.Tests
 {
     public class DemoTest
@@ -37,6 +39,29 @@ namespace SeleniumCSharp.Tests
                 throw;
             }
            
+
+        }
+
+        [Test]
+        public void TestSelectElementWrapper()
+        {
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                LoginPage loginPage = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
+                loginPage.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
+                loginPage.Form.InputFormFields().SubmitForm();
+                driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
+                SelectElementWrapper adminYear = new SelectElementWrapper(driver,By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
+                var ele = adminYear.SelectedOption;
+                var ee = ele.ParentElement;
+            }
+            catch (Exception e)
+            {
+                new DriverCommands(driver).GetScreenshotAndPageSource();
+                throw;
+            }
+
 
         }
         [TearDown]

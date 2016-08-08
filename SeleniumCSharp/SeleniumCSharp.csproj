@@ -60,6 +60,7 @@
     <Compile Include="Selenium\DriverCommands.cs" />
     <Compile Include="Selenium\DriverWrapper.cs" />
     <Compile Include="Selenium\JavaScripts.cs" />
+    <Compile Include="Selenium\SelectElementWrapper.cs" />
     <Compile Include="Selenium\SeleniumListener.cs" />
     <Compile Include="Selenium\WebElementWrapper.cs" />
     <Compile Include="Tests\DemoTest.cs" />
