@@ -34,11 +34,20 @@ namespace WebServiceCSharp.Core
                 if (o.GetType().ToString().Contains("Exception"))
                 {
                     Exception e = (Exception)o;
-                    Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
+                    Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException);
                     return;
                 }
                 WriteToFile(o,"INFO");
             }
+        }
+
+        /// <summary>
+        /// Log info into the log file when log mode is Info
+        /// </summary>
+        /// <param name="e">Exception</param>
+        public static void Info(Exception e)
+        {           
+            Info("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException);
         }
 
         /// <summary>
@@ -66,15 +75,17 @@ namespace WebServiceCSharp.Core
 
             if (mode == LogMode.DEBUG || mode == LogMode.INFO)
             {
-                if (o.GetType().ToString().Contains("Exception"))
-                {
-                    Exception e = (Exception)o;
-                    Debug("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException, e.StackTrace);
-                    return;
-                }
-                WriteToFile(o,"DEBUG");
+               WriteToFile(o,"DEBUG");
             }
                
+        }
+        /// <summary>
+        /// Log Debug into the log file when logMode is Debug or Error
+        /// </summary>
+        /// <param name="e">exception</param>
+        public static void Debug(Exception e)
+        {
+            Debug("Inner Exception: {0} \n Stacktrace : {1}", e.InnerException);
         }
 
         /// <summary>
@@ -100,13 +111,16 @@ namespace WebServiceCSharp.Core
         /// <param name="o"></param>
         public static void Error(Object o)
         {
-            if(o.GetType().ToString().Contains("Exception")){
-                Exception e = (Exception)o;
-                Error("{0} \nInner Exception: {1} \n Stacktrace : {2}",e, e.InnerException, e.StackTrace);
-                return;
-            }
-          
             WriteToFile(o,"ERROR");
+        }
+
+        /// <summary>
+        /// Log Debug into the log file
+        /// </summary>
+        /// <param name="e">Exception</param>
+        public static void Error(Exception e)
+        {
+            Error("{0} \nInner Exception:\n{1} ", e, e.InnerException);
         }
 
         /// <summary>
