@@ -74,11 +74,11 @@ namespace SeleniumCSharp.Tests.Main
         public override Form InputFormFields()
         {
             String value;
-            if (Data.TryGetValue("UserName", out value) && !String.IsNullOrEmpty(value))
+            if (Data.TryGetValue("UserName", out value))
             {
                 UserName.SendKeys(value);
             }
-            if (Data.TryGetValue("Password", out value) && !String.IsNullOrEmpty(value))
+            if (Data.TryGetValue("Password", out value))
             {
                 Password.SendKeys(value);
             }

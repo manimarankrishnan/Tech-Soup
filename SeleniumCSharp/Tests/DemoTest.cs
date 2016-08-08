@@ -17,7 +17,7 @@ namespace SeleniumCSharp.Tests
         {
             Logger.logWriter = TestContext.Out;
             Logger.name = TestContext.CurrentContext.Test.FullName;
-            Logger.mode = LogMode.DEBUG;
+            Logger.mode = LogMode.INFO;
             Logger.Info("Setup completed");
         }
 
