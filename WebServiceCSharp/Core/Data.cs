@@ -42,7 +42,7 @@ namespace WebServiceCSharp.Core
         }
 
         /// <summary>
-        /// Returns a single value for a particula key
+        /// Returns a single value for a particular key
         /// </summary>
         /// <param name="key">key</param>
         /// <returns>Single Strng value</returns>
@@ -62,7 +62,7 @@ namespace WebServiceCSharp.Core
         }
 
         /// <summary>
-        /// Returns a list of values for a particula key
+        /// Returns a list of values for a particular key
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
