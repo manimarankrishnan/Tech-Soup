@@ -135,9 +135,14 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
-                InitializeElement();
-                return retryElementLocator.LocateElement(locators);
+                if (Driver != null && by != null)
+                {
+                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    InitializeElement();
+                    return retryElementLocator.LocateElement(locators);
+                }
+                else
+                    throw;
             }
             catch (Exception e)
             {
@@ -158,9 +163,14 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
-                InitializeElement();
-                result = retryElementLocator.LocateElements(locators);
+                if (Driver != null && by != null)
+                {
+                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    InitializeElement();
+                    result = retryElementLocator.LocateElements(locators);
+                }
+                else
+                    throw;
             }
             catch (Exception e)
             {
@@ -179,9 +189,14 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
-                InitializeElement();
-                WrappedElement.Clear();
+                if (Driver != null && by != null)
+                {
+                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    InitializeElement();
+                    WrappedElement.Clear();
+                }
+                else
+                    throw;
             }
             catch (Exception e)
             {
@@ -203,9 +218,14 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
-                InitializeElement();
-                WrappedElement.Click();
+                if (Driver != null && by != null)
+                {
+                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    InitializeElement();
+                    WrappedElement.Click();
+                }
+                else
+                    throw;
             }
             catch (Exception e)
             {
@@ -273,9 +293,14 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
-                InitializeElement();
-                WrappedElement.SendKeys(text); 
+                if (Driver != null && by != null)
+                {
+                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    InitializeElement();
+                    WrappedElement.SendKeys(text);
+                }
+                else
+                    throw;
             }
             catch (Exception e)
             {
@@ -305,8 +330,14 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
-                InitializeElement();
+                if (Driver != null && by != null)
+                {
+                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    InitializeElement();
+                    WrappedElement.Submit();
+                }
+                else
+                    throw;
             }
             catch (Exception e)
             {
