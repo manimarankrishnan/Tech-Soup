@@ -15,7 +15,7 @@ using OpenQA.Selenium.Remote;
 namespace SeleniumCSharp.Selenium
 {
 
-    public class DriverWrapper : IWebDriver, ISearchContext, IDisposable, IJavaScriptExecutor, IHasInputDevices, ITakesScreenshot, IWrapsDriver
+    public class DriverWrapper : IWebDriver, IJavaScriptExecutor, IHasInputDevices, ITakesScreenshot, IWrapsDriver
     {
         private IWebDriver driver;
 

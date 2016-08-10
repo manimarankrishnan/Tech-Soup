@@ -90,7 +90,7 @@ namespace SeleniumCSharp.Framework
             ImplicitTimeout = DefaultTimeOut;
             PageLoadTimeout = DefaultTimeOut;
             JavascriptTimeout = DefaultTimeOut;
-            ElementWaitTimeout = 10;
+            ElementWaitTimeout = DefaultTimeOut;
             PollingInterVal =300;
             Browser = "firefox";
             BrowserVersion = "";

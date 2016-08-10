@@ -54,7 +54,7 @@ namespace SeleniumCSharp.Selenium
         /// arguments[0] - String eventName - name of the event 
         /// arguments[1] - String functionBody - the function body of the event listener
         /// </summary>
-        public const String AddEventListenerStringFormat = "window.addEventListener('{0}',function(event){{1}});";
+        public const String AddEventListenerStringFormat = "window.addEventListener('{0}',function(event){ {1} });";
 
         /// <summary>
         /// Returns the javascript to add a function to a eventListener

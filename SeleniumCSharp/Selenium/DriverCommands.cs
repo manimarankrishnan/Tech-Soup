@@ -42,7 +42,6 @@ namespace SeleniumCSharp.Selenium
                 using (var writer = new System.IO.StreamWriter(fileName))
                 {
                     writer.Write(Driver.PageSource);
-                    writer.Close();
                 }
                 Logger.Debug("HTML Page Source Saved at file://{0}", fileName.Replace('\\','/'));
             }
