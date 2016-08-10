@@ -64,6 +64,91 @@ namespace SeleniumCSharp.Tests
 
 
         }
+
+        [Test]
+        public void TestWebElementWrapper()
+        {
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                LoginPage page = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
+                page.Data = new Data("TestCaseData_Authentication_Teacher");
+                //Test method InputFormFields
+                page.Form.InputFormFields();
+                //Test method Clear
+                page.Form.UserName.Clear();
+                page.Form.UserName.Clear();
+                //Test method Click
+                page.Form.Submit.Click();
+                //Test property Displayed
+                page.Form.InitElements();
+                bool isUserNameDisplayed = page.Form.UserName.Displayed;
+                Assert.IsTrue(isUserNameDisplayed,"UserName textbox is displayed");
+                //Test property Enabled
+                bool isUserNameEnabled = page.Form.UserName.Enabled;
+                Assert.IsTrue(isUserNameEnabled, "UserName textbox is Enabled");
+                //Test method GetAttribute
+                string attribute = page.Form.UserName.GetAttribute("type");
+                Assert.AreEqual(attribute, "text", "UserName type is different");
+                //test method GetCssValue
+                string cssValueHeightOfUserName = page.Form.UserName.GetCssValue("height");
+                Assert.AreEqual(cssValueHeightOfUserName, "20px", "UserName height is not 20px");
+                //Test property Location
+                System.Drawing.Point locationOfUserName = page.Form.UserName.Location;
+                //Test property Size
+                System.Drawing.Size sizeOfUserName = page.Form.UserName.Size;
+                //Test method SendKeys
+                page.Form.UserName.SendKeys("vj_teacher");
+                page.Form.Password.SendKeys("sch00lnet");
+                //Login
+                page.Form.Submit.Click();
+            }
+            catch(Exception e)
+            {
+                new DriverCommands(driver).GetScreenshotAndPageSource();
+                throw;
+            }
+
+        }
+
+        [Test]
+        public void TestSelectElementWrapper2()
+        {
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                LoginPage page = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
+                page.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
+                page.Form.InputFormFields().SubmitForm();
+                driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
+                SelectElementWrapper adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
+                //Test method SelectedOption
+                var selectedElement = adminYear.SelectedOption;
+                //Test method SelectByValue
+                adminYear.SelectByValue("2009");
+                //Test property IsMultiple
+                bool a =adminYear.IsMultiple;
+                //adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
+                //Test method SelectByText
+                adminYear.SelectByText("2010-2011");
+                adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
+                //Test method SelectByIndex
+                adminYear.SelectByIndex(2);
+                
+
+            }
+            catch (StaleElementReferenceException see)
+            {
+                new DriverCommands(driver).GetScreenshotAndPageSource();
+                throw;
+            }
+            catch (Exception e)
+            {
+                new DriverCommands(driver).GetScreenshotAndPageSource();
+                throw;
+            }
+        }
+
         [TearDown]
         public void CleanUp()
         {

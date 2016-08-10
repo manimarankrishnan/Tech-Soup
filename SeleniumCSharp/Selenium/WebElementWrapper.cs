@@ -266,6 +266,9 @@ namespace SeleniumCSharp.Selenium
             return WrappedElement.GetCssValue(propertyName);
         }
 
+        /// <summary>
+        /// Location of the webelement on the screen
+        /// </summary>
         public Point Location
         {
             get { return WrappedElement.Location; }

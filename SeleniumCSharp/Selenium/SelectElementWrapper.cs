@@ -276,7 +276,7 @@ namespace SeleniumCSharp.Selenium
         {
             try
             {
-                SelectElement.DeselectByText(text);
+                SelectElement.SelectByText(text);
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace SeleniumCSharp.Selenium
         {
             try
             {
-                SelectElement.DeselectByValue(value);
+                SelectElement.SelectByValue(value);
             }
             catch (Exception e)
             {
