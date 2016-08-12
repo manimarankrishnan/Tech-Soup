@@ -137,7 +137,7 @@ namespace SeleniumCSharp.Selenium
             {
                 if (Driver != null && by != null)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     return retryElementLocator.LocateElement(locators);
                 }
@@ -165,7 +165,7 @@ namespace SeleniumCSharp.Selenium
             {
                 if (Driver != null && by != null)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     result = retryElementLocator.LocateElements(locators);
                 }
@@ -177,7 +177,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Found {0} element using the locator {1} in webelement {2} ", result.Count, by, WrappedElement);
+            Logger.Info("Found {0} element using the locator {1} in webelement {2} ", result.Count, by, WrappedElement.TagName);
             return result;
         }
 
@@ -191,7 +191,7 @@ namespace SeleniumCSharp.Selenium
             {
                 if (Driver != null && by != null)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     WrappedElement.Clear();
                 }
@@ -203,7 +203,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Cleared the element : {0}", WrappedElement);
+            Logger.Info("Cleared the element : {0}", by);
         }
 
 
@@ -220,7 +220,7 @@ namespace SeleniumCSharp.Selenium
             {
                 if (Driver != null && by != null)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     WrappedElement.Click();
                 }
@@ -232,7 +232,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Clicked the element : {0}", WrappedElement);
+            Logger.Info("Clicked the element : {0}", by);
 
         }
 
@@ -298,7 +298,7 @@ namespace SeleniumCSharp.Selenium
             {
                 if (Driver != null && by != null)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     WrappedElement.SendKeys(text);
                 }
@@ -310,7 +310,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Entered text {0} in the webelement : {1}", text, WrappedElement);
+            Logger.Info("Entered text '{0}' in the webelement : {1}",text, by);
 
         }
 
@@ -335,7 +335,7 @@ namespace SeleniumCSharp.Selenium
             {
                 if (Driver != null && by != null)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     WrappedElement.Submit();
                 }
