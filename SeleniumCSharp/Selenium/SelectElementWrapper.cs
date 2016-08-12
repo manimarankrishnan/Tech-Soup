@@ -89,7 +89,7 @@ namespace SeleniumCSharp.Selenium
                 }
                 catch (StaleElementReferenceException e)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     return SelectElement.AllSelectedOptions;
                 }
@@ -114,7 +114,7 @@ namespace SeleniumCSharp.Selenium
                 }
                 catch (StaleElementReferenceException e)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     return SelectElement.IsMultiple;
                 }
@@ -140,7 +140,7 @@ namespace SeleniumCSharp.Selenium
                 }
                 catch (StaleElementReferenceException e)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     return SelectElement.Options;
                 }
@@ -175,7 +175,7 @@ namespace SeleniumCSharp.Selenium
                 }
                 catch (StaleElementReferenceException e)
                 {
-                    Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                    Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
                     return new WebElementWrapper(SelectElement.SelectedOption, Driver);
                 }
@@ -204,7 +204,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                 InitializeElement();
                 SelectElement.DeselectByIndex(index);
             }
@@ -234,7 +234,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                 InitializeElement();
                 SelectElement.DeselectByText(text);
             }
@@ -263,7 +263,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                 InitializeElement();
                 SelectElement.DeselectByValue(value);
             }
@@ -293,7 +293,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                 InitializeElement();
                 SelectElement.SelectByIndex(index);
             }
@@ -327,7 +327,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                 InitializeElement();
                 SelectElement.SelectByText(text);
             }
@@ -360,7 +360,7 @@ namespace SeleniumCSharp.Selenium
             }
             catch (StaleElementReferenceException e)
             {
-                Logger.Error("Caught exception {0}. Attempting to re-initialize element", e);
+                Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                 InitializeElement();
                 SelectElement.SelectByValue(value);
             }

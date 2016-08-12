@@ -54,7 +54,8 @@ namespace SeleniumCSharp.Tests
                 driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
                 SelectElementWrapper adminYear = new SelectElementWrapper(driver,By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
                 var ele = adminYear.SelectedOption;
-                var ee = ele.ParentElement;
+                var parentElement = ele.ParentElement;
+                Assert.AreEqual(parentElement.TagName, "select", "Wrong Parent element tag name is displayed");
             }
             catch (Exception e)
             {
@@ -117,24 +118,29 @@ namespace SeleniumCSharp.Tests
             DriverWrapper driver = DriverUtils.GetDriver();
             try
             {
-                LoginPage page = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
+                LoginPage page = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));              
                 page.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
                 page.Form.InputFormFields().SubmitForm();
                 driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
                 SelectElementWrapper adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
-                //Test method SelectedOption
+                //Test property SelectedOption
                 var selectedElement = adminYear.SelectedOption;
+                //Test property  Options
+                var allOptions = adminYear.Options;
+                //Test property AllSelectedOptions
+                var allSelected = adminYear.AllSelectedOptions;
                 //Test method SelectByValue
                 adminYear.SelectByValue("2009");
                 //Test property IsMultiple
                 bool a =adminYear.IsMultiple;
+                //Test property ParentElement
+
                 //adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
                 //Test method SelectByText
                 adminYear.SelectByText("2010-2011");
-                adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
+                //adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
                 //Test method SelectByIndex
-                adminYear.SelectByIndex(2);
-                
+                adminYear.SelectByIndex(2);                
 
             }
             catch (StaleElementReferenceException see)
