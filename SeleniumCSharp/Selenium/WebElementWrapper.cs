@@ -37,8 +37,8 @@ namespace SeleniumCSharp.Selenium
                 if (searchContext is DriverWrapper)
                     return (DriverWrapper)searchContext;
                 if (searchContext is IWebDriver)
-                   return  new DriverWrapper((IWebDriver)searchContext);
-                return null; 
+                    return new DriverWrapper((IWebDriver)searchContext);
+                return null;
             }
             set
             {
@@ -46,7 +46,7 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
-        public WebElementWrapper(IWebElement element,DriverWrapper driver = null)
+        public WebElementWrapper(IWebElement element, DriverWrapper driver = null)
         {
             this.WrappedElement = element;
             this._driver = driver;
@@ -149,7 +149,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-          
+
         }
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
@@ -201,11 +201,11 @@ namespace SeleniumCSharp.Selenium
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw ;
+                throw;
             }
             Logger.Info("Cleared the element : {0}", WrappedElement);
         }
-        
+
 
         /// <summary>
         /// Click a webelement
@@ -230,7 +230,7 @@ namespace SeleniumCSharp.Selenium
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw ;
+                throw;
             }
             Logger.Info("Clicked the element : {0}", WrappedElement);
 
@@ -308,9 +308,9 @@ namespace SeleniumCSharp.Selenium
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw ;
+                throw;
             }
-            Logger.Info("Entered text {0} in the webelement : {1}",text, WrappedElement);
+            Logger.Info("Entered text {0} in the webelement : {1}", text, WrappedElement);
 
         }
 
@@ -345,7 +345,7 @@ namespace SeleniumCSharp.Selenium
             catch (Exception e)
             {
                 Logger.Error(e);
-                throw ;
+                throw;
             }
         }
 
@@ -410,7 +410,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-           return this;
+            return this;
         }
 
         /// <summary>
@@ -428,6 +428,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw e;
             }
+            
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
             var elements = retryElementLocator.LocateElements(locators);
@@ -460,7 +461,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-           
+
             return this;
 
         }
@@ -471,21 +472,22 @@ namespace SeleniumCSharp.Selenium
         /// <returns></returns>
         public WebElementWrapper ScrollToView()
         {
-             if (Driver == null){
-                  Exception e = new Exception ("Driver is null");
-                    Logger.Error(e);
-                    throw e;
-             }
+            if (Driver == null)
+            {
+                Exception e = new Exception("Driver is null");
+                Logger.Error(e);
+                throw e;
+            }
             try
             {
-               ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.ScrollIntoView, WrappedElement);
+                ((IJavaScriptExecutor)Driver).ExecuteScript(JavaScripts.ScrollIntoView, WrappedElement);
             }
             catch (Exception e)
             {
                 Logger.Error(e);
                 throw;
             }
-           
+
             return this;
         }
 
@@ -530,17 +532,7 @@ namespace SeleniumCSharp.Selenium
         {
             get
             {
-                try
-                {
-                    IWebElement element = (IWebElement) Driver.ExecuteScript(JavaScripts.ParentElementNode, WrappedElement);
-                    var wrapper = new WebElementWrapper(element,Driver);
-                    return wrapper;
-                }
-                catch(Exception e)
-                {
-                    Logger.Error(e);
-                    throw;
-                }
+                return new WebElementWrapper(this, By.XPath(".//..")); ;
             }
         }
     }

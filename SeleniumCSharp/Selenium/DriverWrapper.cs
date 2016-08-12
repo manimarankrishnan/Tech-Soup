@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Reflection;
 using WebServiceCSharp.Core;
 using OpenQA.Selenium.Remote;
+using System.Drawing.Imaging;
 
 namespace SeleniumCSharp.Selenium
 {
@@ -187,6 +188,45 @@ namespace SeleniumCSharp.Selenium
             }                
             return driver; 
         }
+
+
+        public void SaveScreenshot()
+        {
+            try
+            {
+                String fileName = Logger.GetFilePath() + Utils.GetUniqueNumber() + ".jpg";
+                GetScreenshot().SaveAsFile(fileName, ImageFormat.Jpeg);
+                Logger.Debug("Screenshot saved at file://{0}", fileName.Replace('\\', '/'));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+        }
+
+        public void SavePageSource()
+        {
+            try
+            {
+                String fileName = Logger.GetFilePath() + Utils.GetUniqueNumber() + ".html";
+                using (var writer = new System.IO.StreamWriter(fileName))
+                {
+                    writer.Write(PageSource);
+                }
+                Logger.Debug("HTML Page Source Saved at file://{0}", fileName.Replace('\\', '/'));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+        }
+
+        public void SaveScreenshotAndPageSource()
+        {
+            SaveScreenshot();
+            SavePageSource();
+        }
+
 
        class CustomRemoteDriver :RemoteWebDriver
         {

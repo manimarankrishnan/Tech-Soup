@@ -13,7 +13,7 @@ namespace SeleniumCSharp.Framework
         /// <summary>
         /// Default Timeout value in seconds
         /// </summary>
-        public static long DefaultTimeOut = 30;
+        public static long DefaultTimeOut = 60;
         /// <summary>
         /// Implicit Timeout in seconds
         /// </summary>
@@ -87,10 +87,10 @@ namespace SeleniumCSharp.Framework
 
         public void SetDefaults()
         {
-            ImplicitTimeout = DefaultTimeOut;
+            ImplicitTimeout = 5;
             PageLoadTimeout = DefaultTimeOut;
             JavascriptTimeout = DefaultTimeOut;
-            ElementWaitTimeout = DefaultTimeOut;
+            ElementWaitTimeout = 15;
             PollingInterVal =300;
             Browser = "firefox";
             BrowserVersion = "";

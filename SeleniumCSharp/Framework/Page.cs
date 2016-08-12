@@ -14,11 +14,11 @@ namespace SeleniumCSharp.Framework
         public String ExpectedUrl { get; set; }
         public Form Form { get; set; }
         public Data Data { get; set; }
-        public DriverCommands DriverCommands { get; set; }
+       
         public Page(DriverWrapper driver)
         {
             this.Driver = driver;
-            this.DriverCommands = new DriverCommands(driver);
+           
         }
         public virtual void InitElements()
         {

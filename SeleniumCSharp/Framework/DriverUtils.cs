@@ -119,6 +119,7 @@ namespace SeleniumCSharp.Framework
 
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(TestConfiguration.ImplicitTimeout));
             driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(TestConfiguration.JavascriptTimeout));
+            driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(TestConfiguration.PageLoadTimeout));
             try
             {
                 driver.Manage().Window.Maximize();

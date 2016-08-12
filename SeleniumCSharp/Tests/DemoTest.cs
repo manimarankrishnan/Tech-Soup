@@ -35,7 +35,7 @@ namespace SeleniumCSharp.Tests
             }
             catch (Exception e)
             {
-                new DriverCommands(driver).GetScreenshotAndPageSource();
+                 driver.SaveScreenshotAndPageSource();;
                 throw;
             }
            
@@ -58,7 +58,7 @@ namespace SeleniumCSharp.Tests
             }
             catch (Exception e)
             {
-                new DriverCommands(driver).GetScreenshotAndPageSource();
+                 driver.SaveScreenshotAndPageSource();;
                 throw;
             }
 
@@ -105,7 +105,7 @@ namespace SeleniumCSharp.Tests
             }
             catch(Exception e)
             {
-                new DriverCommands(driver).GetScreenshotAndPageSource();
+                 driver.SaveScreenshotAndPageSource();;
                 throw;
             }
 
@@ -139,15 +139,44 @@ namespace SeleniumCSharp.Tests
             }
             catch (StaleElementReferenceException see)
             {
-                new DriverCommands(driver).GetScreenshotAndPageSource();
+                driver.SaveScreenshotAndPageSource(); 
                 throw;
             }
             catch (Exception e)
             {
-                new DriverCommands(driver).GetScreenshotAndPageSource();
+                 driver.SaveScreenshotAndPageSource();;
                 throw;
             }
         }
+
+
+        [Test]
+        public void TestElementWait()
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                driver.Navigate().GoToUrl("file:///C:/Users/prasanna.selvaraj/Desktop/index.html");
+                WebElementWrapper CreateElement = new WebElementWrapper(driver, By.Id("loadButton"));
+                CreateElement.Click();
+                sw.Start();
+                WebElementWrapper ClickMeElement = new WebElementWrapper(driver, By.Id("btn1"));
+
+                ClickMeElement.Click();
+                sw.Stop();
+
+            }
+           
+            catch (Exception e)
+            {
+                sw.Stop();
+                var ss = sw.Elapsed;
+                 driver.SaveScreenshotAndPageSource();;
+                throw;
+            }
+        }
+
 
         [TearDown]
         public void CleanUp()
