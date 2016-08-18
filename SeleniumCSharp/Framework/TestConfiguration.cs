@@ -120,6 +120,10 @@ namespace SeleniumCSharp.Framework
                 testconfig.BrowserVersion = Config.GetConfigValue("SELENIUM_VERSION");
             if (Config.IsConfigValuePresent("SELENIUM_PLATFORM"))
                 testconfig.Platform = Config.GetConfigValue("SELENIUM_PLATFORM");
+            if (Config.IsConfigValuePresent("SELENIUM_HOST"))
+                testconfig.HubHost = Config.GetConfigValue("SELENIUM_HOST");
+            if (Config.IsConfigValuePresent("SELENIUM_PORT"))
+                testconfig.HubPort = Config.GetConfigValue("SELENIUM_PORT");
             if (Config.IsConfigValuePresent("SAUCE_USERNAME"))
                 testconfig.SauceLabsUserName = Config.GetConfigValue("SAUCE_USERNAME");
             if (Config.IsConfigValuePresent("SAUCE_ACCESS_KEY"))
@@ -134,11 +138,13 @@ namespace SeleniumCSharp.Framework
             Logger.Debug("SELENIUM_BROWSER : {0} \n"+
                             "SELENIUM_VERSION : {1} \n"+
                             "SELENIUM_PLATFORM : {2} \n"+
-                            "SAUCE_USERNAME : {3} \n"+
-                            "SAUCE_ACCESS_KEY : {4} \n"+
-                            "GRID : {5} \n"+
-                            "JOB_NAME : {6} \n" +
-                            "BUILD_NUMBER : {7} \n", testconfig.Browser, testconfig.BrowserVersion, testconfig.Platform, testconfig.SauceLabsUserName, testconfig.SauceLabsAccessKey, testconfig.GridType, testconfig.JobName, testconfig.BuildNumber);
+                            "SELENIUM_HOST : {3} \n" +
+                            "SELENIUM_PORT : {4} \n" +
+                            "SAUCE_USERNAME : {5} \n"+
+                            "SAUCE_ACCESS_KEY : {6} \n"+
+                            "GRID : {7} \n"+
+                            "JOB_NAME : {8} \n" +
+                            "BUILD_NUMBER : {9} \n", testconfig.Browser, testconfig.BrowserVersion, testconfig.Platform,testconfig.HubHost,testconfig.HubPort, testconfig.SauceLabsUserName, testconfig.SauceLabsAccessKey, testconfig.GridType, testconfig.JobName, testconfig.BuildNumber);
 
             return testconfig;
         }
