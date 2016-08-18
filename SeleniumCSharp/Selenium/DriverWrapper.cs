@@ -228,6 +228,10 @@ namespace SeleniumCSharp.Selenium
         }
 
 
+        public override string ToString()
+        {
+            return "Page : "+Title;
+        }
        class CustomRemoteDriver :RemoteWebDriver
         {
            //Dummy Constructor
@@ -245,5 +249,6 @@ namespace SeleniumCSharp.Selenium
             }
 
         }
+        
     }
 }

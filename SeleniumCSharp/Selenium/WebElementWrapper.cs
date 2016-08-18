@@ -127,11 +127,13 @@ namespace SeleniumCSharp.Selenium
 
         public IWebElement FindElement(By by)
         {
+            IWebElement result; ;
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
             List<By> locators = new List<By> { by };
             try
             {
-                return retryElementLocator.LocateElement(locators);
+                result = new WebElementWrapper(retryElementLocator.LocateElement(locators));
+
             }
             catch (StaleElementReferenceException e)
             {
@@ -139,7 +141,8 @@ namespace SeleniumCSharp.Selenium
                 {
                     Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
-                    return retryElementLocator.LocateElement(locators);
+                    result = new WebElementWrapper(retryElementLocator.LocateElement(locators));
+
                 }
                 else
                     throw;
@@ -149,6 +152,8 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
+            Logger.Info("Found element using the locator {0} in webelement {1} ", by, this);
+            return result;
 
         }
 
@@ -177,7 +182,8 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Found {0} element using the locator {1} in webelement {2} ", result.Count, by, WrappedElement.TagName);
+            Logger.Info("Found {0} element using the locator {1} in webelement {2} ", result.Count, by, this);
+
             return result;
         }
 
@@ -310,7 +316,7 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Entered text '{0}' in the webelement : {1}",text, by);
+            Logger.Info("Entered text '{0}' in the webelement : {1}", text, by);
 
         }
 
@@ -403,13 +409,13 @@ namespace SeleniumCSharp.Selenium
                 RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
                 List<By> locators = new List<By> { by };
                 WrappedElement = retryElementLocator.LocateElement(locators);
-                Logger.Info("Found element using locator: {0}", by);
             }
             catch (Exception e)
             {
                 Logger.Error(e);
                 throw;
             }
+            Logger.Info("Found element using locator: {0} in {1}", by, SearchContext);
             return this;
         }
 
@@ -428,11 +434,11 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw e;
             }
-            
+
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
             var elements = retryElementLocator.LocateElements(locators);
-            Logger.Info("Found {0} elements using locator {1}", elements.Count, by);
+            Logger.Info("Found {0} elements using locator {1} in {2}", elements.Count, by, SearchContext);
             return elements;
         }
 
@@ -533,6 +539,58 @@ namespace SeleniumCSharp.Selenium
             get
             {
                 return new WebElementWrapper(this, By.XPath(".//..")); ;
+            }
+        }
+
+        public WebElementWrapper ImmediateChild
+        {
+            get
+            {
+                return new WebElementWrapper(this,By.XPath("./*"));
+            }
+        }
+
+        public String Value
+        {
+            get
+            {
+                return  GetAttribute("value");
+            }
+        }
+
+        public String Name
+        {
+            get
+            {
+                return GetAttribute("name");
+            }
+        }
+
+        public String Id
+        {
+            get
+            {
+                return GetAttribute("id");
+                By[] ss  = {By.Id(""),By.XPath("")};
+                ByChained v = new ByChained(ss);
+                by = v;
+            }
+        }
+
+        public override string ToString()
+        {
+            if (by != null)
+                return by.ToString();
+            else
+            {
+                try
+                {
+                    return TagName;
+                }
+                catch
+                {
+                    return "WebElementWrapper";
+                }
             }
         }
     }
