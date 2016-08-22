@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using WebServiceCSharp.Core;
+using Utils.Core;
 using SeleniumCSharp.Selenium;
 using SeleniumCSharp.Framework;
 using SeleniumCSharp.Tests.Main;

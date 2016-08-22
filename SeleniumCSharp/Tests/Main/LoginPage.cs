@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeleniumCSharp.Framework;
 using SeleniumCSharp.Selenium;
-using WebServiceCSharp.Core;
+using Utils.Core;
 using OpenQA.Selenium;
 namespace SeleniumCSharp.Tests.Main
 {

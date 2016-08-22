@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using SeleniumCSharp.Selenium;
 using SeleniumCSharp.Framework;
-using WebServiceCSharp.Core;
+using Utils.Core;
 using System;
 using OpenQA.Selenium;
 namespace SeleniumCSharp.Tests

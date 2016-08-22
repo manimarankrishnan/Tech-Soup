@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebServiceCSharp.Core;
+using Utils.Core;
 using OpenQA.Selenium;
 using SeleniumCSharp.Selenium;
 namespace SeleniumCSharp.Framework

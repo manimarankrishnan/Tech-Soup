@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeleniumCSharp.Selenium;
-using WebServiceCSharp.Core;
+using Utils.Core;
 namespace SeleniumCSharp.Framework
 {
     public abstract class Page

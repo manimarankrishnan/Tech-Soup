@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using SeleniumCSharp.Selenium;
 using OpenQA.Selenium.Remote;
-using WebServiceCSharp.Core;
+using Utils.Core;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;

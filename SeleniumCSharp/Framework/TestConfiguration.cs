@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium;
-using WebServiceCSharp.Core;
+using Utils.Core;
 namespace SeleniumCSharp.Framework
 {
     public class TestConfiguration

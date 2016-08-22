@@ -9,7 +9,7 @@ using OpenQA.Selenium.Support.Events;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
-using WebServiceCSharp.Core;
+using Utils.Core;
 using OpenQA.Selenium.Remote;
 using System.Drawing.Imaging;
 
@@ -194,7 +194,7 @@ namespace SeleniumCSharp.Selenium
         {
             try
             {
-                String fileName = Logger.GetFilePath() + Utils.GetUniqueNumber() + ".jpg";
+                String fileName = Logger.GetFilePath() + Utils.Core.GeneralUtils.GetUniqueNumber() + ".jpg";
                 GetScreenshot().SaveAsFile(fileName, ImageFormat.Jpeg);
                 Logger.Debug("Screenshot saved at file://{0}", fileName.Replace('\\', '/'));
             }
@@ -208,7 +208,7 @@ namespace SeleniumCSharp.Selenium
         {
             try
             {
-                String fileName = Logger.GetFilePath() + Utils.GetUniqueNumber() + ".html";
+                String fileName = Logger.GetFilePath() + Utils.Core.GeneralUtils.GetUniqueNumber() + ".html";
                 using (var writer = new System.IO.StreamWriter(fileName))
                 {
                     writer.Write(PageSource);

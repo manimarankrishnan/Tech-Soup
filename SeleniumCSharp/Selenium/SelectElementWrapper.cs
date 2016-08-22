@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Support.UI;
-using WebServiceCSharp.Core;
+using Utils.Core;
 
 namespace SeleniumCSharp.Selenium
 {
