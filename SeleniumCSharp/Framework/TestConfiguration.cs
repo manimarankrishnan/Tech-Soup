@@ -79,6 +79,26 @@ namespace SeleniumCSharp.Framework
             }
         }
 
+        static TestConfiguration()
+        {
+            ImplicitTimeout = 5;
+            PageLoadTimeout = DefaultTimeOut;
+            JavascriptTimeout = DefaultTimeOut;
+            ElementWaitTimeout = DefaultTimeOut;
+            PollingInterVal = 300;
+
+            if (Config.IsConfigValuePresent("ImplicitTimeout"))
+                ImplicitTimeout = long.Parse(Config.GetConfigValue("ImplicitTimeout"));
+            if (Config.IsConfigValuePresent("PageLoadTimeout"))
+                PageLoadTimeout = long.Parse(Config.GetConfigValue("PageLoadTimeout"));
+            if (Config.IsConfigValuePresent("JavascriptTimeout"))
+                JavascriptTimeout = long.Parse(Config.GetConfigValue("JavascriptTimeout"));
+            if (Config.IsConfigValuePresent("ElementWaitTimeout"))
+                ElementWaitTimeout = long.Parse(Config.GetConfigValue("ElementWaitTimeout"));
+            if (Config.IsConfigValuePresent("PollingInterVal"))
+                PollingInterVal = long.Parse(Config.GetConfigValue("PollingInterVal"));
+        }
+
         public TestConfiguration()
         {
             SetDefaults();
@@ -86,12 +106,7 @@ namespace SeleniumCSharp.Framework
 
 
         public void SetDefaults()
-        {
-            ImplicitTimeout = 5;
-            PageLoadTimeout = DefaultTimeOut;
-            JavascriptTimeout = DefaultTimeOut;
-            ElementWaitTimeout = 15;
-            PollingInterVal =300;
+        { 
             Browser = "firefox";
             BrowserVersion = "";
             Platform = "";

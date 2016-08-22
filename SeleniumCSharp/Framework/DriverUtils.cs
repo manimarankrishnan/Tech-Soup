@@ -35,6 +35,13 @@ namespace SeleniumCSharp.Framework
             DriverWrapper driver = CreateDriver(currentTestConfiguration, capabilites);
 
             _drivers.Add(driver);
+            if (Config.IsConfigValuePresent("StartingUrl"))
+            {
+                String startingUrl = Config.GetConfigValue("StartingUrl");
+                Logger.Info("Navigating to '{0}'.", startingUrl);
+                driver.Navigate().GoToUrl(startingUrl);
+            }
+                
             return driver;
         }
 
@@ -123,7 +130,8 @@ namespace SeleniumCSharp.Framework
             try
             {
                 driver.Manage().Window.Maximize();
-            }catch{}
+            }
+            catch { }
 
             return driver;
         }
@@ -168,7 +176,7 @@ namespace SeleniumCSharp.Framework
             {
                 Logger.Info("Attempting to close Driver number {0}", _drivers.IndexOf(driver) + 1);
                 try
-                {           
+                {
                     driver.Quit();
                     Logger.Info("Closed Driver number {0}", _drivers.IndexOf(driver) + 1);
                 }
