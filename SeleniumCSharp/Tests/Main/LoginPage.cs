@@ -44,6 +44,17 @@ namespace SeleniumCSharp.Tests.Main
             driver.Navigate().GoToUrl(URL);
             return new LoginPage(driver);
         }
+
+        public Page Login()
+        {
+            return Form.InputSubmitForm();
+        }
+
+        public Page LoginAsTeacher()
+        {
+            Data = new Data("TestCaseData_Authentication_Teacher");
+            return Form.InputSubmitForm();
+        }
     }
 
     public class LoginForm : Form
