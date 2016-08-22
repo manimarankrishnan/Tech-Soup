@@ -101,6 +101,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{0c99f43a-c765-4375-a9f2-204acd9ff515}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebServiceCSharp\WebService-CSharp.csproj">
       <Project>{4d633460-0580-408f-bfe7-13d69e41a71b}</Project>
       <Name>WebService-CSharp</Name>

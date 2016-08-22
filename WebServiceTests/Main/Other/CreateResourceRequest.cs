@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
+using Utils.Core;
 
 namespace WebServiceTests.Main.Other
 {
@@ -19,7 +20,7 @@ namespace WebServiceTests.Main.Other
         }
         public override string ToString()
         {
-            return Utils.JSONSerializeObject(obj);
+            return GeneralUtils.JSONSerializeObject(obj);
         }
 
         public class Rootobject

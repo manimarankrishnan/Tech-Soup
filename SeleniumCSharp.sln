@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService-CSharp", "WebServiceCSharp\WebService-CSharp.csproj", "{4D633460-0580-408F-BFE7-13D69E41A71B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C99F43A-C765-4375-A9F2-204ACD9FF515} = {0C99F43A-C765-4375-A9F2-204ACD9FF515}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceTests", "WebServiceTests\WebServiceTests.csproj", "{E01FE188-C8E2-4424-B59C-6E075DA55EA8}"
 EndProject

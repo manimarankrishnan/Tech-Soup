@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
+using Utils.Core;
 
 namespace WebServiceTests.Test
 {

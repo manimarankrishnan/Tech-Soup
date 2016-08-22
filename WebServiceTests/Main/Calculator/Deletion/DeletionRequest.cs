@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils.Core;
+
 using WebServiceCSharp.Core;
 namespace WebServiceTests.Main.Calculator.Deletion
 {
@@ -23,7 +25,7 @@ namespace WebServiceTests.Main.Calculator.Deletion
 
         public override string ToString()
         {
-            return Utils.XMLSerializeObject(envelope);
+            return GeneralUtils.XMLSerializeObject(envelope);
         }
 
     }

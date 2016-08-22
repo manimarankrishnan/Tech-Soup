@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
+using Utils.Core;
+
 namespace WebServiceTests.Test
 {
     public class NavigationTests
@@ -28,7 +30,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_NavigationTestsWithURI_TC_getCitiesPostalCode");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(Utils.GetFileAsString(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsString(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_NavigationTestsWithURI_TC_getNearByCityName");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(responseBody, Utils.GetFileAsString(client._expectedResponseBody), "Actual and Expected response body are not eaual");
+            Assert.AreEqual(responseBody, GeneralUtils.GetFileAsString(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
 
@@ -59,7 +61,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://api.geonames.org", "TestCaseData_NavigationTestsWithoutURI_TC_getCitiesPostalCode");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(Utils.GetFileAsString(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsString(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://api.geonames.org", "TestCaseData_NavigationTestsWithoutURI_TC_getNearByCityName");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(responseBody, Utils.GetFileAsString(client._expectedResponseBody), "Actual and Expected response body are not eaual");
+            Assert.AreEqual(responseBody, GeneralUtils.GetFileAsString(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://www.webserviceX.NET", "TestCaseData_NavigationTestsWithoutURI_TC_getCitiesByCountry");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
+            Assert.AreEqual(responseBody, GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
         #endregion-------------BasicNavigationTestsWithURI
@@ -105,7 +107,7 @@ namespace WebServiceTests.Test
                 .AddHeaders(@"Content-Type:text/xml,SOAPAction:http://www.webserviceX.NET/GetCitiesByCountry")
                 .SetRequest()
                 .CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
+            Assert.AreEqual(responseBody, GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
         #endregion-------------BasicNavigationTestsWithoutHeaders

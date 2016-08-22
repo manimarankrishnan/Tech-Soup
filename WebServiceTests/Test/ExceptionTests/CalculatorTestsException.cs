@@ -10,6 +10,7 @@ using WebServiceTests.Main.Calculator.Addition;
 using WebServiceTests.Main.Calculator.Subtraction;
 using WebServiceTests.Main.Calculator.Multiplication;
 using WebServiceTests.Main.Calculator.Deletion;
+using Utils.Core;
 
 namespace WebServiceTests.Test.ExceptionTests
 {

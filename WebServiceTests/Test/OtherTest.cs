@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
 using WebServiceTests.Main.Other;
+using Utils.Core;
+
 namespace WebServiceTests.Test
 {
     public class OtherTest
@@ -28,7 +30,7 @@ namespace WebServiceTests.Test
             XmlDocument xd = new XmlDocument();
             xd.LoadXml(responseBody);
             XmlDocument dd = new XmlDocument();
-            dd.LoadXml(Utils.GetFileAsString(client._expectedResponseBody));
+            dd.LoadXml(GeneralUtils.GetFileAsString(client._expectedResponseBody));
             Assert.AreEqual(xd, dd, "Actual and Expected response body are not eaual");
         }
 
@@ -46,7 +48,7 @@ namespace WebServiceTests.Test
             responseBody=responseBody.Replace("\n ", "");
             String statusCode = client.GetStatusCodeOfResponse();
             Assert.AreEqual(statusCode, "Created", "Status code mismatch");
-            Assert.AreEqual(Utils.FormatJsonString(Utils.GetFileAsString(client._expectedResponseBody)), Utils.FormatJsonString(responseBody), "ResonseBody mismatch");
+            Assert.AreEqual(GeneralUtils.FormatJsonString(GeneralUtils.GetFileAsString(client._expectedResponseBody)), GeneralUtils.FormatJsonString(responseBody), "ResonseBody mismatch");
 
         }
 

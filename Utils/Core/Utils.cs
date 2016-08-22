@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using System.Xml;
-namespace WebServiceCSharp.Core
+namespace Utils.Core
 {
-    public class Utils
+    public class GeneralUtils
     {
 
         static Dictionary<String, List<String[]>> ExcelData = new Dictionary<string, List<string[]>>();
@@ -252,8 +252,8 @@ namespace WebServiceCSharp.Core
             List<Data> neededData = new List<Data>();
             String[] identifierParts = dataIdentifer.Split('_');
 
-            String[] Headers = Utils.GetDataFromExcel(identifierParts[0] +"_"+ identifierParts[1]).First();
-            foreach (String[] DataValues in Utils.GetDataFromExcel(dataIdentifer))
+            String[] Headers = GeneralUtils.GetDataFromExcel(identifierParts[0] +"_"+ identifierParts[1]).First();
+            foreach (String[] DataValues in GeneralUtils.GetDataFromExcel(dataIdentifer))
             {
                 Data iterateData = new Data();
                 int index = 0;
