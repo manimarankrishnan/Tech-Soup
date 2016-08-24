@@ -6,7 +6,7 @@ using System;
 using OpenQA.Selenium;
 namespace SeleniumCSharp.Tests
 {
-
+    [TestFixture]
     public class DriverWrapperTests
     {
 

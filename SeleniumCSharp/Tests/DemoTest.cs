@@ -12,6 +12,7 @@ using OpenQA.Selenium;
 
 namespace SeleniumCSharp.Tests
 {
+    [TestFixture]
     public class DemoTest
     {
         [SetUp]
