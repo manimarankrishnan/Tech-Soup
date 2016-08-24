@@ -24,6 +24,7 @@ namespace SeleniumCSharp.Tests
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void LoginToSchoolnet()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
@@ -43,6 +44,7 @@ namespace SeleniumCSharp.Tests
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void TestSelectElementWrapper()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
@@ -67,6 +69,7 @@ namespace SeleniumCSharp.Tests
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void TestWebElementWrapper()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
@@ -113,6 +116,7 @@ namespace SeleniumCSharp.Tests
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void TestSelectElementWrapper2()
         {
             DriverWrapper driver = DriverUtils.GetDriver();

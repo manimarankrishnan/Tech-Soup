@@ -20,6 +20,7 @@ namespace SeleniumCSharp.Tests
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void GotoURLTest()
         {
             Logger.Info("Starting Test");
@@ -39,6 +40,7 @@ namespace SeleniumCSharp.Tests
 
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void CreateDriver()
         {
 
@@ -49,6 +51,7 @@ namespace SeleniumCSharp.Tests
 
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void CloseDriver()
         {
             DriverWrapper wrapperObject = DriverUtils.GetDriver();
@@ -61,6 +64,7 @@ namespace SeleniumCSharp.Tests
 
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void QuitDriver()
         {
             DriverWrapper wrapperObject = DriverUtils.GetDriver();
@@ -79,6 +83,7 @@ namespace SeleniumCSharp.Tests
 
 
         [Test]
+        [Parallelizable(ParallelScope.Fixtures)]
         public void DriverWrapperTest()
         {
             DriverWrapper wrapperObject = DriverUtils.GetDriver();
