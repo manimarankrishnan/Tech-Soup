@@ -38,7 +38,7 @@ namespace Utils.Core
             {
                 StackTrace stackTrace = new StackTrace();
                 String className = stackTrace.GetFrame(1).GetMethod().DeclaringType.ToString();
-                _name = (value.Contains(className) ? "" : className) + value;
+                _name = (value.Contains(className) ? "" : className +".") + value;
             }
         }
 
