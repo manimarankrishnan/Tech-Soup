@@ -4,23 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
+
 namespace Utils.Core
 {
-    public  class Logger
+    public class Logger
     {
 
         [ThreadStatic]
-        public static TextWriter logWriter;
+        public static TextWriter _logWriter;
+
+        public static TextWriter LogWriter
+        {
+            get
+            {
+                return _logWriter;
+            }
+            set
+            {
+                _logWriter = value;
+            }
+        }
         [ThreadStatic]
-        public static String name;
+        public static String _name;
+
+        public static String Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                StackTrace stackTrace = new StackTrace();
+                String className = stackTrace.GetFrame(1).GetMethod().DeclaringType.ToString();
+                _name = (value.Contains(className) ? "" : className) + value;
+            }
+        }
 
         private static String filePath { get; set; }
-        public static LogMode mode=LogMode.DEBUG;
+        public static LogMode mode = LogMode.DEBUG;
         private static DateTime buildStartTime = DateTime.Now;
 
         public static void SetLogWriter(TextWriter writer)
         {
-            logWriter = writer;
+            LogWriter = writer;
         }
 
         /// <summary>
@@ -31,7 +59,7 @@ namespace Utils.Core
         {
             if (mode == LogMode.INFO)
             {
-               WriteToFile(o,"INFO");
+                WriteToFile(o, "INFO");
             }
         }
 
@@ -49,14 +77,14 @@ namespace Utils.Core
         /// </summary>
         /// <param name="format">String format</param>
         /// <param name="args">arguments</param>
-        public static void Info( String format, params Object[] args)
+        public static void Info(String format, params Object[] args)
         {
             if (mode == LogMode.INFO)
             {
                 if (args.Length == 0)
                     Info((Object)format);
                 else
-                    WriteToFile(String.Format(format,args), "INFO");
+                    WriteToFile(String.Format(format, args), "INFO");
             }
         }
 
@@ -69,9 +97,9 @@ namespace Utils.Core
 
             if (mode == LogMode.DEBUG || mode == LogMode.INFO)
             {
-               WriteToFile(o,"DEBUG");
+                WriteToFile(o, "DEBUG");
             }
-               
+
         }
         /// <summary>
         /// Log Debug into the log file when logMode is Debug or Error
@@ -105,7 +133,7 @@ namespace Utils.Core
         /// <param name="o"></param>
         public static void Error(Object o)
         {
-            WriteToFile(o,"ERROR");
+            WriteToFile(o, "ERROR");
         }
 
         /// <summary>
@@ -135,32 +163,33 @@ namespace Utils.Core
         /// </summary>
         /// <param name="o">object to be written</param>
         /// <param name="logmode">log mode </param>
-        private static void WriteToFile(Object o,String logmode){
+        private static void WriteToFile(Object o, String logmode)
+        {
 
-            if(logWriter!=null)
-              logWriter.WriteLine(o);
+            if (LogWriter != null)
+                LogWriter.WriteLine(o);
             using (StreamWriter sw = new StreamWriter(GetFilePath() + ".log", true))
             {
                 sw.AutoFlush = true;
-                sw.WriteLine(logmode +": "+ o.ToString());
+                sw.WriteLine(logmode + ": " + o.ToString());
             }
         }
 
-         /// <summary>
+        /// <summary>
         /// Get the file name for the current execution
         /// </summary>
         /// <returns></returns>
         public static string GetFilePath()
         {
-            if (name == null)
-                name = "TestResult";
-            String fileName = name.Split('.').LastOrDefault();
+            if (Name == null)
+                Name = "TestResult";
+            String fileName = Name.Split('.').LastOrDefault();
             var invalids = Path.GetInvalidFileNameChars().ToList();
-             invalids.AddRange(Path.GetInvalidPathChars());
+            invalids.AddRange(Path.GetInvalidPathChars());
             var newName = String.Join("_", fileName.Split(invalids.ToArray(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
-            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"), name.Replace(fileName, ""));
+            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"), Name.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
-            filePath = Path.Combine(filePath, newName );
+            filePath = Path.Combine(filePath, newName);
             return filePath;
         }
 
@@ -168,7 +197,8 @@ namespace Utils.Core
     }
 
 
-    public enum LogMode{
+    public enum LogMode
+    {
         DEBUG,
         INFO,
         ERROR

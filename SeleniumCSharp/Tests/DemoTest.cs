@@ -19,14 +19,13 @@ namespace SeleniumCSharp.Tests
         [SetUp]
         public void Setup()
         {
-            Logger.logWriter = TestContext.Out;
-            Logger.name = TestContext.CurrentContext.Test.FullName;
+            Logger.LogWriter = TestContext.Out;
+            Logger.Name = TestContext.CurrentContext.Test.FullName;
             Logger.mode = LogMode.INFO;
             Logger.Info("Setup completed");
         }
 
-        [Test]
-        
+        [Test,Property("TestId","123")]        
         public void LoginToSchoolnet()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
@@ -72,6 +71,28 @@ namespace SeleniumCSharp.Tests
         [Test]
         public void TestWebElementWrapper()
         {
+
+            StringBuilder sb = new StringBuilder();
+            List<StringBuilder> sbList = new List<StringBuilder>();
+            for (int i = 0; i < 10; i++)
+            {
+                sbList.Add(new StringBuilder());
+            }
+
+
+                for (int j = 10; j < 11111; j++)
+                {
+                    sbList[(j - 1) % 9].Append("\t=A" + j);
+                }
+
+                foreach (var s in sbList)
+                {
+                    Logger.Info(s.ToString());
+                }
+
+
+
+
             DriverWrapper driver = DriverUtils.GetDriver();
             try
             {
@@ -182,6 +203,37 @@ namespace SeleniumCSharp.Tests
                 sw.Stop();
                 var ss = sw.Elapsed;
                  driver.SaveScreenshotAndPageSource();;
+                throw;
+            }
+        }
+
+        [Test]
+        public void TestDataCreation()
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                driver.Navigate().GoToUrl("https://team-automation-release-st.sndev.net");
+                for (int i = 0; i <= 50; i++)
+                {
+                    driver.Navigate().GoToUrl("https://team-automation-release-st.sndev.net/Assess/ViewTestDetails.aspx?testid=91198&referrer=~%2FAssess%2FTestCentralHome.aspx");
+                    WebElementWrapper copyButton = new WebElementWrapper(driver, By.Id("ctl00_MainContent_TestInfoSidebar1_ButtonCopy"));
+                    copyButton.Click();
+                    sw.Start();
+                    WebElementWrapper ClickMeElement = new WebElementWrapper(driver, By.Id("btn1"));
+
+                    ClickMeElement.Click();
+                }
+                sw.Stop();
+
+            }
+
+            catch (Exception e)
+            {
+                sw.Stop();
+                var ss = sw.Elapsed;
+                driver.SaveScreenshotAndPageSource(); ;
                 throw;
             }
         }
