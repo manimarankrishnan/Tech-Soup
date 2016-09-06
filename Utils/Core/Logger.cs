@@ -25,6 +25,7 @@ namespace Utils.Core
                 _logWriter = value;
             }
         }
+
         [ThreadStatic]
         public static String _name;
 
