@@ -29,7 +29,7 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
-        private DriverWrapper Driver { get; set; }
+        public DriverWrapper Driver { get { return _element.Driver; } set { _element.Driver = value; } }
         private WebElementWrapper _element;
         public IWebElement WrappedElement
         {
@@ -39,20 +39,24 @@ namespace SeleniumCSharp.Selenium
         public SelectElementWrapper(DriverWrapper driver, By by)
         {
             this._element = new WebElementWrapper(driver, by);
-            this.Driver = driver;
+            this._selectElement = new SelectElement(_element);
             this.by = by;
         }
 
         public SelectElementWrapper(IWebElement element)
         {
-            this._element = new WebElementWrapper(element);
+            if (element is WebElementWrapper)
+                this._element = (WebElementWrapper)element;
+            else
+                this._element = new WebElementWrapper(element);
+            this._selectElement = new SelectElement(_element);
             this.by = null;
         }
 
-        public SelectElementWrapper(WebElementWrapper parentElement, By by)
+        public SelectElementWrapper(IWebElement parentElement, By by)
         {
             this._element = new WebElementWrapper(parentElement, by);
-            this.Driver = parentElement.Driver;
+            this._selectElement = new SelectElement(_element);
             this.by = by;
         }
 
@@ -66,6 +70,14 @@ namespace SeleniumCSharp.Selenium
             }
             try
             {
+                try
+                {
+                    _element.InitializeElement();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e);
+                }
                 _selectElement = new SelectElement(_element);
             }
             catch (Exception e)
@@ -152,7 +164,7 @@ namespace SeleniumCSharp.Selenium
 
             }
         }
-     
+
         //
         // Summary:
         //     Gets the selected item within the select element.
@@ -171,7 +183,7 @@ namespace SeleniumCSharp.Selenium
 
                 try
                 {
-                    return new WebElementWrapper(SelectElement.SelectedOption,Driver);
+                    return new WebElementWrapper(SelectElement.SelectedOption, Driver);
                 }
                 catch (StaleElementReferenceException e)
                 {
