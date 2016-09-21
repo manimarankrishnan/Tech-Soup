@@ -12,7 +12,7 @@ namespace Utils.Core
     {
 
         [ThreadStatic]
-        public static TextWriter _logWriter;
+        private static TextWriter _logWriter;
 
         public static TextWriter LogWriter
         {
@@ -27,7 +27,7 @@ namespace Utils.Core
         }
 
         [ThreadStatic]
-        public static String _name;
+        private static String _name;
 
         public static String Name
         {
