@@ -9,6 +9,7 @@ using SeleniumCSharp.Selenium;
 using SeleniumCSharp.Framework;
 using SeleniumCSharp.Tests.Main;
 using OpenQA.Selenium;
+using SeleniumCSharp.Tests.Main.Components;
 
 namespace SeleniumCSharp.Tests
 {
@@ -58,6 +59,96 @@ namespace SeleniumCSharp.Tests
                 var ele = adminYear.SelectedOption;
                 var parentElement = ele.ParentElement;
                 Assert.AreEqual(parentElement.TagName, "select", "Wrong Parent element tag name is displayed");
+            }
+            catch (Exception e)
+            {
+                 driver.SaveScreenshotAndPageSource();;
+                throw;
+            }
+
+
+        }
+
+
+        struct WebPageTables
+        {
+            String URL;
+            By TableLocator;
+            String FindColumn;
+        }
+
+
+
+        [Test]
+        public void TestTable()
+        {
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                LoginPage loginPage = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
+                loginPage.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
+                loginPage.Form.InputFormFields().SubmitForm();
+
+                WebPageTables d = new WebPageTables { };
+
+
+                driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
+
+                System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
+                Table<TestCentralRow> testCentralTable = new Table<TestCentralRow>(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderResults1_gridResults"));
+                watch.Stop();
+                var ss = watch.ElapsedMilliseconds;
+
+
+                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, testCentralTable.TableRows.Count);
+                watch.Reset();
+                watch.Start();
+                dynamic rows =     testCentralTable.GetRowsContainingText("Test Name", "schedulefuture 12128");
+                watch.Stop();
+                var ssd = watch.ElapsedMilliseconds;
+
+                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, testCentralTable.TableRows.Count);
+
+
+
+                driver.Navigate().GoToUrl("https://www.smashingmagazine.com/2008/08/top-10-css-table-designs/");
+
+                watch.Reset();
+                watch.Start();
+                Table<MagagzineRow> magaZineTable = new Table<MagagzineRow>(driver, By.Id("newspaper-b"));
+                watch.Stop();
+                 ss = watch.ElapsedMilliseconds;
+
+
+                 Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, magaZineTable.TableRows.Count);
+                watch.Reset();
+                watch.Start();
+                  rows = magaZineTable.GetRowsContainingText("Q2", "30.2");
+                watch.Stop();
+                 ssd = watch.ElapsedMilliseconds;
+
+                 Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, magaZineTable.TableRows.Count);
+                 watch.Reset();
+                 watch.Start();
+                 magaZineTable = new Table<MagagzineRow>(driver, Table<MagagzineRow>.GetTableLocatorFromColumnNames(MagagzineRow.ExpectedColumnList.ToArray()));
+                 watch.Stop();
+                 ss = watch.ElapsedMilliseconds;
+
+
+                 Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, magaZineTable.TableRows.Count);
+                 watch.Reset();
+                 watch.Start();
+                 rows = magaZineTable.GetRowsContainingText("Q2", "30.2");
+                 watch.Stop();
+                 ssd = watch.ElapsedMilliseconds;
+
+                 Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, magaZineTable.TableRows.Count);
+               
+
+
+
+
             }
             catch (Exception e)
             {

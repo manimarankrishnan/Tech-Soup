@@ -57,17 +57,25 @@
     <Compile Include="Framework\DriverUtils.cs" />
     <Compile Include="Framework\TestConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selenium\Component.cs" />
+    <Compile Include="Selenium\ComponentCollection.cs" />
     <Compile Include="Selenium\DriverWrapper.cs" />
     <Compile Include="Selenium\JavaScripts.cs" />
     <Compile Include="Selenium\SelectElementWrapper.cs" />
     <Compile Include="Selenium\SeleniumListener.cs" />
+    <Compile Include="Selenium\Table.cs" />
+    <Compile Include="Selenium\UI\TableHeaderRow.cs" />
+    <Compile Include="Selenium\UI\TableRow.cs" />
     <Compile Include="Selenium\WebElementWrapper.cs" />
     <Compile Include="Tests\DemoTest.cs" />
     <Compile Include="Tests\DriverWrapperTests.cs" />
+    <Compile Include="Tests\Main\Components\TestCentralRow.cs" />
     <Compile Include="Tests\Main\LoginPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\TestCaseData.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

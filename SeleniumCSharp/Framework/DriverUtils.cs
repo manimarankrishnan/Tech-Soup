@@ -83,8 +83,8 @@ namespace SeleniumCSharp.Framework
             }
 
             capab.IsJavaScriptEnabled = true;
-            capab.SetCapability("version", configuration.BrowserVersion);
-            capab.SetCapability("platform", configuration.Platform);
+            capab.SetCapability(CapabilityType.Version, configuration.BrowserVersion);
+            capab.SetCapability(CapabilityType.Platform, configuration.Platform);
             capab.SetCapability("build", configuration.BuildName);
             return capab;
         }
