@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
+using SeleniumCSharp.Framework;
 namespace SeleniumCSharp.Selenium
 {
     public class ComponentCollection<T> : ReadOnlyCollection<T> where T : Component, new()
@@ -17,8 +18,22 @@ namespace SeleniumCSharp.Selenium
 
         private static List<T> GetListOfComponents(ISearchContext searchContext, By By)
         {
+
+            ReadOnlyCollection<IWebElement> listOfElements;
+            if(searchContext is IWebElement)
+            {
+                listOfElements = new WebElementWrapper(searchContext as IWebElement, By).WaitForElements(5);
+            }
+            else if(searchContext is IWebDriver)
+            {
+                listOfElements = new WebElementWrapper(searchContext as IWebDriver, By).WaitForElements(TestConfiguration.ElementWaitTimeout);
+            }
+            else
+            {
+                listOfElements = searchContext.FindElements(By);
+            }
             var componentList = new List<T>();
-            foreach (var element in searchContext.FindElements(By))
+            foreach (var element in listOfElements)
             {
                 var component = new T();
                 component.RootElement = element;

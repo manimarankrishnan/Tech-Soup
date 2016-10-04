@@ -60,4 +60,34 @@ namespace SeleniumCSharp.Tests.Main.Components
         
     }
 
+
+
+    public class DataTableExample : TableRow
+    {
+        
+        public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
+        {
+            get {
+            return ExpectedColumnList;
+            }
+
+        }
+        public static System.Collections.ObjectModel.ReadOnlyCollection<string> ExpectedColumnList{get{
+                return new System.Collections.ObjectModel.ReadOnlyCollection<string>(
+
+                    new List<string>(){"Name",	"Position",	"Start" ,"date",	"Salary"}
+
+                    );
+
+        }
+        }
+
+
+        
+    }
+
+
+
+
+
 }

@@ -13,6 +13,7 @@ using OpenQA.Selenium.Support.PageObjects;
 using SeleniumCSharp.Framework;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using System.Diagnostics;
 
 namespace SeleniumCSharp.Selenium
 {
@@ -127,6 +128,8 @@ namespace SeleniumCSharp.Selenium
 
         public IWebElement FindElement(By by)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             IWebElement result; ;
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
             List<By> locators = new List<By> { by };
@@ -152,13 +155,16 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Found element using the locator {0} in webelement {1} ", by, this);
+            watch.Stop();
+            Logger.Info("Found element using the locator {0} in webelement {1}. Time Taken - {2} milliseconds ", by, this,watch.ElapsedMilliseconds);
             return result;
 
         }
 
         public ReadOnlyCollection<IWebElement> FindElements(By by)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             ReadOnlyCollection<IWebElement> result;
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
             List<By> locators = new List<By> { by };
@@ -182,7 +188,8 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Found {0} element using the locator {1} in webelement {2} ", result.Count, by, this);
+            watch.Stop();
+            Logger.Info("Found {0} element using the locator {1} in webelement {2} . Time Taken - {3} milliseconds ", result.Count, by, this,watch.ElapsedMilliseconds);
 
             return result;
         }
@@ -398,6 +405,8 @@ namespace SeleniumCSharp.Selenium
         /// <returns></returns>
         public WebElementWrapper Wait(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             if (by == null)
             {
                 Exception e = new Exception("The By locator is not initialized.");
@@ -415,7 +424,9 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
-            Logger.Info("Found element using locator: {0} in {1}", by, SearchContext);
+            watch.Stop();
+            if (SearchContext is IWebDriver)
+                Logger.Info("Found element using locator: {0} in {1}. Time Taken - {2} milliseconds ", by, SearchContext, watch.ElapsedMilliseconds);
             return this;
         }
 
@@ -427,7 +438,8 @@ namespace SeleniumCSharp.Selenium
         /// <returns></returns>
         public ReadOnlyCollection<IWebElement> WaitForElements(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
         {
-
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             if (by == null)
             {
                 Exception e = new Exception("The By locator is not initialized.");
@@ -438,7 +450,9 @@ namespace SeleniumCSharp.Selenium
             RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
             List<By> locators = new List<By> { by };
             var elements = retryElementLocator.LocateElements(locators);
-            Logger.Info("Found {0} elements using locator {1} in {2}", elements.Count, by, SearchContext);
+            watch.Stop();
+            if(SearchContext is IWebDriver)
+                Logger.Info("Found {0} elements using locator {1} in {2}. Time Taken - {3} milliseconds. ", elements.Count, by, SearchContext,watch.ElapsedMilliseconds);
             return elements;
         }
 

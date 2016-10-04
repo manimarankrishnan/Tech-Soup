@@ -26,7 +26,7 @@ namespace SeleniumCSharp.Tests
             Logger.Info("Setup completed");
         }
 
-        [Test,Property("TestId","123")]        
+        [Test, Property("TestId", "123")]
         public void LoginToSchoolnet()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
@@ -38,10 +38,10 @@ namespace SeleniumCSharp.Tests
             }
             catch (Exception e)
             {
-                 driver.SaveScreenshotAndPageSource();;
+                driver.SaveScreenshotAndPageSource(); ;
                 throw;
             }
-           
+
 
         }
 
@@ -55,14 +55,14 @@ namespace SeleniumCSharp.Tests
                 loginPage.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
                 loginPage.Form.InputFormFields().SubmitForm();
                 driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
-                SelectElementWrapper adminYear = new SelectElementWrapper(driver,By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
+                SelectElementWrapper adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
                 var ele = adminYear.SelectedOption;
                 var parentElement = ele.ParentElement;
                 Assert.AreEqual(parentElement.TagName, "select", "Wrong Parent element tag name is displayed");
             }
             catch (Exception e)
             {
-                 driver.SaveScreenshotAndPageSource();;
+                driver.SaveScreenshotAndPageSource(); ;
                 throw;
             }
 
@@ -70,94 +70,7 @@ namespace SeleniumCSharp.Tests
         }
 
 
-        struct WebPageTables
-        {
-            String URL;
-            By TableLocator;
-            String FindColumn;
-        }
 
-
-
-        [Test]
-        public void TestTable()
-        {
-            DriverWrapper driver = DriverUtils.GetDriver();
-            try
-            {
-                LoginPage loginPage = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
-                loginPage.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
-                loginPage.Form.InputFormFields().SubmitForm();
-
-                WebPageTables d = new WebPageTables { };
-
-
-                driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
-
-                System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-                watch.Start();
-                Table<TestCentralRow> testCentralTable = new Table<TestCentralRow>(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderResults1_gridResults"));
-                watch.Stop();
-                var ss = watch.ElapsedMilliseconds;
-
-
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, testCentralTable.TableRows.Count);
-                watch.Reset();
-                watch.Start();
-                dynamic rows =     testCentralTable.GetRowsContainingText("Test Name", "schedulefuture 12128");
-                watch.Stop();
-                var ssd = watch.ElapsedMilliseconds;
-
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, testCentralTable.TableRows.Count);
-
-
-
-                driver.Navigate().GoToUrl("https://www.smashingmagazine.com/2008/08/top-10-css-table-designs/");
-
-                watch.Reset();
-                watch.Start();
-                Table<MagagzineRow> magaZineTable = new Table<MagagzineRow>(driver, By.Id("newspaper-b"));
-                watch.Stop();
-                 ss = watch.ElapsedMilliseconds;
-
-
-                 Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, magaZineTable.TableRows.Count);
-                watch.Reset();
-                watch.Start();
-                  rows = magaZineTable.GetRowsContainingText("Q2", "30.2");
-                watch.Stop();
-                 ssd = watch.ElapsedMilliseconds;
-
-                 Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, magaZineTable.TableRows.Count);
-                 watch.Reset();
-                 watch.Start();
-                 magaZineTable = new Table<MagagzineRow>(driver, Table<MagagzineRow>.GetTableLocatorFromColumnNames(MagagzineRow.ExpectedColumnList.ToArray()));
-                 watch.Stop();
-                 ss = watch.ElapsedMilliseconds;
-
-
-                 Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, magaZineTable.TableRows.Count);
-                 watch.Reset();
-                 watch.Start();
-                 rows = magaZineTable.GetRowsContainingText("Q2", "30.2");
-                 watch.Stop();
-                 ssd = watch.ElapsedMilliseconds;
-
-                 Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, magaZineTable.TableRows.Count);
-               
-
-
-
-
-            }
-            catch (Exception e)
-            {
-                 driver.SaveScreenshotAndPageSource();;
-                throw;
-            }
-
-
-        }
 
         [Test]
         public void TestWebElementWrapper()
@@ -171,15 +84,15 @@ namespace SeleniumCSharp.Tests
             }
 
 
-                for (int j = 10; j < 11111; j++)
-                {
-                    sbList[(j - 1) % 9].Append("\t=A" + j);
-                }
+            for (int j = 10; j < 11111; j++)
+            {
+                sbList[(j - 1) % 9].Append("\t=A" + j);
+            }
 
-                foreach (var s in sbList)
-                {
-                    Logger.Info(s.ToString());
-                }
+            foreach (var s in sbList)
+            {
+                Logger.Info(s.ToString());
+            }
 
 
 
@@ -199,7 +112,7 @@ namespace SeleniumCSharp.Tests
                 //Test property Displayed
                 page.Form.InitElements();
                 bool isUserNameDisplayed = page.Form.UserName.Displayed;
-                Assert.IsTrue(isUserNameDisplayed,"UserName textbox is displayed");
+                Assert.IsTrue(isUserNameDisplayed, "UserName textbox is displayed");
                 //Test property Enabled
                 bool isUserNameEnabled = page.Form.UserName.Enabled;
                 Assert.IsTrue(isUserNameEnabled, "UserName textbox is Enabled");
@@ -219,9 +132,9 @@ namespace SeleniumCSharp.Tests
                 //Login
                 page.Form.Submit.Click();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                 driver.SaveScreenshotAndPageSource();;
+                driver.SaveScreenshotAndPageSource(); ;
                 throw;
             }
 
@@ -233,7 +146,7 @@ namespace SeleniumCSharp.Tests
             DriverWrapper driver = DriverUtils.GetDriver();
             try
             {
-                LoginPage page = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));              
+                LoginPage page = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
                 page.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
                 page.Form.InputFormFields().SubmitForm();
                 driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
@@ -247,7 +160,7 @@ namespace SeleniumCSharp.Tests
                 //Test method SelectByValue
                 adminYear.SelectByValue("2009");
                 //Test property IsMultiple
-                bool a =adminYear.IsMultiple;
+                bool a = adminYear.IsMultiple;
                 //Test property ParentElement
 
                 //adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
@@ -255,17 +168,17 @@ namespace SeleniumCSharp.Tests
                 adminYear.SelectByText("2010-2011");
                 //adminYear = new SelectElementWrapper(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderSearch1_schoolYearId"));
                 //Test method SelectByIndex
-                adminYear.SelectByIndex(2);                
+                adminYear.SelectByIndex(2);
 
             }
             catch (StaleElementReferenceException see)
             {
-                driver.SaveScreenshotAndPageSource(); 
+                driver.SaveScreenshotAndPageSource();
                 throw;
             }
             catch (Exception e)
             {
-                 driver.SaveScreenshotAndPageSource();;
+                driver.SaveScreenshotAndPageSource(); ;
                 throw;
             }
         }
@@ -288,12 +201,12 @@ namespace SeleniumCSharp.Tests
                 sw.Stop();
 
             }
-           
+
             catch (Exception e)
             {
                 sw.Stop();
                 var ss = sw.Elapsed;
-                 driver.SaveScreenshotAndPageSource();;
+                driver.SaveScreenshotAndPageSource(); ;
                 throw;
             }
         }
@@ -335,7 +248,7 @@ namespace SeleniumCSharp.Tests
         {
             var testStatus = TestContext.CurrentContext.Result.Outcome.Status;
             Logger.Debug("Test Result : " + testStatus);
-            if(!testStatus.ToString().Equals("Passed",StringComparison.OrdinalIgnoreCase))
+            if (!testStatus.ToString().Equals("Passed", StringComparison.OrdinalIgnoreCase))
             {
                 Logger.Error("{0}\nStactrace:\n{1}", TestContext.CurrentContext.Result.Message, TestContext.CurrentContext.Result.StackTrace);
             }

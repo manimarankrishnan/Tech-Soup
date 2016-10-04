@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using System.Collections.ObjectModel;
 namespace SeleniumCSharp.Selenium.UI
 {
-    public class TableHeaderRow : TableRow
+    public class TableFooterRow : TableRow
     {
 
         public override ReadOnlyCollection<string> ColumnList

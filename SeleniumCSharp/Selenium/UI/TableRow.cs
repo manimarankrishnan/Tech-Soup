@@ -11,7 +11,7 @@ namespace SeleniumCSharp.Selenium.UI
 
     public abstract class TableRow : Component
     {
-        public virtual By ByData { get { return By.TagName("td"); } }
+        public virtual By ByTableData { get { return By.TagName("td"); } }
 
         public abstract ReadOnlyCollection<String> ColumnList { get; }
 
@@ -34,7 +34,7 @@ namespace SeleniumCSharp.Selenium.UI
         {
             get
             {
-                return _dataList ?? RootElement.FindElements(ByData);
+                return _dataList ?? RootElement.FindElements(ByTableData);
             }
             set { _dataList = value; }
         }
