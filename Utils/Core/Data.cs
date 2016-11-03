@@ -30,15 +30,20 @@ namespace Utils.Core
         /// <param name="type"></param>
         public Data(String dataIdentifier)
         {
-            initialiseDictionaries();
             LoadValues(dataIdentifier);
         }
 
-        private void initialiseDictionaries()
+        protected void initialiseDictionaries()
         {
             StringValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             StringLists = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             DataValues = new Dictionary<string, Data>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        public string this[string key]
+        {
+            get { return GetValue(key); }
+            set {  SetValue(key,value); }
         }
 
         /// <summary>
@@ -309,7 +314,7 @@ namespace Utils.Core
         /// <summary>
         /// Loads the values from the DataIdentifier (Override the exising values)
         /// </summary>
-        public void LoadValues()
+        public virtual void LoadValues()
         {
             if (DataIdentifier == null)
             {
@@ -336,9 +341,9 @@ namespace Utils.Core
         /// Should update the DataIdentifier and Type
         /// </summary>
         /// <param name="dataIdentifier"></param>
-        public void LoadValues(String dataIdentifier)
+        public virtual void LoadValues(String dataIdentifier)
         {
-            this.DataIdentifier = dataIdentifier;
+            DataIdentifier = dataIdentifier;
             LoadValues();
         }
 

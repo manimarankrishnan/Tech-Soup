@@ -264,12 +264,23 @@ namespace SeleniumCSharp.Selenium
 
         public bool Displayed
         {
-            get { return WrappedElement.Displayed; }
+            get {
+                var displayed = WrappedElement.Displayed;
+                Logger.Info("Element {0} is {1} displayed.", by, displayed ? "" : "not");
+                return displayed;
+            
+            
+            }
         }
 
         public bool Enabled
         {
-            get { return WrappedElement.Enabled; }
+            get {
+                var enabled = WrappedElement.Enabled;
+                Logger.Info("Element {0} is {1} enabled.", by, enabled ? "" : "not");
+                return enabled; 
+            
+            }
         }
 
         /// <summary>
@@ -279,7 +290,9 @@ namespace SeleniumCSharp.Selenium
         /// <returns></returns>
         public string GetAttribute(string attributeName)
         {
-            return WrappedElement.GetAttribute(attributeName);
+            var attr = WrappedElement.GetAttribute(attributeName);
+            Logger.Info("Returned attribute: '{0}' Value: '{1}' from element {2} .",attributeName,attr, by);
+            return attr ;
         }
 
         /// <summary>
@@ -289,7 +302,9 @@ namespace SeleniumCSharp.Selenium
         /// <returns></returns>
         public string GetCssValue(string propertyName)
         {
-            return WrappedElement.GetCssValue(propertyName);
+            var cssProp = WrappedElement.GetCssValue(propertyName);
+            Logger.Info("Returned CSS property: '{0}' Value: '{1}' from element {2} .", propertyName, cssProp, by);
+            return cssProp;
         }
 
         /// <summary>
@@ -297,12 +312,21 @@ namespace SeleniumCSharp.Selenium
         /// </summary>
         public Point Location
         {
-            get { return WrappedElement.Location; }
+            get {
+                var location = WrappedElement.Location;
+                Logger.Info("Returned Location X: '{0}' Y: '{1}' of element {2} .", location.X, location.Y, by);
+                return location ; 
+            }
         }
 
         public bool Selected
         {
-            get { return WrappedElement.Selected; }
+            get
+            {
+                var selected = WrappedElement.Selected;
+                Logger.Info("Element {0} is {1} selected.", by, selected ? "" : "not");
+                return selected;
+            }
         }
 
         /// <summary>
@@ -345,7 +369,12 @@ namespace SeleniumCSharp.Selenium
         /// </summary>
         public Size Size
         {
-            get { return WrappedElement.Size; }
+            get
+            {
+                var size = WrappedElement.Size;
+                Logger.Info("Returned Location Height: '{0}' Width: '{1}' of element {2} .", size.Height, size.Width, by);
+                return size;
+            }
         }
 
         /// <summary>
@@ -373,6 +402,8 @@ namespace SeleniumCSharp.Selenium
                 Logger.Error(e);
                 throw;
             }
+            Logger.Info("Entered Submit in the webelement : {0}",  by);
+
         }
 
         /// <summary>
@@ -380,7 +411,12 @@ namespace SeleniumCSharp.Selenium
         /// </summary>
         public string TagName
         {
-            get { return WrappedElement.TagName; }
+            get
+            {
+                var tagname = WrappedElement.TagName;
+                Logger.Info("Returned tagname '{0}' for the webelement : {1}", tagname, by);
+                return tagname;
+            }
         }
 
 
@@ -389,7 +425,11 @@ namespace SeleniumCSharp.Selenium
         /// </summary>
         public string Text
         {
-            get { return WrappedElement.Text; }
+            get {
+                var text = WrappedElement.Text;
+                Logger.Info("Returned text '{0}' from the webelement : {1}", text, by);
+                return text; 
+            }
         }
 
         /// <summary>

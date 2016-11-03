@@ -46,6 +46,7 @@
     <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Data.cs" />
     <Compile Include="Core\Logger.cs" />
+    <Compile Include="Core\Properties.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

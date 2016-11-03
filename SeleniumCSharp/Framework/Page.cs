@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeleniumCSharp.Selenium;
 using Utils.Core;
+using OpenQA.Selenium.Support.UI;
 namespace SeleniumCSharp.Framework
 {
     public abstract class Page
@@ -32,12 +33,12 @@ namespace SeleniumCSharp.Framework
             try
             {
                 string actualUrl = Driver.Url;
-                
-                if(!actualUrl.ToLower().Contains(ExpectedUrl.ToLower())){
-                    Exception e = new Exception(String.Format("The expected Url: {0} is not found in actual Url: {1}",ExpectedUrl,actualUrl));
-                    Logger.Error(e);
-                    throw e;
-                }
+                var wait = new DefaultWait<DriverWrapper>(Driver);
+                wait.Timeout = TimeSpan.FromSeconds(TestConfiguration.PageLoadTimeout);
+                wait.PollingInterval = TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal); ;
+                wait.Message = "The actual page URL: '" + actualUrl + "' does not contain the expected page URL: '" + this.ExpectedUrl + "'.";
+                wait.Until((d) => { return d.Url.ToLower().Contains(ExpectedUrl.ToLower()); });
+
                 Logger.Info("Verifed the actual URL: {0} contains the expected URL: {1}.",actualUrl,ExpectedUrl);
             }
             catch (Exception e)
