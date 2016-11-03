@@ -90,7 +90,11 @@ namespace SeleniumCSharp.Selenium
 
         public DriverWrapper(IWebDriver driver)
         {
-            this.driver = driver;          
+            this.driver = driver;
+            while (this.driver is DriverWrapper)
+            {
+                this.driver = (driver as DriverWrapper).WrappedDriver;
+            }
         }
 
         [DebuggerStepThrough]

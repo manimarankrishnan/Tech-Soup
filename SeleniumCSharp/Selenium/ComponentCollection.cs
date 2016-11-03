@@ -36,7 +36,7 @@ namespace SeleniumCSharp.Selenium
             foreach (var element in listOfElements)
             {
                 var component = new T();
-                component.RootElement = element;
+                component.WrappedElement = element;
                 component.InitElements();
                 componentList.Add(component);
             }

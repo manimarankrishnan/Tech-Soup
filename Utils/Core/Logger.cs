@@ -29,6 +29,9 @@ namespace Utils.Core
         [ThreadStatic]
         private static String _name;
 
+        [ThreadStatic]
+        private static String _logFilePath;
+      
         public static String Name
         {
             get
@@ -40,12 +43,13 @@ namespace Utils.Core
                 StackTrace stackTrace = new StackTrace();
                 String className = stackTrace.GetFrame(1).GetMethod().DeclaringType.ToString();
                 _name = (value.Contains(className) ? "" : className +".") + value;
+                _logFilePath = GetFilePath() +".log";
             }
         }
 
-        private static String filePath { get; set; }
+ 
         public static LogMode mode = LogMode.DEBUG;
-        private static DateTime buildStartTime = DateTime.Now;
+        private static readonly DateTime buildStartTime = DateTime.Now;
 
         public static void SetLogWriter(TextWriter writer)
         {
@@ -60,7 +64,7 @@ namespace Utils.Core
         {
             if (mode == LogMode.INFO)
             {
-                WriteToFile(o, "INFO");
+                WriteToFile(o, "INFO" );
             }
         }
 
@@ -85,7 +89,7 @@ namespace Utils.Core
                 if (args.Length == 0)
                     Info((Object)format);
                 else
-                    WriteToFile(String.Format(format, args), "INFO");
+                    WriteToFile(String.Format(format, args), "INFO" );
             }
         }
 
@@ -169,7 +173,8 @@ namespace Utils.Core
 
             if (LogWriter != null)
                 LogWriter.WriteLine(o);
-            using (StreamWriter sw = new StreamWriter(GetFilePath() + ".log", true))
+            _logFilePath = _logFilePath ?? GetFilePath() + ".log";
+            using (StreamWriter sw = new StreamWriter(_logFilePath, true))
             {
                 sw.AutoFlush = true;
                 sw.WriteLine(logmode + ": " + o.ToString());

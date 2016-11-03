@@ -28,8 +28,6 @@ namespace SeleniumCSharp.Tests
             Logger.Info("Setup completed");
         }
 
-
-
         [Test]
         public void TestTable()
         {
@@ -129,6 +127,96 @@ namespace SeleniumCSharp.Tests
 
 
         [Test]
+        public void GetColumnTests()
+        {
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                #region Check without checkbox
+
+                driver.Navigate().GoToUrl("https://datatables.net/extensions/select/examples/initialisation/checkbox.html");
+                var Table = new TableWithHeaders(driver, By.Id("example"));
+
+
+
+
+                var softwareEng= Table.GetRowsContainingValue("Position", "Software Engineer");
+                foreach (var row in softwareEng)
+                {
+                     row[""].Click();
+                }
+                #endregion
+
+                #region Check without checkbox
+
+                driver.Navigate().GoToUrl("http://yuilibrary.com/yui/docs/datatable/datatable-chkboxselect.html");
+                Table = new TableWithHeaders(driver, By.CssSelector("table.yui3-datatable-table"), new List<string>()
+                {
+                    "",
+                    "Port No.",
+                    "Protocol",
+                    "Common Name"
+
+                });
+               
+                 var Port995 = Table.GetRowsContainingValue("Port No.", "995");
+                foreach (var row in Port995)
+                {
+                    row[""].DescendantCheckbox.UnCheck();
+                    Assert.IsFalse(row[""].DescendantCheckbox.Selected);
+                }
+                #endregion
+
+                #region Custom Column Name
+
+                driver.Navigate().GoToUrl("http://yuilibrary.com/yui/docs/datatable/datatable-chkboxselect.html");
+                Table = new TableWithHeaders(driver, By.CssSelector("table.yui3-datatable-table"), new List<string>()
+                {
+                    "Select",
+                    "Port No.",
+                    "Protocol",
+                    "Common Name"
+
+                });
+
+                 Port995 = Table.GetRowsContainingValue("Port No.", "995");
+                foreach (var row in Port995)
+                {
+                    row["Select"].DescendantCheckbox.UnCheck();
+                    Assert.IsFalse(row["Select"].DescendantCheckbox.Selected);
+                }
+                #endregion
+
+
+                #region Radio Grid
+
+                driver.Navigate().GoToUrl(" https://css-tricks.com/examples/RadioGrid/");
+                Table = new TableWithHeaders(driver, By.CssSelector("#page-wrap>table"));
+
+                var Snickers = Table.GetRowsContainingValue("", "Snickers");
+
+                Snickers[0].GetTableDataElement("1").DescendantRadioButton.Check();
+                foreach (var row in Snickers)
+                {
+                    row["1"].DescendantRadioButton.Check();
+                    Assert.IsTrue(row["1"].DescendantRadioButton.Selected);
+                }
+
+                Table["", "Snickers"]["1"].DescendantRadioButton.Check();
+
+
+                #endregion
+            }
+            catch (Exception e)
+            {
+                driver.SaveScreenshotAndPageSource(); ;
+                throw;
+            }
+
+
+        }
+
+        [Test]
         public void ItemPropertiesPageTables()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
@@ -172,8 +260,14 @@ namespace SeleniumCSharp.Tests
                 watch.Reset();
                 watch.Start();
                  rows = CategoriesTable.GetRowsContainingValue("Category Name", "Curriculum 3");
+                 CategoriesTable["Category Name", "Curriculum 3"]["Show"].DescendantCheckbox.Check();
+                 TableRow tr = rows[0];
+                 tr["Show"].DescendantCheckbox.Check();
                 watch.Stop();
                  ssd = watch.ElapsedMilliseconds;
+
+
+                 CategoriesTable["Category Name", "Curriculum 3"]["Show"].DescendantCheckbox.Check();
 
                 Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, CategoriesTable.TableRows.Count);
 

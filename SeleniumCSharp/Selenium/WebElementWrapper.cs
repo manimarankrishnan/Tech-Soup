@@ -31,15 +31,19 @@ namespace SeleniumCSharp.Selenium
                 if (_driver != null)
                     return _driver;
                 ISearchContext searchContext = SearchContext;
-                while (searchContext is WebElementWrapper)
+                while (searchContext is WebElementWrapper && _driver==null)
                 {
+                    _driver = ((WebElementWrapper)searchContext).Driver ?? _driver;
                     searchContext = ((WebElementWrapper)searchContext).SearchContext;
                 }
-                if (searchContext is DriverWrapper)
-                    return (DriverWrapper)searchContext;
-                if (searchContext is IWebDriver)
-                    return new DriverWrapper((IWebDriver)searchContext);
-                return null;
+                if (searchContext is DriverWrapper  && _driver==null)
+                {
+                    _driver = (DriverWrapper)searchContext;
+                }
+                if (searchContext is IWebDriver && _driver == null)
+                    _driver= new DriverWrapper((IWebDriver)searchContext);
+
+                return _driver;
             }
             set
             {
@@ -126,12 +130,19 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        private TimeSpan ElementWaitTimeout = TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout);
+        private TimeSpan PollingInterval = TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal);
+
         public IWebElement FindElement(By by)
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
             IWebElement result; ;
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
+
+            var element = WrappedElement;
+            while (element is IWrapsElement)
+                element = ((IWrapsElement)element).WrappedElement;
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(element, ElementWaitTimeout, PollingInterval);
             List<By> locators = new List<By> { by };
             try
             {
@@ -144,6 +155,7 @@ namespace SeleniumCSharp.Selenium
                 {
                     Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
+                    retryElementLocator = new RetryingElementLocator(WrappedElement, ElementWaitTimeout, PollingInterval);
                     result = new WebElementWrapper(retryElementLocator.LocateElement(locators));
 
                 }
@@ -166,7 +178,7 @@ namespace SeleniumCSharp.Selenium
             Stopwatch watch = new Stopwatch();
             watch.Start();
             ReadOnlyCollection<IWebElement> result;
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement, TimeSpan.FromSeconds(TestConfiguration.ElementWaitTimeout), TimeSpan.FromMilliseconds(TestConfiguration.PollingInterVal));
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(WrappedElement,ElementWaitTimeout,PollingInterval);
             List<By> locators = new List<By> { by };
             try
             {
@@ -178,6 +190,7 @@ namespace SeleniumCSharp.Selenium
                 {
                     Logger.Info("Caught exception {0}. Attempting to re-initialize element", e.Message);
                     InitializeElement();
+                    retryElementLocator = new RetryingElementLocator(WrappedElement, ElementWaitTimeout, PollingInterval);
                     result = retryElementLocator.LocateElements(locators);
                 }
                 else
@@ -386,6 +399,12 @@ namespace SeleniumCSharp.Selenium
         {
             if (!Selected)
                 Click();
+            if (!Selected)
+            {
+                var e = new Exception (String.Format("Element {0} is clicked. But its not selected.", this));
+                Logger.Error(e);
+                throw e;
+            }
         }
 
         /// <summary>
@@ -395,6 +414,12 @@ namespace SeleniumCSharp.Selenium
         {
             if (Selected)
                 Click();
+            if (Selected)
+            {
+                var e = new Exception(String.Format("Element {0} is clicked. But its not unselected.", this));
+                Logger.Error(e);
+                throw e;
+            }
         }
 
         /// <summary>
@@ -415,7 +440,7 @@ namespace SeleniumCSharp.Selenium
             }
             try
             {
-                RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
+                RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext,ElementWaitTimeout,PollingInterval);
                 List<By> locators = new List<By> { by };
                 WrappedElement = retryElementLocator.LocateElement(locators);
             }
@@ -447,7 +472,7 @@ namespace SeleniumCSharp.Selenium
                 throw e;
             }
 
-            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext, TimeSpan.FromSeconds(timeOutInSeconds), TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds));
+            RetryingElementLocator retryElementLocator = new RetryingElementLocator(SearchContext,ElementWaitTimeout,PollingInterval);
             List<By> locators = new List<By> { by };
             var elements = retryElementLocator.LocateElements(locators);
             watch.Stop();
@@ -548,19 +573,93 @@ namespace SeleniumCSharp.Selenium
             return element;
         }
 
+        private WebElementWrapper _parentElement;
         public WebElementWrapper ParentElement
         {
             get
             {
-                return new WebElementWrapper(this, By.XPath(".//..")); ;
+                _parentElement = _parentElement ??  new WebElementWrapper(this, By.XPath(".//..")); ;
+                return _parentElement;
             }
         }
 
+        private WebElementWrapper _immediateChild;
         public WebElementWrapper ImmediateChild
         {
             get
             {
-                return new WebElementWrapper(this,By.XPath("./*"));
+                _immediateChild = _immediateChild ?? new WebElementWrapper(this, By.XPath("./*"));
+                return _immediateChild; 
+            }
+        }
+
+        private WebElementWrapper _descendantLink;
+        public WebElementWrapper DescendantLink
+        {
+            get
+            {
+                _descendantLink = _descendantLink ?? new WebElementWrapper(this, By.TagName("a"));
+                return _descendantLink;
+            }
+        }
+
+        private WebElementWrapper _descendantCheckbox;
+        public WebElementWrapper DescendantCheckbox
+        {
+            get
+            {
+                _descendantCheckbox = _descendantCheckbox ?? new WebElementWrapper(this, By.CssSelector("input[type='checkbox']"));
+                return _descendantCheckbox;
+            }
+        }
+
+        private WebElementWrapper _descendantRadioButton;
+        public WebElementWrapper DescendantRadioButton
+        {
+            get
+            {
+                _descendantRadioButton = _descendantRadioButton ?? new WebElementWrapper(this, By.CssSelector("input[type='radio']"));
+                return _descendantRadioButton; 
+            }
+        }
+        
+        private SelectElementWrapper _descendantSelect;
+        public SelectElementWrapper DescendantSelect
+        {
+            get
+            {
+                _descendantSelect = _descendantSelect ?? new SelectElementWrapper(this, By.TagName("select"));
+                return _descendantSelect; 
+            }
+        }
+
+        private WebElementWrapper _descendantTextBox;
+        public WebElementWrapper DescendantTextBox
+        {
+            get
+            {
+                _descendantTextBox = _descendantTextBox ?? new WebElementWrapper(this, By.CssSelector("input[type='text']"));
+                return _descendantTextBox; 
+            }
+        }
+
+        private WebElementWrapper _descendantTextArea;
+        public WebElementWrapper DescendantTextArea
+        {
+            get
+            {
+                _descendantTextArea=_descendantTextArea??new WebElementWrapper(this, By.TagName("textarea"));
+                return _descendantTextArea;
+            }
+        }
+        
+        private WebElementWrapper _descendantImage;
+        public WebElementWrapper DescendantImage
+        {
+            get
+            {
+                _descendantImage = _descendantImage ?? new WebElementWrapper(this, By.TagName("img"));
+                return _descendantImage;
             }
         }
 
@@ -585,12 +684,24 @@ namespace SeleniumCSharp.Selenium
             get
             {
                 return GetAttribute("id");
-                By[] ss  = {By.Id(""),By.XPath("")};
-                ByChained v = new ByChained(ss);
-                by = v;
             }
         }
 
+        public String Color
+        {
+            get
+            {
+                return WrappedElement.GetCssValue("color");
+            }
+        }
+
+        public String BackgroundColor
+        {
+            get
+            {
+                return WrappedElement.GetCssValue("background-color");
+            }
+        }
         public override string ToString()
         {
             if (by != null)

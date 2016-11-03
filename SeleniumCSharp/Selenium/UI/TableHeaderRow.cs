@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using System.Collections.ObjectModel;
 namespace SeleniumCSharp.Selenium.UI
 {
-    public class TableHeaderRow : TableRow
+    public class TableHeaderRow : TableRow 
     {
 
         public override ReadOnlyCollection<string> ColumnList
@@ -17,6 +17,7 @@ namespace SeleniumCSharp.Selenium.UI
             }
         }
 
+
         public override OpenQA.Selenium.By ByTableData
         {
             get
@@ -25,5 +26,6 @@ namespace SeleniumCSharp.Selenium.UI
             }
         }
 
+        
     }
 }

@@ -5,15 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using System.Collections.ObjectModel;
+using Utils.Core;
 
 namespace SeleniumCSharp.Selenium.UI
 {
 
-    public abstract class TableRow : Component
+    public class TableRow : Component
     {
         public virtual By ByTableData { get { return By.TagName("td"); } }
 
-        public abstract ReadOnlyCollection<String> ColumnList { get; }
+        public Func<ReadOnlyCollection<string>> GetColumnlistFunc { get; set; }
 
         public List<string> ValueList
         {
@@ -28,13 +29,16 @@ namespace SeleniumCSharp.Selenium.UI
             }
         }
 
+        public virtual ReadOnlyCollection<string> ColumnList { get { return GetColumnlistFunc.Invoke(); } }
+
         private ReadOnlyCollection<IWebElement> _dataList;
 
         public ReadOnlyCollection<IWebElement> DataList
         {
             get
             {
-                return _dataList ?? RootElement.FindElements(ByTableData);
+                _dataList = _dataList ?? WrappedElement.FindElements(ByTableData);
+                return _dataList;
             }
             set { _dataList = value; }
         }
@@ -46,12 +50,12 @@ namespace SeleniumCSharp.Selenium.UI
 
         public TableRow(IWebElement element)
         {
-            RootElement = element;
+            WrappedElement = element;
         }
 
         public override void InitElements()
         {
-            new WebElementWrapper(RootElement, By.Id(""));
+
         }
 
         public String GetText(int dataIndex)
@@ -84,5 +88,45 @@ namespace SeleniumCSharp.Selenium.UI
         }
 
 
+        public WebElementWrapper GetTableDataElement(String ColumnName)
+        {
+            return this[ColumnName];
+        }
+
+
+        public WebElementWrapper this[int index]
+        {
+            get
+            {
+                return new WebElementWrapper(DataList[index]);
+            }
+        }
+
+        public WebElementWrapper this[String ColumnName]
+        {
+            get
+            {
+
+                if (ColumnList.Contains(ColumnName))
+                {
+                    return new WebElementWrapper(DataList[ColumnList.IndexOf(ColumnName)]);
+                }
+                else
+                {
+                    var e = new KeyNotFoundException("The Column " + ColumnName + " is not found in the list of columns" + ColumnList.ToString());
+                    Logger.Error(e);
+                    throw e;
+
+                }
+
+            }
+
+        }
+
+
+
+
     }
+
+
 }

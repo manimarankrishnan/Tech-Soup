@@ -14,36 +14,41 @@ namespace SeleniumCSharp.Tests.Main.Components
     {
 
 
-        public override ReadOnlyCollection<string> ColumnList
-        {
-            get { return ExpectedColumnList; }
-        }
 
-        public static ReadOnlyCollection<string> ExpectedColumnList
-        {
-            get
-            {
-                return new ReadOnlyCollection<string>(
+        //public override ReadOnlyCollection<string> ColumnList
+        //{
+        //    get { return ExpectedColumnList; }
+        //}
 
-                    new List<string>() { "","Show",	"Category Name" }
+        //public static ReadOnlyCollection<string> ExpectedColumnList
+        //{
+        //    get
+        //    {
+        //        return new ReadOnlyCollection<string>(
 
-                    );
+        //            new List<string>() { "","Show",	"Category Name" }
 
-            }
-        }
+        //            );
+
+        //    }
+        //}
 
 
+        //public void ClickEdit()
+        //{
+
+        //}
 
 
     }
 
 
 
-    public class CategoriesTable : Table<CategoriesRow,TableHeaderRow>
+    public class CategoriesTable : Table<TableRow,TableHeaderRow>
     {
 
         public CategoriesTable(IWebDriver driver)
-            : base(driver, By.XPath("//div[@id='divCategoryList']//table"))
+            : base(driver, By.CssSelector("div#divCategoryList>table"))
         {
 
         }

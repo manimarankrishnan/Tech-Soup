@@ -10,28 +10,28 @@ namespace SeleniumCSharp.Tests.Main.Components
     {
 
 
-        public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
-        {
-            get {
-            return ExpectedColumnList;
-            }
+        //public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
+        //{
+        //    get {
+        //    return ExpectedColumnList;
+        //    }
 
-        }
-        public static System.Collections.ObjectModel.ReadOnlyCollection<string> ExpectedColumnList{get{
-                return new System.Collections.ObjectModel.ReadOnlyCollection<string>(
+        //}
+        //public static System.Collections.ObjectModel.ReadOnlyCollection<string> ExpectedColumnList{get{
+        //        return new System.Collections.ObjectModel.ReadOnlyCollection<string>(
 
-                    new List<string>(){"Test Name",	
-                                        "Test Category",	
-                                        "Subject",	
-                                        "Grade Level",	
-                                        "Test Stage",	
-                                        "Start Date",	
-                                        "End Date"}
+        //            new List<string>(){"Test Name",	
+        //                                "Test Category",	
+        //                                "Subject",	
+        //                                "Grade Level",	
+        //                                "Test Stage",	
+        //                                "Start Date",	
+        //                                "End Date"}
 
-                    );
+        //            );
 
-        }
-        }
+        //}
+        //}
     }
 
 
@@ -39,13 +39,13 @@ namespace SeleniumCSharp.Tests.Main.Components
     public class MagagzineRow : TableRow
     {
         
-        public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
-        {
-            get {
-            return ExpectedColumnList;
-            }
+        //public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
+        //{
+        //    get {
+        //    return ExpectedColumnList;
+        //    }
 
-        }
+        //}
         public static System.Collections.ObjectModel.ReadOnlyCollection<string> ExpectedColumnList{get{
                 return new System.Collections.ObjectModel.ReadOnlyCollection<string>(
 
@@ -65,22 +65,22 @@ namespace SeleniumCSharp.Tests.Main.Components
     public class DataTableExample : TableRow
     {
         
-        public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
-        {
-            get {
-            return ExpectedColumnList;
-            }
+        //public override System.Collections.ObjectModel.ReadOnlyCollection<string> ColumnList
+        //{
+        //    get {
+        //    return ExpectedColumnList;
+        //    }
 
-        }
-        public static System.Collections.ObjectModel.ReadOnlyCollection<string> ExpectedColumnList{get{
-                return new System.Collections.ObjectModel.ReadOnlyCollection<string>(
+        //}
+        //public static System.Collections.ObjectModel.ReadOnlyCollection<string> ExpectedColumnList{get{
+        //        return new System.Collections.ObjectModel.ReadOnlyCollection<string>(
 
-                    new List<string>(){"Name",	"Position",	"Start" ,"date",	"Salary"}
+        //            new List<string>(){"Name",	"Position",	"Start" ,"date",	"Salary"}
 
-                    );
+        //            );
 
-        }
-        }
+        //}
+        //}
 
 
         

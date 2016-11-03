@@ -9,6 +9,12 @@ using Utils.Core;
 
 namespace WebServiceTests.Main.Calculator.Addition
 {
+    
+
+
+
+
+
     public class AdditionRequest
     {
         Envelope envelope;
