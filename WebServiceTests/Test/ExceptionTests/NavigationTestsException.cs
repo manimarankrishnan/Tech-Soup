@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WebServiceCSharp.Core;
+using Utils.Core;
+
 namespace WebServiceTests.Test.ExceptionTests
 {
     public class NavigationTestsException
@@ -15,8 +17,8 @@ namespace WebServiceTests.Test.ExceptionTests
         [SetUp]
         public void Setup()
         {
-            Logger.logWriter = TestContext.Out;
-            Logger.name = TestContext.CurrentContext.Test.FullName;
+            Logger.LogWriter = TestContext.Out;
+            Logger.Name = TestContext.CurrentContext.Test.FullName;
             Logger.mode = LogMode.INFO;
         }
 

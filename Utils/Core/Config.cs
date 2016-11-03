@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace WebServiceCSharp.Core
+namespace Utils.Core
 {
     public class Config
     {
@@ -109,7 +109,7 @@ namespace WebServiceCSharp.Core
             }
             StreamReader reader = new StreamReader(configFile);
             Logger.Info("Reading config file" + configFile);
-            configuration configDetails = (configuration)Utils.DeserializeXML(reader.ReadToEnd(), typeof(configuration));
+            configuration configDetails = (configuration)GeneralUtils.DeserializeXML(reader.ReadToEnd(), typeof(configuration));
             foreach (var parameter in configDetails.parameter)
             {
                 String value;

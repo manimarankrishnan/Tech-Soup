@@ -5,8 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
+using Utils.Core;
+
 namespace WebServiceTests.Main.Calculator.Addition
 {
+    
+
+
+
+
+
     public class AdditionRequest
     {
         Envelope envelope;
@@ -23,7 +31,7 @@ namespace WebServiceTests.Main.Calculator.Addition
 
         public override string ToString()
         {
-            return Utils.XMLSerializeObject(envelope);
+            return GeneralUtils.XMLSerializeObject(envelope);
         }
 
 

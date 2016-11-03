@@ -10,6 +10,8 @@ using WebServiceTests.Main.Calculator.Addition;
 using WebServiceTests.Main.Calculator.Subtraction;
 using WebServiceTests.Main.Calculator.Multiplication;
 using WebServiceTests.Main.Calculator.Deletion;
+using Utils.Core;
+
 namespace WebServiceTests.Test
 {
     public class CalculatorTests
@@ -17,8 +19,8 @@ namespace WebServiceTests.Test
         [SetUp]
         public void Setup()
         {
-            Logger.logWriter = TestContext.Out;
-            Logger.name = TestContext.CurrentContext.Test.FullName;
+            Logger.LogWriter = TestContext.Out;
+            Logger.Name = TestContext.CurrentContext.Test.FullName;
             Logger.mode = LogMode.INFO;
         }
 
@@ -37,7 +39,7 @@ namespace WebServiceTests.Test
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Add");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
             Assert.AreEqual(client.Response.StatusCode.ToString(), "OK","Status Code mismatch");
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }      
         
         /// <summary>
@@ -49,7 +51,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Sub");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Mul");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_CalculatorTestsWithURI_TC_Div");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
 
@@ -93,7 +95,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://www.dneonline.com", "TestCaseData_CalculatorTestsWithoutURI_TC_Add");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -105,7 +107,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://www.dneonline.com", "TestCaseData_CalculatorTestsWithoutURI_TC_Sub");
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
 
@@ -130,7 +132,7 @@ namespace WebServiceTests.Test
                 .AddHeaders(@"Content-Type:text/xmlContent-Type:text/xml;charset=utf-8,SOAPAction:http://tempuri.org/Multiply")
                 .SetRequest()
                 .CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
+            Assert.AreEqual(responseBody, GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -146,7 +148,7 @@ namespace WebServiceTests.Test
                 .AddHeaders(@"Content-Type:text/xmlContent-Type:text/xml;charset=utf-8,SOAPAction:http://tempuri.org/Divide")
                 .SetRequest()
                 .CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(responseBody, Utils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
+            Assert.AreEqual(responseBody, GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), "Actual and Expected response body are not eaual");
         }
 
 
@@ -164,10 +166,10 @@ namespace WebServiceTests.Test
         [Test]
         public void PerformAdditionWithRawData()
         {
-            Data values = Utils.GetExcelValueAsDataList("TestCaseData_CalculatorTestsWithURI_TC_Add").First();
+            Data values = GeneralUtils.GetExcelValueAsDataList("TestCaseData_CalculatorTestsWithURI_TC_Add").First();
             WebServiceClient client = new WebServiceClient("", values);
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
        
@@ -179,10 +181,10 @@ namespace WebServiceTests.Test
         [Test]
         public void PerformDivisionWithRawData()
         {
-            Data values = Utils.GetExcelValueAsDataList("TestCaseData_CalculatorTestsWithURI_TC_Div").First();
+            Data values = GeneralUtils.GetExcelValueAsDataList("TestCaseData_CalculatorTestsWithURI_TC_Div").First();
             WebServiceClient client = new WebServiceClient("", values);
             XmlDocument responseBody = client.SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody), responseBody, "Actual and Expected response body are not eaual");
         }
 
         //````````````````````````````````````````````````````````End-Of-BasicCalculatorTestsWithRawData`````````````````````````````````````````````````````//
@@ -204,7 +206,7 @@ namespace WebServiceTests.Test
 
             XmlDocument responseBody = client.SetRequestBody(new AdditionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -221,7 +223,7 @@ namespace WebServiceTests.Test
 
             XmlDocument responseBody = client.SetRequestBody(new SubtractionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -238,7 +240,7 @@ namespace WebServiceTests.Test
 
             XmlDocument responseBody = client.SetRequestBody(new MultiplicationRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
 
         /// <summary>
@@ -255,7 +257,7 @@ namespace WebServiceTests.Test
 
             XmlDocument responseBody = client.SetRequestBody(new DeletionRequest(a, b).ToString())
                 .SetRequest().CallService().GetResponseAsXMLDocument();
-            Assert.AreEqual(Utils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
+            Assert.AreEqual(GeneralUtils.GetFileAsXMLDocument(client._expectedResponseBody).InnerXml, responseBody.InnerXml, "Actual and Expected response body are not eaual");
         }
 
         //-----------------------------------------------------------End-Of-SerializationTests---------------------------------------------------------------//

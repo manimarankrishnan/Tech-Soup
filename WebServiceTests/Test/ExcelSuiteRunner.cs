@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Collections;
 using WebServiceCSharp.Core;
 using System.Xml;
+using Utils.Core;
 namespace WebServiceTests.Test
 {
 
@@ -15,8 +16,8 @@ namespace WebServiceTests.Test
         [SetUp]
         public void Setup()
         {
-            Logger.logWriter = TestContext.Out;
-            Logger.name = TestContext.CurrentContext.Test.FullName;
+            Logger.LogWriter = TestContext.Out;
+            Logger.Name = TestContext.CurrentContext.Test.FullName;
             Logger.mode = LogMode.INFO;
         }
 
@@ -36,7 +37,7 @@ namespace WebServiceTests.Test
                 XmlDocument expectedXmlDoc= null;
 
                 if(expectedValue.EndsWith(".xml") ){
-                   expectedXmlDoc= Utils.GetFileAsXMLDocument(expectedValue);
+                   expectedXmlDoc= GeneralUtils.GetFileAsXMLDocument(expectedValue);
                 }
                 else{
                     expectedXmlDoc = new XmlDocument();
@@ -51,19 +52,19 @@ namespace WebServiceTests.Test
 
                 if (expectedValue.EndsWith(".json") || expectedValue.EndsWith(".txt"))
                 {
-                    expectedJsonString = Utils.FormatJsonString(Utils.GetFileAsString(expectedValue));
+                    expectedJsonString = GeneralUtils.FormatJsonString(GeneralUtils.GetFileAsString(expectedValue));
                 }
                 else
                 {
-                    expectedJsonString = Utils.FormatJsonString(expectedValue);
+                    expectedJsonString = GeneralUtils.FormatJsonString(expectedValue);
                 }
-                Assert.AreEqual(expectedJsonString, Utils.FormatJsonString(client.GetResponseBody()));
+                Assert.AreEqual(expectedJsonString, GeneralUtils.FormatJsonString(client.GetResponseBody()));
             }
             else
             {
                 if (expectedValue.EndsWith(".txt"))
                 {
-                    expectedValue = Utils.GetFileAsString(expectedValue);
+                    expectedValue = GeneralUtils.GetFileAsString(expectedValue);
                 }
 
                 //remove new line characters from response and expected
@@ -86,10 +87,10 @@ namespace WebServiceTests.Test
                 {
                     List<Data> TestCases = new List<Data>();
 
-                    foreach (String[] moduleSheet in Utils.GetDataFromExcel(Config.GetConfigValue("FunctionalSuiteFile"), 1))
+                    foreach (String[] moduleSheet in GeneralUtils.GetDataFromExcel(Config.GetConfigValue("FunctionalSuiteFile"), 1))
                     {
                         if(!String.IsNullOrEmpty(moduleSheet[1]))
-                            TestCases.AddRange(Utils.GetExcelValueAsDataList(moduleSheet[1]));
+                            TestCases.AddRange(GeneralUtils.GetExcelValueAsDataList(moduleSheet[1]));
                     }
                     foreach (var testcaseData in TestCases)
                     {

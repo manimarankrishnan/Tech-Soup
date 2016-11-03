@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebServiceCSharp.Core
+namespace Utils.Core
 {
     public class Data
     {
@@ -30,15 +30,20 @@ namespace WebServiceCSharp.Core
         /// <param name="type"></param>
         public Data(String dataIdentifier)
         {
-            initialiseDictionaries();
             LoadValues(dataIdentifier);
         }
 
-        private void initialiseDictionaries()
+        protected void initialiseDictionaries()
         {
             StringValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             StringLists = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             DataValues = new Dictionary<string, Data>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        public string this[string key]
+        {
+            get { return GetValue(key); }
+            set {  SetValue(key,value); }
         }
 
         /// <summary>
@@ -309,7 +314,7 @@ namespace WebServiceCSharp.Core
         /// <summary>
         /// Loads the values from the DataIdentifier (Override the exising values)
         /// </summary>
-        public void LoadValues()
+        public virtual void LoadValues()
         {
             if (DataIdentifier == null)
             {
@@ -319,8 +324,8 @@ namespace WebServiceCSharp.Core
             }
 
             String[] identifierParts = DataIdentifier.Split('_');
-            String[] HeaderValues = Utils.GetDataFromExcel(identifierParts[0] + "_" + identifierParts[1]).First();
-            String[] DataValues = Utils.GetDataFromExcel(DataIdentifier).First();
+            String[] HeaderValues = GeneralUtils.GetDataFromExcel(identifierParts[0] + "_" + identifierParts[1]).First();
+            String[] DataValues = GeneralUtils.GetDataFromExcel(DataIdentifier).First();
             initialiseDictionaries();
             int index = 0;
             foreach (String val in DataValues)
@@ -336,9 +341,9 @@ namespace WebServiceCSharp.Core
         /// Should update the DataIdentifier and Type
         /// </summary>
         /// <param name="dataIdentifier"></param>
-        public void LoadValues(String dataIdentifier)
+        public virtual void LoadValues(String dataIdentifier)
         {
-            this.DataIdentifier = dataIdentifier;
+            DataIdentifier = dataIdentifier;
             LoadValues();
         }
 

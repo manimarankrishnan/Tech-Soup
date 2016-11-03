@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebServiceCSharp.Core;
+using Utils.Core;
+
 namespace WebServiceTests.Main.Calculator.Subtraction
 {
     public class SubtractionRequest
@@ -23,7 +25,7 @@ namespace WebServiceTests.Main.Calculator.Subtraction
 
         public override string ToString()
         {
-            return Utils.XMLSerializeObject(envelope);
+            return GeneralUtils.XMLSerializeObject(envelope);
         }
 
     }

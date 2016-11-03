@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 using System.Xml;
+using Utils.Core;
 namespace WebServiceCSharp.Core
 {
     public class WebServiceClient
@@ -91,17 +92,17 @@ namespace WebServiceCSharp.Core
             {
                 if (String.IsNullOrEmpty(Request.ContentType))
                     Request.ContentType = "application/json";
-                parameterBody = Utils.GetFileAsString(body);
+                parameterBody = GeneralUtils.GetFileAsString(body);
             }
             else if (body.EndsWith(".xml"))
             {
                 if (String.IsNullOrEmpty(Request.ContentType))
                     Request.ContentType = "text/xml";
-                parameterBody = Utils.GetFileAsString(body);
+                parameterBody = GeneralUtils.GetFileAsString(body);
             }
             else if (body.EndsWith(".txt"))
             {
-                parameterBody = Utils.GetFileAsString(body);
+                parameterBody = GeneralUtils.GetFileAsString(body);
             }
             else
             {
@@ -382,11 +383,11 @@ namespace WebServiceCSharp.Core
             }
 
             if (Response.ContentType.Contains("json"))
-                return Utils.DeserializeJSON(GetResponseBody(), type);
+                return GeneralUtils.DeserializeJSON(GetResponseBody(), type);
 
             else if (Response.ContentType.Contains("xml"))
             {
-                return Utils.DeserializeXML(GetResponseBody(), type);
+                return GeneralUtils.DeserializeXML(GetResponseBody(), type);
             }
             return null;
         }
