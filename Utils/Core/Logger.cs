@@ -193,7 +193,7 @@ namespace Utils.Core
             var invalids = Path.GetInvalidFileNameChars().ToList();
             invalids.AddRange(Path.GetInvalidPathChars());
             var newName = String.Join("_", fileName.Split(invalids.ToArray(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
-            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"), Name.Replace(fileName, ""));
+            String filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"), newName.Replace(fileName, ""));
             Directory.CreateDirectory(filePath);
             filePath = Path.Combine(filePath, newName);
             return filePath;
