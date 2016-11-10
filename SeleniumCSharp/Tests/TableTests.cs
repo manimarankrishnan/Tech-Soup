@@ -29,125 +29,92 @@ namespace SeleniumCSharp.Tests
         }
 
         [Test]
-        public void TestTable()
+        public void TableGettingRowsWithSpecificValue()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
             try
             {
-                LoginPage loginPage = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
-                loginPage.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
-                loginPage.Form.InputFormFields().SubmitForm();
-
-
-                //Schooolnet 
-                driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/Assess/TestCentralHome.aspx");
-
-                System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-                watch.Start();
-                Table<TestCentralRow,TableHeaderRow> testCentralTable = new Table<TestCentralRow,TableHeaderRow>(driver, By.Id("ctl00_MainContent_TestSearchResults1_TestFinderResults1_gridResults"));
-                watch.Stop();
-                var ss = watch.ElapsedMilliseconds;
-
-
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, testCentralTable.TableRows.Count);
-                watch.Reset();
-                watch.Start();
-                dynamic rows = testCentralTable.GetRowsContainingValue("Test Name", "schedulefuture 12128");
-                watch.Stop();
-                var ssd = watch.ElapsedMilliseconds;
-
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, testCentralTable.TableRows.Count);
-
-                //Schoolnet end
-
-                //Magazine start
-
-                driver.Navigate().GoToUrl("https://www.smashingmagazine.com/2008/08/top-10-css-table-designs/");
-
-                watch.Reset();
-                watch.Start();
-                Table<MagagzineRow,TableHeaderRow> magaZineTable = new Table<MagagzineRow,TableHeaderRow>(driver, By.Id("newspaper-b"));
-                watch.Stop();
-                ss = watch.ElapsedMilliseconds;
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, magaZineTable.TableRows.Count);
-                watch.Reset();
-
-                //Get Row
-                watch.Start();
-                rows = magaZineTable.GetRowsContainingValue("Q2", "30.2");
-                watch.Stop();
-                ssd = watch.ElapsedMilliseconds;
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, magaZineTable.TableRows.Count);
-                watch.Reset();
-
-                //Table from columns
-                watch.Start();
-                magaZineTable = new Table<MagagzineRow,TableHeaderRow>(driver, Table<MagagzineRow>.GetTableLocatorFromColumnNames(MagagzineRow.ExpectedColumnList.ToArray()));
-                watch.Stop();
-                ss = watch.ElapsedMilliseconds;
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, magaZineTable.TableRows.Count);
-                watch.Reset();
-                watch.Start();
-                rows = magaZineTable.GetRowsContainingValue("Q2", "30.2");
-                watch.Stop();
-                ssd = watch.ElapsedMilliseconds;
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, magaZineTable.TableRows.Count);
-
                 //Magazine end
                 driver.Navigate().GoToUrl("https://datatables.net/examples/basic_init/hidden_columns.html");
+                //Initialising the table
+                TableWithHeaders dataTableEx = new TableWithHeaders(driver, By.Id("example"));
 
-                watch.Reset();
-                watch.Start();
-                Table<DataTableExample,TableHeaderRow> dataTableEx = new Table<DataTableExample,TableHeaderRow>(driver, By.Id("example"));
-                watch.Stop();
-                ss = watch.ElapsedMilliseconds;
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, dataTableEx.TableRows.Count);
-                watch.Reset();
+                //Getting rows where the value in the 'Position' Column equals 'Software Engineer'
+                List<TableRow> rows = dataTableEx.GetRowsContainingValue("Position", "Software Engineer");
 
-                //Get Row
-                watch.Start();
-                rows = dataTableEx.GetRowsContainingValue("Position", "Software Engineer");
-                watch.Stop();
-                ssd = watch.ElapsedMilliseconds;
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, dataTableEx.TableRows.Count);
-                watch.Reset();
+                //iterating for each row
+                foreach (var row in rows)
+                {
+
+                    /* Using the name of the column */
+
+                    //In each row getting the td element corresponding to the 'Position' column
+                    IWebElement TdElementCorrespondingToPosition = row["Position"];
+                    Assert.AreEqual(TdElementCorrespondingToPosition.Text, "Software Engineer");
+
+
+                    //Same td element can be got by passing the column name to the GetTableDataElement() method
+                    TdElementCorrespondingToPosition = row.GetTableDataElement("Position");
+                    Assert.AreEqual(TdElementCorrespondingToPosition.Text, "Software Engineer");
+
+                    /* Using the index of the column */
+
+                    //Same td element can be got using the index of the column (0 based index)
+                    TdElementCorrespondingToPosition = row[1];
+                    Assert.AreEqual(TdElementCorrespondingToPosition.Text, "Software Engineer");
+
+                    //Same td element can be got by passing the index of the column (0 based index) to the GetTableDataElement() method
+                    TdElementCorrespondingToPosition = row.GetTableDataElement(1);
+                    Assert.AreEqual(TdElementCorrespondingToPosition.Text, "Software Engineer");
+
+                }
 
 
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                driver.SaveScreenshotAndPageSource(); ;
+
                 throw;
             }
 
-
         }
 
-
-
         [Test]
-        public void GetColumnTests()
+        public void GetFirstRowWithTextEqualsAValue()
         {
             DriverWrapper driver = DriverUtils.GetDriver();
             try
             {
-                #region Check without checkbox
+                //Magazine end
+                driver.Navigate().GoToUrl("https://datatables.net/examples/basic_init/hidden_columns.html");
+                //Initialising the table
+                TableWithHeaders dataTableEx = new TableWithHeaders(driver, By.Id("example"));
 
-                driver.Navigate().GoToUrl("https://datatables.net/extensions/select/examples/initialisation/checkbox.html");
-                var Table = new TableWithHeaders(driver, By.Id("example"));
+                //Getting first row where the value in the 'Position' Column equals 'Software Engineer'
+                TableRow row = dataTableEx["Position", "Software Engineer"];
+                //In each row getting the td element corresponding to the 'Position' column
+                IWebElement TdElementCorrespondingToPosition = row["Position"];
+                Assert.AreEqual(TdElementCorrespondingToPosition.Text, "Software Engineer");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
 
+        [Test]
+        public void SelectingParticularRows()
+        {
+            DriverWrapper driver = DriverUtils.GetDriver();
+            try
+            {
+                TableWithHeaders Table;
 
-
-                var softwareEng= Table.GetRowsContainingValue("Position", "Software Engineer");
-                foreach (var row in softwareEng)
-                {
-                     row[""].Click();
-                }
-                #endregion
-
-                #region Check without checkbox
+                #region Check/UnCheck a checkbox in a row
 
                 driver.Navigate().GoToUrl("http://yuilibrary.com/yui/docs/datatable/datatable-chkboxselect.html");
                 Table = new TableWithHeaders(driver, By.CssSelector("table.yui3-datatable-table"), new List<string>()
@@ -158,10 +125,14 @@ namespace SeleniumCSharp.Tests
                     "Common Name"
 
                 });
-               
-                 var Port995 = Table.GetRowsContainingValue("Port No.", "995");
+
+                var Port995 = Table.GetRowsContainingValue("Port No.", "995");
                 foreach (var row in Port995)
                 {
+
+                    //To click a Check box, row[""] returns a WebElementWrapper , 
+                    //we can use the DescendantCheckbox property to get the checkbox inside the td element
+                    //Number of handy properties are present inside the WebElementWrapper class
                     row[""].DescendantCheckbox.UnCheck();
                     Assert.IsFalse(row[""].DescendantCheckbox.Selected);
                 }
@@ -169,6 +140,8 @@ namespace SeleniumCSharp.Tests
 
                 #region Custom Column Name
 
+                //If the Column Name is empty, in the above example we are using ""(empty string) as column name
+                //We can give Custom Names to this column by passing the columns in the particular order when initialising the table
                 driver.Navigate().GoToUrl("http://yuilibrary.com/yui/docs/datatable/datatable-chkboxselect.html");
                 Table = new TableWithHeaders(driver, By.CssSelector("table.yui3-datatable-table"), new List<string>()
                 {
@@ -179,18 +152,18 @@ namespace SeleniumCSharp.Tests
 
                 });
 
-                 Port995 = Table.GetRowsContainingValue("Port No.", "995");
+                Port995 = Table.GetRowsContainingValue("Port No.", "995");
                 foreach (var row in Port995)
                 {
+                    //Now we can use the custom column name 'Select' to select the particular td element
                     row["Select"].DescendantCheckbox.UnCheck();
                     Assert.IsFalse(row["Select"].DescendantCheckbox.Selected);
                 }
                 #endregion
 
+                #region Radio Grid Selecting a radio button
 
-                #region Radio Grid
-
-                driver.Navigate().GoToUrl(" https://css-tricks.com/examples/RadioGrid/");
+                driver.Navigate().GoToUrl("https://css-tricks.com/examples/RadioGrid/");
                 Table = new TableWithHeaders(driver, By.CssSelector("#page-wrap>table"));
 
                 var Snickers = Table.GetRowsContainingValue("", "Snickers");
@@ -199,12 +172,22 @@ namespace SeleniumCSharp.Tests
                 foreach (var row in Snickers)
                 {
                     row["1"].DescendantRadioButton.Check();
+                    //Using the DescendantRadioButton property to get the radio button inside the td
                     Assert.IsTrue(row["1"].DescendantRadioButton.Selected);
                 }
 
                 Table["", "Snickers"]["1"].DescendantRadioButton.Check();
+                #endregion
 
+                #region Check without checkbox
 
+                driver.Navigate().GoToUrl("https://datatables.net/extensions/select/examples/initialisation/checkbox.html");
+                Table = new TableWithHeaders(driver, By.Id("example"));
+                var softwareEng = Table.GetRowsContainingValue("Position", "Software Engineer");
+                foreach (var row in softwareEng)
+                {
+                    row[""].Click();
+                }
                 #endregion
             }
             catch (Exception e)
@@ -216,78 +199,10 @@ namespace SeleniumCSharp.Tests
 
         }
 
-        [Test]
-        public void ItemPropertiesPageTables()
+        public void AdvancedUseOfGenericTypes()
         {
-            DriverWrapper driver = DriverUtils.GetDriver();
-            try
-            {
-                LoginPage loginPage = LoginPage.NavigateToLoginPage(driver, Config.GetConfigValue("StartingUrl"));
-                loginPage.Data = new Data("TestCaseData_Authentication_DistrictAdmin");
-                loginPage.Form.InputFormFields().SubmitForm();
-
-
-                
-                driver.Navigate().GoToUrl("https://team-automation-st.sndev.net/admin/?&admin_current_app_tab_id=5e10edea-eb8b-4000-b8cd-91a9ec533c89&admin_current_control_src=~/Assess/AdminControls/ManageItemCategories.ascx&snidx=5");
-                
-                //Categories Table - 1st implementation with footer - takes more time to initialize
-                System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-                watch.Start();
-                CategoriesTable CategoriesTable = new CategoriesTable(driver);
-                
-                watch.Stop();
-                var ss = watch.ElapsedMilliseconds;
-
-
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, CategoriesTable.TableRows.Count);
-                watch.Reset();
-                watch.Start();
-                dynamic rows = CategoriesTable.GetRowsContainingValue("Category Name", "Curriculum 3");
-                watch.Stop();
-                var ssd = watch.ElapsedMilliseconds;
-
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, CategoriesTable.TableRows.Count);
-
-                //Categories Table - 1st implementation with footer - takes more time to initialize
-               
-                watch.Start();
-                CategoriesTable = new CategoriesTable (driver);
-                watch.Stop();
-                 ss = watch.ElapsedMilliseconds;
-
-
-                Logger.Info("Took {0} milliseconds to initialize table with {1} rows", ss, CategoriesTable.TableRows.Count);
-                watch.Reset();
-                watch.Start();
-                 rows = CategoriesTable.GetRowsContainingValue("Category Name", "Curriculum 3");
-                 CategoriesTable["Category Name", "Curriculum 3"]["Show"].DescendantCheckbox.Check();
-                 TableRow tr = rows[0];
-                 tr["Show"].DescendantCheckbox.Check();
-                watch.Stop();
-                 ssd = watch.ElapsedMilliseconds;
-
-
-                 CategoriesTable["Category Name", "Curriculum 3"]["Show"].DescendantCheckbox.Check();
-
-                Logger.Info("Took {0} milliseconds to get desired value from table with {1} rows", ssd, CategoriesTable.TableRows.Count);
-
-                
-                //Schoolnet end
-
-
-
-            }
-            catch (Exception e)
-            {
-                driver.SaveScreenshotAndPageSource(); ;
-                throw;
-            }
-
 
         }
-
-
-
 
         [TearDown]
         public void CleanUp()
@@ -300,10 +215,6 @@ namespace SeleniumCSharp.Tests
             }
             DriverUtils.QuitDrivers();
         }
-
-
-
-
 
     }
 }

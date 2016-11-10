@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using System.Collections.ObjectModel;
 
-namespace SeleniumCSharp.Selenium
+namespace SeleniumCSharp.Selenium.UI
 {
     public abstract class Component : ISearchContext, IWrapsElement
     {

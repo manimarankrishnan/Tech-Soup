@@ -202,7 +202,7 @@ namespace SeleniumCSharp.Selenium
                 throw;
             }
             watch.Stop();
-            Logger.Info("Found {0} element using the locator {1} in webelement {2} . Time Taken - {3} milliseconds ", result.Count, by, this,watch.ElapsedMilliseconds);
+            Logger.Info("Found {0} elements using the locator {1} in webelement {2} . Time Taken - {3} milliseconds ", result.Count, by, this,watch.ElapsedMilliseconds);
 
             return result;
         }
@@ -614,6 +614,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _parentElement;
+        /// <summary>
+        /// Parent element of the WebELement got using locator By.XPath(".//..")
+        /// </summary>
         public WebElementWrapper ParentElement
         {
             get
@@ -624,6 +627,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _immediateChild;
+        /// <summary>
+        /// Immediate inside the WebELement got using locator By.XPath("./*")
+        /// </summary>
         public WebElementWrapper ImmediateChild
         {
             get
@@ -634,6 +640,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _descendantLink;
+        /// <summary>
+        /// First Link Descendant inside the WebELement got using locator By.TagName("a")
+        /// </summary>
         public WebElementWrapper DescendantLink
         {
             get
@@ -644,6 +653,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _descendantCheckbox;
+        /// <summary>
+        /// First Checkbox Descendant inside the WebELement got using locator By.CssSelector("input[type='checkbox']")
+        /// </summary>
         public WebElementWrapper DescendantCheckbox
         {
             get
@@ -654,6 +666,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _descendantRadioButton;
+        /// <summary>
+        /// First Radio Button Descendant inside the WebELement got using locator By.CssSelector("input[type='radio']"
+        /// </summary>
         public WebElementWrapper DescendantRadioButton
         {
             get
@@ -664,6 +679,9 @@ namespace SeleniumCSharp.Selenium
         }
         
         private SelectElementWrapper _descendantSelect;
+        /// <summary>
+        /// First SelectElement Descendant inside the WebELement got using locator By.TagName("select")
+        /// </summary>
         public SelectElementWrapper DescendantSelect
         {
             get
@@ -674,6 +692,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _descendantTextBox;
+        /// <summary>
+        /// First Textbox Descendant inside the WebELement got using locator By.CssSelector("input[type='text']")
+        /// </summary>
         public WebElementWrapper DescendantTextBox
         {
             get
@@ -684,6 +705,9 @@ namespace SeleniumCSharp.Selenium
         }
 
         private WebElementWrapper _descendantTextArea;
+        /// <summary>
+        /// First Textarea Descendant inside the WebELement got using locator By.TagName("textarea")
+        /// </summary>
         public WebElementWrapper DescendantTextArea
         {
             get
@@ -694,6 +718,9 @@ namespace SeleniumCSharp.Selenium
         }
         
         private WebElementWrapper _descendantImage;
+        /// <summary>
+        /// First Image Descendant inside the WebELement got using locator  By.TagName("img")
+        /// </summary>
         public WebElementWrapper DescendantImage
         {
             get
@@ -703,6 +730,9 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        /// <summary>
+        /// Value in the 'value' attribute of the element
+        /// </summary>
         public String Value
         {
             get
@@ -711,6 +741,9 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        /// <summary>
+        /// Value in the name attribute of the element
+        /// </summary>
         public String Name
         {
             get
@@ -719,6 +752,9 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        /// <summary>
+        /// Value in the id attribute of the element
+        /// </summary>
         public String Id
         {
             get
@@ -727,6 +763,9 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        /// <summary>
+        /// Got fromt the method GetCssValue("color")
+        /// </summary>
         public String Color
         {
             get
@@ -735,6 +774,9 @@ namespace SeleniumCSharp.Selenium
             }
         }
 
+        /// <summary>
+        /// Got fromt the method GetCssValue("background-color")
+        /// </summary>
         public String BackgroundColor
         {
             get

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using SeleniumCSharp.Framework;
-namespace SeleniumCSharp.Selenium
+namespace SeleniumCSharp.Selenium.UI
 {
     public class ComponentCollection<T> : ReadOnlyCollection<T> where T : Component, new()
     {
@@ -22,7 +22,7 @@ namespace SeleniumCSharp.Selenium
             ReadOnlyCollection<IWebElement> listOfElements;
             if(searchContext is IWebElement)
             {
-                listOfElements = new WebElementWrapper(searchContext as IWebElement, By).WaitForElements(5);
+                listOfElements = new WebElementWrapper(searchContext as IWebElement, By).WaitForElements(10);
             }
             else if(searchContext is IWebDriver)
             {
