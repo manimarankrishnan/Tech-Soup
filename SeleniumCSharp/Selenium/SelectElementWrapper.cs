@@ -39,7 +39,6 @@ namespace SeleniumCSharp.Selenium
         public SelectElementWrapper(DriverWrapper driver, By by)
         {
             this._element = new WebElementWrapper(driver, by);
-            this._selectElement = new SelectElement(_element);
             this.by = by;
         }
 
@@ -49,14 +48,12 @@ namespace SeleniumCSharp.Selenium
                 this._element = (WebElementWrapper)element;
             else
                 this._element = new WebElementWrapper(element);
-            this._selectElement = new SelectElement(_element);
             this.by = null;
         }
 
         public SelectElementWrapper(IWebElement parentElement, By by)
         {
             this._element = new WebElementWrapper(parentElement, by);
-            this._selectElement = new SelectElement(_element);
             this.by = by;
         }
 
