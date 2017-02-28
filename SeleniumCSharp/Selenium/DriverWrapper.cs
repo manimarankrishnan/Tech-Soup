@@ -154,7 +154,11 @@ namespace SeleniumCSharp.Selenium
 
         public String GetSessionId()
         {
-            return CustomRemoteDriver.GetSessionId(WrappedDriver);            
+
+            if (GetInnermostDriver() is RemoteWebDriver)
+                return ((RemoteWebDriver)GetInnermostDriver()).SessionId.ToString();
+            else
+                return null;
         }
 
         public Screenshot GetScreenshot()
@@ -236,23 +240,7 @@ namespace SeleniumCSharp.Selenium
         {
             return "Page : "+Title;
         }
-       class CustomRemoteDriver :RemoteWebDriver
-        {
-           //Dummy Constructor
-           private CustomRemoteDriver()
-               : base(DesiredCapabilities.Firefox())
-           {
-
-           }
-            public static  String GetSessionId(IWebDriver driver)
-            {
-                
-                if (driver is RemoteWebDriver)
-                    return ((RemoteWebDriver)driver).SessionId.ToString();
-                return null;
-            }
-
-        }
+    
         
     }
 }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Xml;
 using Utils.Core;
+using System.Web;
 namespace WebServiceCSharp.Core
 {
     public class WebServiceClient
@@ -274,15 +275,15 @@ namespace WebServiceCSharp.Core
         /// <returns></returns>
         public WebServiceClient SetRequest()
         {
-            if (_requestData == null)
-            {
-                Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
-                Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
+            //if (_requestData == null)
+            //{
+            //    Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
+            //    Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
 
-                if (Config.IsConfigValuePresent("DefaultHeaders"))
-                    SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
-                return this;
-            }
+            //    if (Config.IsConfigValuePresent("DefaultHeaders"))
+            //        SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
+            //    return this;
+            //}
 
             EndPointURI = EndPointURI + _URISegment + _urlParameters;
 
