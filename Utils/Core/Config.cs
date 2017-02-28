@@ -41,6 +41,15 @@ namespace Utils.Core
             }
         }
 
+      
+        /// <summary>
+        /// Getting the Project DLL Path
+        /// </summary>
+        public static String GetCurrentProjectDllPath()
+        {                         
+                return AppDomain.CurrentDomain.BaseDirectory;           
+        }
+
         /// <summary>
         /// Get config value
         /// </summary>
