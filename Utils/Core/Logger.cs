@@ -200,6 +200,15 @@ namespace Utils.Core
         }
 
 
+        public static string GetCurrentLogDirectory()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults", buildStartTime.ToString("MMMMdd_yyyy_HHmmss"));
+
+        }
+
+
+
+
     }
 
 
