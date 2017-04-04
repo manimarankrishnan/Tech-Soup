@@ -21,16 +21,47 @@ namespace WebServiceTests.Test
             Logger.mode = LogMode.INFO;
         }
 
+
+
+
+
+
         [Test]
+        public void test1()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        [Retry(3)]
+        public void test3()
+        {
+            Assert.Fail();
+        }
+        [Test]
+        public void test2()
+        {
+            Assert.Fail();
+        }
+
+
+
+
+
+
+
+
+
+       // [Test]
         public void TextToBraille()
         {
             WebServiceClient client = new WebServiceClient("http://www.webservicex.net", "TestCaseData_Others_TC_textToBraille");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            String r = client._expectedResponseBody;
+            String r = client.ExpectedResponseBody;
             XmlDocument xd = new XmlDocument();
             xd.LoadXml(responseBody);
             XmlDocument dd = new XmlDocument();
-            dd.LoadXml(GeneralUtils.GetFileAsString(client._expectedResponseBody));
+            dd.LoadXml(GeneralUtils.GetFileAsString(client.ExpectedResponseBody));
             Assert.AreEqual(xd, dd, "Actual and Expected response body are not eaual");
         }
 
@@ -39,7 +70,7 @@ namespace WebServiceTests.Test
 
         ///JSONPlaceHolder WebService
         ///Checks Status code of the response
-        [Test]
+       // [Test]
         [TestCase("Create", "BodyRequest", 15)]
         public void CreateResourceSerialization(string title, string body, int userID)
         {
@@ -48,7 +79,7 @@ namespace WebServiceTests.Test
             responseBody=responseBody.Replace("\n ", "");
             String statusCode = client.GetStatusCodeOfResponse();
             Assert.AreEqual(statusCode, "Created", "Status code mismatch");
-            Assert.AreEqual(GeneralUtils.FormatJsonString(GeneralUtils.GetFileAsString(client._expectedResponseBody)), GeneralUtils.FormatJsonString(responseBody), "ResonseBody mismatch");
+            Assert.AreEqual(GeneralUtils.FormatJsonString(GeneralUtils.GetFileAsString(client.ExpectedResponseBody)), GeneralUtils.FormatJsonString(responseBody), "ResonseBody mismatch");
 
         }
 

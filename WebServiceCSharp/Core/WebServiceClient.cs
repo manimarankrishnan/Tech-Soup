@@ -22,22 +22,22 @@ namespace WebServiceCSharp.Core
         public long TimeTaken;
 
         //Excel values
-        public String _URISegment { get; set; }
-        public String _urlParameters { get; set; }
-        public String _requestMethod { get; set; }
-        public String _requestHeaders { get; set; }
-        public String _requestBody { get; set; }
-        public String _expectedResponseBody { get; set; }
+        public String URISegment { get; set; }
+        public String UrlParameters { get; set; }
+        public String RequestMethod { get; set; }
+        public String RequestHeaders { get; set; }
+        public String RequestBody { get; set; }
+        public String ExpectedResponseBody { get; set; }
 
         public WebServiceClient(String endPointURI = "", String dataIdentifier = null)
         {
             EndPointURI = endPointURI;
-            _requestBody = "";
-            _requestHeaders = "";
-            _requestMethod = "GET";
-            _urlParameters = "";
-            _URISegment = "";
-            _expectedResponseBody = "";
+            RequestBody = "";
+            RequestHeaders = "";
+            RequestMethod = "GET";
+            UrlParameters = "";
+            URISegment = "";
+            ExpectedResponseBody = "";
             if (dataIdentifier != null)
             {
                 _requestData = new Data(dataIdentifier);
@@ -49,12 +49,12 @@ namespace WebServiceCSharp.Core
         public WebServiceClient(String endPointURI, Data values)
         {
             EndPointURI = endPointURI;
-            _requestBody = "";
-            _requestHeaders = "";
-            _requestMethod = "GET";
-            _urlParameters = "";
-            _URISegment = "";
-            _expectedResponseBody = "";
+            RequestBody = "";
+            RequestHeaders = "";
+            RequestMethod = "GET";
+            UrlParameters = "";
+            URISegment = "";
+            ExpectedResponseBody = "";
             _requestData = values;
             LoadServiceRequestValues();
         }
@@ -72,15 +72,15 @@ namespace WebServiceCSharp.Core
 
             String value;
             if(_requestData.TryGetValue(URISegmentKey,out value) &&  !String.IsNullOrEmpty(value))
-                _URISegment =value;
+                URISegment =value;
             if (_requestData.TryGetValue(MethodKey, out value) && !String.IsNullOrEmpty(value))
-                _requestMethod = value;
+                RequestMethod = value;
             if (_requestData.TryGetValue(HeadersKey, out value) && !String.IsNullOrEmpty(value))
-                _requestHeaders = value;
+                RequestHeaders = value;
             if (_requestData.TryGetValue(RequestBodyKey, out value) && !String.IsNullOrEmpty(value))
-                _requestBody = value;
+                RequestBody = value;
             if (_requestData.TryGetValue(ExpectedResponseBodyKey, out value) && !String.IsNullOrEmpty(value))
-                _expectedResponseBody = value;
+                ExpectedResponseBody = value;
            
 
         }
@@ -135,7 +135,7 @@ namespace WebServiceCSharp.Core
                 Logger.Error(e);
                 throw e;
             }
-            this._requestBody = body;
+            this.RequestBody = body;
             return this;
         }
 
@@ -200,7 +200,7 @@ namespace WebServiceCSharp.Core
             {
                 AddURLParametersToURL(String.Format("{0}={1}", paramValuePairs[key], key));
             }
-            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
+            Logger.Debug("Constructed URL parameter : {0}", UrlParameters);
             return this;
         }
 
@@ -217,10 +217,10 @@ namespace WebServiceCSharp.Core
                 Logger.Error(e);
                 throw e;
             }
-            if (String.IsNullOrEmpty(_urlParameters))
-                _urlParameters = "?";
-            _urlParameters = _urlParameters + (_urlParameters.Equals("?") ? "" : "&") + keyValue;
-            Logger.Debug("Constructed URL parameter : {0}", _urlParameters);
+            if (String.IsNullOrEmpty(UrlParameters))
+                UrlParameters = "?";
+            UrlParameters = UrlParameters + (UrlParameters.Equals("?") ? "" : "&") + keyValue;
+            Logger.Debug("Constructed URL parameter : {0}", UrlParameters);
             return this;
         }
 
@@ -239,8 +239,8 @@ namespace WebServiceCSharp.Core
                 Logger.Error(e);
                 throw e;
             }
-            _requestHeaders = _requestHeaders + "," + headerString;
-            Logger.Info("_requestHeaders = " + _requestHeaders);
+            RequestHeaders = RequestHeaders + "," + headerString;
+            Logger.Info("_requestHeaders = " + RequestHeaders);
             return this;
         }
 
@@ -260,11 +260,11 @@ namespace WebServiceCSharp.Core
 
             foreach (string key in headers.Keys)
             {
-                _requestHeaders = String.Format("{0},{1}:{2}", _requestHeaders, key, headers[key]);
+                RequestHeaders = String.Format("{0},{1}:{2}", RequestHeaders, key, headers[key]);
             }
 
-            _requestHeaders = _requestHeaders + "," + headers;
-            Logger.Info("_requestHeaders = " + _requestHeaders);
+            RequestHeaders = RequestHeaders + "," + headers;
+            Logger.Info("_requestHeaders = " + RequestHeaders);
             return this;
         }
 
@@ -285,7 +285,7 @@ namespace WebServiceCSharp.Core
             //    return this;
             //}
 
-            EndPointURI = EndPointURI + _URISegment + _urlParameters;
+            EndPointURI = EndPointURI + URISegment + UrlParameters;
 
             Request = (HttpWebRequest)WebRequest.Create(EndPointURI);
             Logger.Debug("Set EndPoint as : {0}", Request.RequestUri);
@@ -293,14 +293,14 @@ namespace WebServiceCSharp.Core
             if (Config.IsConfigValuePresent("DefaultHeaders"))
                 SetRequestHeaders(Config.GetConfigValue("DefaultHeaders"));
 
-            Request.Method = _requestMethod;
+            Request.Method = RequestMethod;
             Logger.Debug("Request method :{0}", Request.Method);
 
-            if (!String.IsNullOrEmpty(_requestHeaders))
-                SetRequestHeaders(_requestHeaders);
+            if (!String.IsNullOrEmpty(RequestHeaders))
+                SetRequestHeaders(RequestHeaders);
 
-            if (!String.IsNullOrEmpty(_requestBody))
-                loadRequestBody(_requestBody);
+            if (!String.IsNullOrEmpty(RequestBody))
+                loadRequestBody(RequestBody);
 
             Logger.Debug(Request);
 

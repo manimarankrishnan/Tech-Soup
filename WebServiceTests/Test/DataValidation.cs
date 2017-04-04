@@ -28,7 +28,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyOutlookEmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
 
             String statusCode = client.GetStatusCodeOfResponse();
             Assert.AreEqual(statusCode, "OK", "Status code mismatch");
@@ -43,7 +43,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyGmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_CheckLanguageEnglish");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_CheckLanguageFrench");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyVat");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyMobileNumberIndia");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyMobileNumberBangaloreIndia");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("", "TestCaseData_DataValidationTestsWithURI_TC_verifyMobileNumberUS");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         #endregion -----End-of-DataValidationTests----------
@@ -131,7 +131,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyOutlookEmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_verifyGmail");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_CheckLanguageEnglish");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace WebServiceTests.Test
         {
             WebServiceClient client = new WebServiceClient("http://apilayer.net", "TestCaseData_DataValidationTestsWithoutURI_TC_CheckLanguageFrench");
             String responseBody = client.SetRequest().CallService().GetResponseBody();
-            Assert.AreEqual(client._expectedResponseBody, responseBody, "Actual and Expected response body are not equal");
+            Assert.AreEqual(client.ExpectedResponseBody, responseBody, "Actual and Expected response body are not equal");
         }
 
         #endregion -----End-of-DataValidationTestsWithURI----------

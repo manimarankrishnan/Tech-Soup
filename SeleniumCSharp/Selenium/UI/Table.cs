@@ -81,15 +81,7 @@ namespace SeleniumCSharp.Selenium.UI
         /// <returns></returns>
         public virtual List<TTableRow> GetRowsContainingText(String expectedText)
         {
-
             return TableRows.Where(tr => tr.WrappedElement.Text.Contains(expectedText.Trim())).ToList();
-            List<TTableRow> expectedRows = new List<TTableRow>();
-            foreach (var row in TableRows)
-            {
-                if (row.WrappedElement.Text.Contains(expectedText.Trim()))
-                    expectedRows.Add(row);
-            }
-            return expectedRows;
         }
 
        /// <summary>
@@ -164,7 +156,8 @@ namespace SeleniumCSharp.Selenium.UI
         {
             get
             {
-                return _columnList ?? HeaderRow.ColumnList;
+                _columnList = _columnList ?? new ReadOnlyCollection<string>(HeaderRow.ValueList); 
+                return _columnList;
             }
             set
             {
@@ -175,6 +168,7 @@ namespace SeleniumCSharp.Selenium.UI
         {
             base.InitElements();
             HeaderRow = new ComponentCollection<TTableHeader>(WrappedElement, ByTableHeaderRow).FirstOrDefault();
+            HeaderRow.GetColumnlistFunc = delegate() { return ColumnList; };
         }
 
         /// <summary>
@@ -185,17 +179,7 @@ namespace SeleniumCSharp.Selenium.UI
         /// <returns></returns>
         public virtual List<TTableRow> GetRowsContainingValue(String columnName, String expectedValue)
         {
-
-
-            return TableRows.Where(tr=> tr.GetText(ColumnList.IndexOf(columnName)).Equals(expectedValue.Trim())).ToList();
-            int dataIndex = ColumnList.IndexOf(columnName);
-            List<TTableRow> expectedRows = new List<TTableRow>();
-            foreach (var row in TableRows)
-            {
-                if (row.GetText(dataIndex).Equals(expectedValue.Trim()))
-                    expectedRows.Add(row);
-            }
-            return expectedRows;
+            return TableRows.Where(tr=> tr.GetText(ColumnList.IndexOf(columnName)).Trim().Equals(expectedValue.Trim())).ToList();
         }
 
         /// <summary>
@@ -253,18 +237,11 @@ namespace SeleniumCSharp.Selenium.UI
 
         public TTableFooter FooterRow { get; set; }
 
-        public ReadOnlyCollection<String> ColumnList
-        {
-            get
-            {
-                return HeaderRow.ColumnList;
-            }
-        }
         public override void InitElements()
         {
             base.InitElements();
             FooterRow = new ComponentCollection<TTableFooter>(WrappedElement, ByTableFooterRow).FirstOrDefault();
-
+            FooterRow.GetColumnlistFunc = delegate() { return ColumnList; };
         }
     }
 

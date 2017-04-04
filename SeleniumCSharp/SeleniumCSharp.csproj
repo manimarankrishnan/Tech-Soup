@@ -69,12 +69,8 @@
     <Compile Include="Selenium\UI\TableHeaderRow.cs" />
     <Compile Include="Selenium\UI\TableRow.cs" />
     <Compile Include="Selenium\WebElementWrapper.cs" />
-    <Compile Include="Tests\DemoTest.cs" />
     <Compile Include="Tests\DriverWrapperTests.cs" />
     <Compile Include="Tests\ExtentReportTest1.cs" />
-    <Compile Include="Tests\Main\Components\ItemProperties.cs" />
-    <Compile Include="Tests\Main\Components\TestCentralRow.cs" />
-    <Compile Include="Tests\Main\LoginPage.cs" />
     <Compile Include="Tests\TableTests.cs" />
   </ItemGroup>
   <ItemGroup>

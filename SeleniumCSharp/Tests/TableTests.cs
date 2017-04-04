@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using SeleniumCSharp.Framework;
 using SeleniumCSharp.Selenium;
-using SeleniumCSharp.Tests.Main;
-using SeleniumCSharp.Tests.Main.Components;
 using Utils.Core;
 using OpenQA.Selenium;
 using SeleniumCSharp.Selenium.UI;

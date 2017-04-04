@@ -31,7 +31,7 @@ namespace WebServiceTests.Test
             String response = client.SetRequest().CallService().GetResponseBody();
             Logger.Debug((Object)response);
             Console.WriteLine(response);
-            String expectedValue = client._expectedResponseBody;
+            String expectedValue = client.ExpectedResponseBody;
             if(client.Response.ContentType.Contains("xml"))
             {
                 XmlDocument expectedXmlDoc= null;

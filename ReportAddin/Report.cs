@@ -7,6 +7,7 @@ using RelevantCodes.ExtentReports;
 using NUnit.Framework.Interfaces;
 using Utils.Core;
 using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ReportAddin
 {
@@ -52,45 +53,93 @@ namespace ReportAddin
 
         public static void LogException(Exception e)
         {
+            Logger.Error(e);
             ExtentTest.Log(LogStatus.Warning, e);
         }
 
 
         public static void LogPass(string message)
         {
+            Logger.Debug(message);
             ExtentTest.Log(LogStatus.Pass, message);
         }
 
         public static void LogSkip(string message)
         {
+            Logger.Debug(message);
             ExtentTest.Log(LogStatus.Skip, message);
         }
 
         public static void LogFail(string message)
         {
+            Logger.Error(message);
             ExtentTest.Log(LogStatus.Fail, message);
         }
 
-        public static void EndTest(TestStatus testStatus, string TestName)
+        public static void EndTest(Object testStatus, string TestName)
         {
 
-            LogStatus logstatus;
-            switch (testStatus)
-            {
-                case TestStatus.Failed:
+            LogStatus logstatus=LogStatus.Pass;
+
+            string status = testStatus.ToString();
+
+            switch(status.ToLower()){
+                case "fail":
+                case "failed":
                     logstatus = LogStatus.Fail;
-                    LogFail(TestName + ":Failed");
                     break;
-                case TestStatus.Inconclusive:
+                case "inconclusive":
+                case "aborted":
                     logstatus = LogStatus.Warning;
                     break;
-                case TestStatus.Skipped:
+                case "skipped":
                     logstatus = LogStatus.Skip;
                     break;
-                default:
-                    logstatus = LogStatus.Pass;
-                    break;
+
             }
+
+
+            if (testStatus is TestStatus)
+            {
+                TestStatus status1 = ( TestStatus)testStatus;
+                switch (status1)
+                {
+                    case TestStatus.Failed:
+                        logstatus = LogStatus.Fail;
+                        LogFail(TestName + ":Failed");
+                        break;
+                    case TestStatus.Inconclusive:
+                        logstatus = LogStatus.Warning;
+                        break;
+                    case TestStatus.Skipped:
+                        logstatus = LogStatus.Skip;
+                        break;
+                    default:
+                        logstatus = LogStatus.Pass;
+                        break;
+                }
+            }
+            else if (testStatus is UnitTestOutcome)
+            {
+                 UnitTestOutcome status1 = ( UnitTestOutcome)testStatus;
+                 switch (status1)
+                {
+                    case UnitTestOutcome.Failed:
+                        logstatus = LogStatus.Fail;
+                        LogFail(TestName + ":Failed");
+                        break;
+                    case UnitTestOutcome.Aborted:
+                        logstatus = LogStatus.Warning;
+                        break;
+                    case UnitTestOutcome.Inconclusive:
+                        logstatus = LogStatus.Skip;
+                        break;
+                    default:
+                        logstatus = LogStatus.Pass;
+                        break;
+                }
+            }
+            ExtentTest.Log(logstatus, TestName + " " + testStatus);
             ExtentReport.EndTest(ExtentTest);
 
         }

@@ -24,25 +24,25 @@ namespace SeleniumCSharp.Framework
         public Page SubmitForm()
         {
             Submit.Wait(TestConfiguration.ElementWaitTimeout).Click();
-            return SubmitReturnPage();
+            return SubmitLandPage();
         }
         public Page CancelForm()
         {
             Cancel.Wait(TestConfiguration.ElementWaitTimeout).Click();
-            return SubmitReturnPage();
+            return SubmitLandPage();
         }
-        public Page InputSubmitForm()
+        public Page EnterAndSubmit()
         {
-            InputFormFields();
+            EnterFieldValues();
             return SubmitForm();
         }
 
-        public abstract Form InitElements();
-        public abstract Form InputFormFields();
-        public abstract Form InputFormFields(IList<String> fields);
-        public abstract Page SubmitReturnPage();
-        public abstract Page CancelReturnPage();
-        public abstract Form VerifyFieldsExist(IList<String> fields);
+        public abstract Form Init();
+        public abstract Form EnterFieldValues();
+        public abstract Form EnterFieldValues(IList<String> fields);
+        public abstract Page SubmitLandPage();
+        public abstract Page CancelLandPage();
+        public abstract Form VerifyFields(IList<String> fields);
 
 
     }

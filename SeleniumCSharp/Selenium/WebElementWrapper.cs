@@ -552,6 +552,36 @@ namespace SeleniumCSharp.Selenium
         }
 
         /// <summary>
+        /// Wait for element to be clickable
+        /// </summary>
+        /// <param name="timeOutInSeconds">Time out period in seconds.</param>
+        /// <param name="pollingIntervalInMilliSeconds"> Polling interval in milliseconds</param>
+        /// <returns></returns>
+        public WebElementWrapper WaitToBeClickable(long timeOutInSeconds, long pollingIntervalInMilliSeconds = 500)
+        {
+            if (by == null)
+            {
+                Exception e = new Exception("The By locator is not initialized.");
+                Logger.Error(e);
+                throw e;
+            }
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOutInSeconds));
+                wait.PollingInterval = TimeSpan.FromMilliseconds(pollingIntervalInMilliSeconds);
+                WrappedElement = wait.Until(ExpectedConditions.ElementToBeClickable(by));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+
+            return this;
+
+        }
+
+        /// <summary>
         /// Scroll into the view of an element.
         /// </summary>
         /// <returns></returns>
@@ -590,7 +620,7 @@ namespace SeleniumCSharp.Selenium
             }
             try
             {
-                new Actions((IWebDriver)this.Driver).MoveToElement(WrappedElement).Click().Build().Perform();
+                new Actions((IWebDriver)this.Driver).MoveToElement(WrappedElement).Build().Perform();
             }
             catch (WebDriverException ex)
             {
@@ -771,6 +801,17 @@ namespace SeleniumCSharp.Selenium
             get
             {
                 return WrappedElement.GetCssValue("color");
+            }
+        }
+
+        /// <summary>
+        /// Got fromt the method GetAttribute("class")
+        /// </summary>
+        public String Class
+        {
+            get
+            {
+                return WrappedElement.GetAttribute("class");
             }
         }
 
