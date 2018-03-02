@@ -17,7 +17,7 @@
     <documentTitle>Automation Test Report</documentTitle>
 
     <!-- report name - displayed at top-nav -->
-    <reportName>Automation Report</reportName>
+    <reportName>Tech Soup POC Automation Report</reportName>
 
     <!-- report headline - displayed at top-nav, after reportHeadline -->
     <reportHeadline></reportHeadline>
